@@ -1,8 +1,22 @@
+import axios from 'axios'
 import './App.css'
 import NavBar from './components/navbar'
-import { useQuery } from 'react-query'
+import { QueryClient, useMutation, useQuery } from 'react-query'
 
 function App() {
+  const queryClient = new QueryClient()
+  const mutation = useMutation(object => {
+    return axios.post('http://localhost:8080/api/recipe', object)
+  })
+  const update = useMutation({
+    mutationFn: (recipeToUpdate) => axios.put('http://localhost:8080/api/recipe/6', recipeToUpdate),
+    onSuccess: updatedRecipe => {
+      queryClient.setQueryData(['Recipes', {id : 7}], updatedRecipe.data)
+      console.log(updatedRecipe)
+    }
+  })
+
+
  //Version avec import fonction 
 
   // const {isLoading, error, data } = GetAllRecipe()
@@ -37,6 +51,12 @@ function App() {
   //   })
   // }, [])
 
+  const handleSubmitTest = (e) => {
+    e.preventDefault()
+    const object = {name: 'testRssefffscpisse', description: 'test'}
+    update.mutate(object)
+  }
+
   return (
     <>
     <NavBar />
@@ -56,6 +76,8 @@ function App() {
         <div className='mx-auto mt-5 w-10/12 border-4 border-indigo-500/100'>RECIPE</div>
         <div className='mx-auto mt-5 w-10/12 border-4 border-indigo-500/100'>RECIPE</div>
       </div>
+
+      <button onClick={(e) => handleSubmitTest(e)}>Submit</button>
     </>
   )
 }
