@@ -8,6 +8,10 @@ function App() {
   const mutation = useMutation(object => {
     return axios.post('http://localhost:8080/api/recipe', object)
   })
+
+  const recipePost = useMutation({
+    mutationFn: (recipe) => {return fetch('http://localhost:8080/api/recipe', recipe)}
+  })
   const update = useMutation({
     mutationFn: (recipeToUpdate) => axios.put('http://localhost:8080/api/recipe/6', recipeToUpdate),
     onSuccess: updatedRecipe => {
@@ -53,8 +57,10 @@ function App() {
 
   const handleSubmitTest = (e) => {
     e.preventDefault()
-    const object = {name: 'testRssefffscpisse', description: 'test'}
-    update.mutate(object)
+    // const object = {name: 'testRssefffscpisse', description: 'test'}
+    // update.mutate(object)
+    recipe = {}
+    recipePost.mutate(recipe)
   }
 
   return (
