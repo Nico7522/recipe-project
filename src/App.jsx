@@ -1,14 +1,14 @@
 import axios from 'axios'
 import './App.css'
 import NavBar from './components/navbar'
-import { QueryClient, useMutation, useQuery } from 'react-query'
+import { useQueryClient, useMutation, useQuery } from 'react-query'
 import { GetAllRecipe } from '../API/recipe'
 import { useState } from 'react'
 
 
 function App() {
   const [message, setMessage] = useState('');
-  const queryClient = new QueryClient()
+  const queryClient = useQueryClient()
   const mutation = useMutation(object => {
     return axios.post('http://localhost:8080/api/recipe', object)
   })
@@ -37,30 +37,25 @@ function App() {
     //   console.log(updatedRecipe.data)
     // }
 
-    mutationFn: (recipeToUpdate) => axios.put('http://localhost:8080/api/recipe/1', recipeToUpdate),
     onMutate: async (recipeToUpdate) => {
-      await queryClient.cancelQueries(['Recipes', recipeToUpdate.id]);
-      const previousRecipe = queryClient.getQueriesData(['Recipes', recipeToUpdate.id]);
-      queryClient.setQueriesData(['Recipes', recipeToUpdate.id], recipeToUpdate);
+      await queryClient.cancelQueries({queryKey: ['Recipes', recipeToUpdate.id]});
+      const previousRecipe = await queryClient.getQueryData(['Recipes', recipeToUpdate.id]);
+      queryClient.setQueryData(['Recipes', recipeToUpdate.id], recipeToUpdate);
       return { previousRecipe, recipeToUpdate }
     },
+    mutationFn: (recipeToUpdate) => axios.put('http://localhost:8080/api/recipe/1', recipeToUpdate),
     onError: (err, recipeToUpdate, context) => {
-     console.log('previousRecipe =>',previousRecipe);
-     console.log('context =>', context);
+      console.log(context);
       queryClient.setQueryData(
         ['Recipes', context.recipeToUpdate.id],
         context.previousRecipe
       )
-      // console.log('error =>', err);
-      // console.log('recipeToUpdate =>', recipeToUpdate);
-      // console.log('context =>', context);
     },
- 
-    onSettled: (data, error, recipeToUpdate)  => {
-      // console.log('data =>', data);
-      // console.log('error =>', error);
-      // console.log('variable =>', recipeToUpdate);
-      queryClient.invalidateQueries(['Recipes', recipeToUpdate.id])
+    
+    onSettled: (data, error, variables, context, recipeToUpdate)  => {
+    
+      console.log('context =>', context);
+      queryClient.invalidateQueries({queryKey: ['Recipes', context.recipeToUpdate.id]})
     },
   })
 
@@ -110,10 +105,10 @@ function App() {
       tags: [{ id: 1 }],
       UserId: 1,
     };
-    console.log(recipe);
+    // console.log(recipe);
     // recipePost.mutate(recipe)
     update.mutate({
-      name: "tests2",
+      name: "new235ssssssssqs",
       description: "Coupez les légumes...",
       ingredients: [{ id: 1, quantity: 200, unit: "grammes" }],
       tags: [{ id: 1 }],
