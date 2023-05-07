@@ -2,11 +2,13 @@ import axios from 'axios'
 import './App.css'
 import NavBar from './components/navbar'
 import { useQueryClient, useMutation, useQuery } from 'react-query'
-import { GetAllRecipe } from '../API/recipe'
+import { GetAllRecipe, useUpdateRecipe } from '../API/recipe'
 import { useState } from 'react'
 
 
 function App() {
+
+  const { isSuccess, isError, mutate, previousRecipe, recipeToUpdate, error} = useUpdateRecipe()
   const [message, setMessage] = useState('');
   const queryClient = useQueryClient()
   const mutation = useMutation(object => {
@@ -19,7 +21,7 @@ function App() {
     "Content-type": "application/json; charset=UTF-8"
 } }),
   onSuccess: (context, data, variable) => {
-    context.status === 404 ? setMessage('Something went wrong') : "IS OK ! "
+    context.status === 404 ? setMessage('Something went wrong') : "IS OK !"
     setTimeout(() => {
       setMessage('')
     }, 2000);
@@ -31,11 +33,11 @@ function App() {
    
   )
   const update = useMutation('recipeToUpdate', {
-    // mutationFn: (recipeToUpdate) => axios.put('http://localhost:8080/api/recipe/1', recipeToUpdate),
-    // onSuccess: updatedRecipe => {
-    //   queryClient.setQueryData(['Recipes', {id : 1}], updatedRecipe.data)
-    //   console.log(updatedRecipe.data)
-    // }
+  //   // mutationFn: (recipeToUpdate) => axios.put('http://localhost:8080/api/recipe/1', recipeToUpdate),
+  //   // onSuccess: updatedRecipe => {
+  //   //   queryClient.setQueryData(['Recipes', {id : 1}], updatedRecipe.data)
+  //   //   console.log(updatedRecipe.data)
+  //   // }
 
     onMutate: async (recipeToUpdate) => {
       await queryClient.cancelQueries({queryKey: ['Recipes', recipeToUpdate.id]});
@@ -62,12 +64,12 @@ function App() {
 
  //Version avec import fonction 
 
-  const {isLoading, error, data } = GetAllRecipe()
+  const {isLoading, data } = GetAllRecipe()
   if (isLoading) {
     return <p>Loading...</p>
   };
   if (error) {
-    return <p>Somethinf went wrong...</p>
+    return <p>{error.response.data}</p>
   }
 
 
@@ -107,14 +109,23 @@ function App() {
     };
     // console.log(recipe);
     // recipePost.mutate(recipe)
-    update.mutate({
-      name: "new235ssssssssqs",
+    // update.mutate({
+    //   name: "new235ssssssssqs",
+    //   description: "Coupez les légumes...",
+    //   ingredients: [{ id: 1, quantity: 200, unit: "grammes" }],
+    //   tags: [{ id: 1 }],
+    //   UserId: 1,
+    // })
+
+    mutate({
+      name: "nssssss",
       description: "Coupez les légumes...",
       ingredients: [{ id: 1, quantity: 200, unit: "grammes" }],
       tags: [{ id: 1 }],
       UserId: 1,
     })
-   
+ 
+
   }
 
   return (
@@ -122,8 +133,9 @@ function App() {
     <NavBar />
     
       <h1 className='text-center font mt-24'>RECIPE HOME</h1>
-
-      
+    {console.log('l\'erreur =>', error)}
+      {/* {console.log(isError)}
+      {console.log(isSuccess)} */}
       <div className='m-auto text-center w-10/12 h-96 border-4 border-indigo-500/100'>
         ALL RECIPE
       
