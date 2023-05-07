@@ -2,13 +2,14 @@ import axios from 'axios'
 import './App.css'
 import NavBar from './components/navbar'
 import { useQueryClient, useMutation, useQuery } from 'react-query'
-import { GetAllRecipe, useUpdateRecipe } from '../API/recipe'
+import { useFetchAllRecipes, useFetchRecipeById, useUpdateRecipe } from '../API/recipe'
 import { useState } from 'react'
 
 
 function App() {
 
   const { isSuccess, isError, mutate, previousRecipe, recipeToUpdate, error} = useUpdateRecipe()
+  // const { error, data, isFetched } = useFetchRecipeById("1")
   const [message, setMessage] = useState('');
   const queryClient = useQueryClient()
   const mutation = useMutation(object => {
@@ -64,7 +65,7 @@ function App() {
 
  //Version avec import fonction 
 
-  const {isLoading, data } = GetAllRecipe()
+  const { isLoading, data } = useFetchAllRecipes()
   if (isLoading) {
     return <p>Loading...</p>
   };
@@ -82,9 +83,9 @@ function App() {
     
   //   return <p>Loading...</p>
   // };
-  // if (error) {
-  //   return <p>Something went wrong...</p>
-  // }
+  if (error) {
+    console.log('error dans l\'app =>', error);
+  }
 
   // Axios utilisation normal 
   // const [result, setResult] = useState(null)
@@ -95,7 +96,7 @@ function App() {
   //     return data;
   //   })
   // }, [])
-
+  const recipe = null
   const handleSubmitTest = (e) => {
     e.preventDefault()
     // const object = {name: 'testRssefffscpisse', description: 'test'}
@@ -117,14 +118,16 @@ function App() {
     //   UserId: 1,
     // })
 
-    mutate({
-      name: "nssssss",
-      description: "Coupez les légumes...",
-      ingredients: [{ id: 1, quantity: 200, unit: "grammes" }],
-      tags: [{ id: 1 }],
-      UserId: 1,
-    })
- 
+    
+      mutate({
+        name: "nssssss",
+        description: "Coupez les légumes...",
+        ingredients: [{ id: 1, quantity: 200, unit: "grammes" }],
+        tags: [{ id: 1 }],
+        UserId: 1,
+      })
+      
+    
 
   }
 
@@ -133,7 +136,7 @@ function App() {
     <NavBar />
     
       <h1 className='text-center font mt-24'>RECIPE HOME</h1>
-    {console.log('l\'erreur =>', error)}
+
       {/* {console.log(isError)}
       {console.log(isSuccess)} */}
       <div className='m-auto text-center w-10/12 h-96 border-4 border-indigo-500/100'>
