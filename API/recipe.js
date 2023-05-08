@@ -4,27 +4,28 @@ import {
   useQuery,
   useQueryClient,
 } from "react-query";
-
 import axios from "axios";
 
-export const useFetchAllRecipes = (isLoading, error, data) => {
+export const useFetchLastestRecipes = () => {
+  const queryClient = useQueryClient();
+  return useQuery(["Recipes", {limit: 3, offset: 0}], () =>
+    fetch("http://localhost:8080/api/recipe?limit=3&offset=0").then((r) => r.json())
+  );
+}
+
+export const useFetchAllRecipes = () => {
+
   const queryClient = useQueryClient();
   return useQuery("Recipes", () =>
-    fetch("http://localhost:8080/api/recipe").then((r) => r.json())
+    fetch("http://localhost:8080/api/recipe/").then((r) => r.json())
   );
 };
 
-
-
-export const useFetchRecipeById = (recipeId) => {
+export const useFetchRecipeById = ({recipeId}) => {
   const queryClient = useQueryClient();
-  return useQuery({
-    queryKey: ["Recipes", recipeId],
-    queryFn: (id) =>
-      axios
-        .get(`http://localhost:8080/api/recipe/` + recipeId)
-        .then((res) => res.data),
-  });
+  return useQuery(["Recipes", recipeId], () =>
+    axios.get("http://localhost:8080/api/recipe/" + recipeId)
+  );
 };
 
 export const useUpdateRecipe = (recipeToUpdate, setError) => {

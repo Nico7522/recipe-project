@@ -4,6 +4,7 @@ import NavBar from './components/navbar'
 import { useQueryClient, useMutation, useQuery } from 'react-query'
 import { useFetchAllRecipes, useFetchRecipeById, useUpdateRecipe } from '../API/recipe'
 import { useState } from 'react'
+import { Outlet } from 'react-router-dom'
 
 
 function App() {
@@ -120,7 +121,7 @@ function App() {
 
     
       mutate({
-        name: "nssssss",
+        name: "tt",
         description: "Coupez les légumes...",
         ingredients: [{ id: 1, quantity: 200, unit: "grammes" }],
         tags: [{ id: 1 }],
@@ -134,27 +135,8 @@ function App() {
   return (
     <>
     <NavBar />
-    
-      <h1 className='text-center font mt-24'>RECIPE HOME</h1>
+      <Outlet />
 
-      {/* {console.log(isError)}
-      {console.log(isSuccess)} */}
-      <div className='m-auto text-center w-10/12 h-96 border-4 border-indigo-500/100'>
-        ALL RECIPE
-      
-
-
-        <div className='mx-auto mt-5 w-10/12 border-4 border-indigo-500/100'>{data.results.map(r => (
-          <h3 key={r.id}>{r.name}</h3>
-        ))}</div>
-
-
-        <div className='mx-auto mt-5 w-10/12 border-4 border-indigo-500/100'>RECIPE</div>
-        <div className='mx-auto mt-5 w-10/12 border-4 border-indigo-500/100'>RECIPE</div>
-      </div>
-
-      <button onClick={(e) => handleSubmitTest(e)}>Submit</button>
-      <h1>{message}</h1>
     </>
   )
 }
