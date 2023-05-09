@@ -6,7 +6,7 @@ export default function RecipesPage(){
 
     return(
         <>
-        <h1 className='text-center font mt-24'>RECIPE HOME</h1>
+        <h1 className='text-center font pt-5 text-xl mt-24'>ALL RECIPES !</h1>
         <Outlet />
         
         </>

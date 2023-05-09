@@ -1,8 +1,19 @@
 @font-face {
     font-family: font;
     src: url(../components/Nice_Sugar.otf);
+
+   
+}
+
+@font-face {
+    font-family: title;
+    src: url(../components/Wild\ Hazelnut.ttf);
 }
 
 .font {
     font-family: font;
+}
+
+.title {
+    font-family: title;
 }

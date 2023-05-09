@@ -1,8 +1,11 @@
 import App from "../App";
 import RecipesList from "../containers/recipes/recipes-list";
+import AboutPage from "../pages/about/about-page";
 import HomePage from "../pages/home/home.page";
 import RecipeDetailsPage from "../pages/recipes/recipe-details.page";
 import RecipesPage from "../pages/recipes/recipes-page";
+import LoginPage from "../pages/user/login/login-page";
+import RegisterPage from "../pages/user/register/register-page";
 
 export const routes = [
     {
@@ -24,6 +27,23 @@ export const routes = [
                     {
                         path: ":recipeId",
                         element: <RecipeDetailsPage />
+                    }
+                ]
+            },
+            {
+                path: 'about',
+                element: <AboutPage />
+            },
+            {
+                path: 'user',
+                children : [
+                    {
+                        index: true,
+                        element: <LoginPage />
+                    },
+                    {
+                        path: 'signup',
+                        element: <RegisterPage />
                     }
                 ]
             }
