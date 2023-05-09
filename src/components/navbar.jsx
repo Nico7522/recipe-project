@@ -4,9 +4,9 @@ import Button from './Button';
 const NavBar = () => {
     let Links =[
       {name:"HOME",link:"/"},
-      {name:"SERVICE",link:"/"},
-      {name:"ABOUT",link:"/"},
-      {name:"BLOG'S",link:"/"},
+      {name:"RECIPES",link:"/recipes"},
+      {name:"INGREDIENTS",link:"/"},
+      {name:"RECIPES OF THE WEEKS",link:"/"},
       {name:"CONTACT",link:"/"},
     ];
     let [open,setOpen]=useState(false);
@@ -34,7 +34,7 @@ const NavBar = () => {
           ))
         }
         <Button>
-          Mode Dark
+          LOG IN
         </Button>
       </ul>
       </div>
