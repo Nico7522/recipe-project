@@ -1,1 +1,1 @@
-export default function Register();
+export default function Register(){};

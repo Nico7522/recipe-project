@@ -1,5 +1,5 @@
 export default function Reaction({ reactions }) {
-  console.log(reactions);
+ 
 
   let like = 0;
   let tasty = 0;

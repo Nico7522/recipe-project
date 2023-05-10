@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 import Button from './Button';
 
 const NavBar = () => {
@@ -33,8 +34,11 @@ const NavBar = () => {
             </li>
           ))
         }
-        <Button>
-          LOG IN
+        <Button style={"btn"}>
+          <Link to='/user/signin'>LOG IN</Link>
+        </Button>
+        <Button style={"btn"}>
+          <Link to='/user/signup'>REGISTER</Link>
         </Button>
       </ul>
       </div>

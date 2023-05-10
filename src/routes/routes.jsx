@@ -1,6 +1,9 @@
 import App from "../App";
 import RecipesList from "../containers/recipes/recipes-list";
 import AboutPage from "../pages/about/about-page";
+import AdminPage from "../pages/admin/admin-page";
+import AdminCommentsPage from "../pages/admin/pages/admin-comments";
+import AdminRecipesPage from "../pages/admin/pages/admin-recipes";
 import HomePage from "../pages/home/home.page";
 import RecipeDetailsPage from "../pages/recipes/recipe-details.page";
 import RecipesPage from "../pages/recipes/recipes-page";
@@ -48,6 +51,23 @@ export const routes = [
                     {
                         path: 'signup',
                         element: <RegisterPage />
+                    }
+                ]
+            },
+            {
+                path: 'admin',
+                children: [
+                    {
+                        index: true,
+                        element: <AdminPage />
+                    },
+                    {
+                        path: 'recipes',
+                        element: <AdminRecipesPage />
+                    },
+                    {
+                        path: 'comments',
+                        element: <AdminCommentsPage />
                     }
                 ]
             }

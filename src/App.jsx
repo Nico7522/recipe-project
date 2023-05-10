@@ -137,12 +137,11 @@ function App() {
 
   return (
     <>
-      <header className="mt-20">
+      <header className="-pt-5">
         <NavBar />
       </header>
-      <main className="w-full h-full -mt-5">
+      <main className="mt-32">
         <Outlet />
-
       </main>
   
     </>

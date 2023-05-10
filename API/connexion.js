@@ -7,5 +7,5 @@ import {
   import axios from "axios";
 
 export const fetchUser = (userLog) => {
-    return axios.post('http://localhost:8080/api/user/login', userLog)
+    return axios.post('http://localhost:8080/api/user/login', userLog).then(({data}) => { return data})
 }

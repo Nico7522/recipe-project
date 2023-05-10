@@ -20,7 +20,6 @@ export default function Recipe({
         const dateB = new Date(b.createdAt);
         return dateA - dateB;
       });
-    console.log('comments =>', comments);
 
   return (
     <div
