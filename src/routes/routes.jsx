@@ -5,6 +5,7 @@ import AdminPage from "../pages/admin/admin-page";
 import AdminCommentsPage from "../pages/admin/pages/admin-comments";
 import AdminRecipesPage from "../pages/admin/pages/admin-recipes";
 import HomePage from "../pages/home/home.page";
+import RecipeCreatePage from "../pages/recipes/recipe-create.pages";
 import RecipeDetailsPage from "../pages/recipes/recipe-details.page";
 import RecipesPage from "../pages/recipes/recipes-page";
 import LoginPage from "../pages/user/login/login-page";
@@ -30,6 +31,10 @@ export const routes = [
                     {
                         path: ":recipeId",
                         element: <RecipeDetailsPage />
+                    },
+                    {
+                        path: 'create',
+                        element: <RecipeCreatePage />
                     }
                 ]
             },
