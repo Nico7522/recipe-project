@@ -43,9 +43,12 @@
 } */
 
 
-#root {
+body {
+background-image: url('/public/bg.webp');
+background-attachment: fixed;
+height: max-content;
 
-  background-image: url('/public/bg.webp');
+
 }
 
 

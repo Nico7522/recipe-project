@@ -29,7 +29,7 @@ function App() {
           "Content-type": "application/json; charset=UTF-8",
         },
       }),
-    onSuccess: (context, data, variable) => {
+    onSuccess: (context, data, variables) => {
       context.status === 404 ? setMessage("Something went wrong") : "IS OK !";
       setTimeout(() => {
         setMessage("");

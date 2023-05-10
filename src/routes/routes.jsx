@@ -42,6 +42,10 @@ export const routes = [
                         element: <LoginPage />
                     },
                     {
+                        path: 'signin',
+                        element: <LoginPage />
+                    },
+                    {
                         path: 'signup',
                         element: <RegisterPage />
                     }
