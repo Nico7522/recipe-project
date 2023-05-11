@@ -1,10 +1,11 @@
 import { useFetchAllRecipes } from "../../../API/recipe"
 import Recipe from "../../components/recipe/recipe-component"
+import Title from "../../components/title/title"
 
 export default function RecipesList({limit, offset}){
     const { isLoading, data, error } = useFetchAllRecipes()
     if (isLoading) {
-      return <p>Loading...</p>
+      return <div className="customloader"></div>
     };
     if (error) {
       return <p>{error.response.data}</p>
@@ -12,6 +13,8 @@ export default function RecipesList({limit, offset}){
 
     return (
         <>
+       
+        <Title text={'ALL RECIPES !'}/>
         {data.results.map(recipe => (
             <Recipe key={recipe.id} {...recipe} />
         ))}

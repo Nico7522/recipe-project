@@ -33,7 +33,7 @@ export default function Login() {
       reset();
     }
     if (isLoading) {
-    return <p className='mt-96 font text-3xl w-96 m-auto'>Wait...</p>
+    return <div className="custom-loader"></div>
     }
     if (data) {
     console.log(data);

@@ -2,7 +2,7 @@ import React from 'react'
 
 const Button = (props) => {
   return (
-    <button className={`mt-5 bg-green-300 text-white font-[Poppins] py-2 px-6 rounded md:ml-8 hover:bg-indigo-400 
+    <button type={props.type} className={`mt-5 bg-green-300 text-white font-[Poppins] py-2 px-6 rounded md:ml-8 hover:bg-indigo-400 
     duration-500`+ " " + props.style}>
       {props.children}
     </button>

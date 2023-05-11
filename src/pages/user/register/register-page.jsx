@@ -2,7 +2,7 @@ export default function(){
 
     return(
         <>
-        <p>REGISTER IS COMMING ❄❄❄</p>
+         <div className="customloader"></div>
         </>
     )
 }
