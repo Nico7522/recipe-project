@@ -10,9 +10,10 @@ export default function RecipeForm() {
   const [options, setOptions] = useState([]);
   const [showMultiSelect, setShowMultiSelect] = useState(false);
   const [selected, setSelected] = useState([]);
-  const [quantity, setQauntity] = useState(null);
-  const [unit, setUnit] = useState(null);
   const [ingredients, setIngredients] = useState([])
+  const recupEnfant = (ingredients) => {
+    setIngredients(ingredients)
+  }
   const { isLoading, data } = useFetchIngredient();
 
   // const schema = yup.object().shape({
@@ -57,6 +58,12 @@ export default function RecipeForm() {
   const submit = (data) => {
     console.log(data);
     const tabTemp = [];
+    tabTemp.push({
+      name: data.name,
+      description: data.description,
+      ingredients : ingredients
+    })
+    console.log('tabTemp =>', tabTemp);
 
   };
   return (
@@ -67,9 +74,13 @@ export default function RecipeForm() {
           className="w-96 m-auto flex flex-col"
           onSubmit={handleSubmit(submit)}
         >
+          <div>
+            <label htmlFor="name">Name</label>
+            <input {...register('name')} type="text" />
+          </div>
           <div className="flex flex-col text-center">
-            <label htmlFor="desc">Description</label>
-            <textarea name="desc" id="desc" cols="50" rows="5"></textarea>
+            <label htmlFor="description">Description</label>
+            <input {...register('description')} id="desc" cols="50" rows="5" />
           </div>
           <h3 className="text-3xl text-center">Ingredients 👇👇👇</h3>
           <Controller
@@ -97,12 +108,12 @@ export default function RecipeForm() {
           {/* <button type="submit">CREATE</button>  */}
         </form>
       )}
-    <FormIngredients selected={selected}/>
+    <FormIngredients selected={selected} func={recupEnfant}/>
     </div>
   );
 }
 
-const FormIngredients = ({selected}) => {
+const FormIngredients = ({selected, func}) => {
   const {handleSubmit, register, reset} = useForm()
   const handleIngredients = (data) => {
     let tabId = [];
@@ -131,6 +142,8 @@ const FormIngredients = ({selected}) => {
       i++
     }
     console.log(tabIngre);
+    func(tabIngre)
+   
     reset()
    
   }
