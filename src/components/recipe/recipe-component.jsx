@@ -20,6 +20,7 @@ export default function Recipe({
         const dateB = new Date(b.createdAt);
         return dateA - dateB;
       });
+     
 
   return (
     <div
@@ -44,7 +45,10 @@ export default function Recipe({
       <div className="ml-5 border-red-500 border-4 w-50">
       <h3 className="font">Ingredients 👇👇👇</h3>
       {ingredients.map((i) => (
-       <Ingredient {...i} />
+        
+         <Ingredient {...i} />
+
+        
       ))}
       </div>
 

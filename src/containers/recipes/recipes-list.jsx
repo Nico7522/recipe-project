@@ -10,6 +10,7 @@ export default function RecipesList({limit, offset}){
     if (error) {
       return <p>{error.response.data}</p>
     }
+    console.log(data);
 
     return (
         <>

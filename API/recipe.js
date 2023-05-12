@@ -8,23 +8,53 @@ import axios from "axios";
 
 export const useFetchLastestRecipes = () => {
   const queryClient = useQueryClient();
-  return useQuery(["Recipes", {limit: 3, offset: 0}], () =>
-    fetch("http://localhost:8080/api/recipe?limit=3&offset=0").then((r) => r.json())
+  return useQuery(["Recipes", { limit: 3, offset: 0 }], () =>
+    fetch("http://localhost:8080/api/recipe?limit=3&offset=0").then((r) =>
+      r.json()
+    )
   );
-}
+};
 
 export const useFetchAllRecipes = () => {
-
   const queryClient = useQueryClient();
   return useQuery("Recipes", () =>
     fetch("http://localhost:8080/api/recipe/").then((r) => r.json())
   );
 };
 
-export const useFetchRecipeById = ({recipeId}) => {
+export const useFetchRecipeById = ({ recipeId }) => {
   const queryClient = useQueryClient();
   return useQuery(["Recipes", recipeId], () =>
     axios.get("http://localhost:8080/api/recipe/" + recipeId)
+  );
+};
+
+export const PostRecipe = (recipe) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    async (recipe) => {
+      await axios.post("http://localhost:8080/api/recipe", recipe);
+    },
+    {
+      onMutate: async (recipe) => {
+        await queryClient.cancelQueries({
+          queryKey: ["Recipes", recipe],
+        });
+        const previousRecipes = await queryClient.getQueryData("Recipes");
+        queryClient.setQueryData("Recipes", old => [old, recipe]);
+
+        return { previousRecipes };
+      },
+      
+  
+      onError: (err, recipe, context) => {
+        queryClient.setQueryData("Recipes", context.previousRecipes);
+      },
+
+      onSettled: () => {
+        queryClient.invalidateQueries("Recipes");
+      },
+    }
   );
 };
 
