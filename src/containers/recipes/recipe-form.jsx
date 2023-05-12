@@ -186,6 +186,7 @@ import * as yup from "yup";
 import axios from "axios";
 import { PostRecipe } from "../../../API/recipe";
 import { useSelector } from "react-redux";
+import { set } from "react-hook-form";
 
 export default function RecipeForm() {
   const tags = [
@@ -193,23 +194,21 @@ export default function RecipeForm() {
     { label: "Healthy", value: "Healty", id: "2" },
     { label: "Dessert", value: "Dessert", id: "3" },
   ];
-  const idUser = useSelector(state => state.user.user.user.id)
+  const idUser = useSelector((state) => state.user.user.user.id);
 
   const [isIngredientsValidate, setIngredientValidate] = useState(false);
   const disabledButton = `mt-5 bg-gray-300 text-white font-[Poppins] py-2 px-6 rounded md:ml-8 hover:bg-gray-400 
-  duration-500`
+  duration-500`;
   const [options, setOptions] = useState([]);
   const [showMultiSelect, setShowMultiSelect] = useState(false);
   const [selected, setSelected] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [tag, setTag] = useState([]);
-  const {mutate} = PostRecipe()
-  
-  
+  const { mutate } = PostRecipe();
 
   const recupEnfant = (ingredients) => {
     setIngredients(ingredients);
-    setIngredientValidate(true)
+    setIngredientValidate(true);
   };
   const { isLoading, data } = useFetchIngredient();
 
@@ -245,6 +244,7 @@ export default function RecipeForm() {
   } = useForm({});
 
   const submit = (data) => {
+    console.log(data);
     const tabTags = data.tags.map((t) => {
       return { id: t.id };
     });
@@ -254,15 +254,9 @@ export default function RecipeForm() {
       description: data.description,
       ingredients: ingredients,
       tags: tabTags,
-      UserId: idUser
+      UserId: idUser,
     });
-    console.log("tabTemp =>", tabTemp);
-    mutate(tabTemp[0])
-    
-
-    // axios
-    //   .post("http://localhost:8080/api/recipe", tabTemp[0])
-    //   .then((r) => console.log(r));
+    mutate(tabTemp[0]);
   };
   return (
     <div className="w-96 m-auto">
@@ -424,6 +418,7 @@ const FormIngredients = ({ func, tab, isIngredientsValidate }) => {
 
         <Button type={"submit"}>Validate your ingredients</Button>
       </form>
+      <PictureForm />
     </div>
   );
 };
@@ -435,3 +430,22 @@ const FormIngredients = ({ func, tab, isIngredientsValidate }) => {
 //     name: yup.string().required()
 //   }))
 // })
+
+const PictureForm = () => {
+  const { register, handleSubmit } = useForm();
+
+  const handleSubmitImage = (data) => {
+    const formData = new FormData();
+
+    formData.append("picture", data.file[0]);
+    console.log(data.file[0]);
+    axios.post("url/api", formData);
+  };
+  return (
+    <form onSubmit={handleSubmit(handleSubmitImage)}>
+      <label htmlFor="file">Image</label>
+      <input {...register("file")} type="file" id="picture" />
+      <button type="submit">Upload your image</button>
+    </form>
+  );
+};

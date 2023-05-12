@@ -10,11 +10,14 @@ import Reaction from "../reactions/reactions";
 export default function Recipe({
   id,
   name,
+  imgURL,
   description,
   ingredients,
   comments,
   reactions,
 }) {
+  console.log(imgURL);
+ 
     comments.sort((a, b) => {
         const dateA = new Date(a.createdAt);
         const dateB = new Date(b.createdAt);
@@ -29,7 +32,7 @@ export default function Recipe({
     >
       <h2 className="uppercase tracking-widest text-3xl text-center title">{name}</h2>
       <div className="w-1/4 flex flex-row justify-center m-auto">
-        <img src="http://localhost:8080/images/recipe/recipedefault.jpg" className="rounded-2xl block m-auto " alt="" />
+        <img src={"http://localhost:8080"+imgURL} className="rounded-2xl block m-auto " alt="" />
         <div className=" h-60 border-4 border-red-300 ">
             <h2 className="text-2xl font">Description</h2>
         <p className=" h-60 w-96 para">{description}</p>
