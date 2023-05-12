@@ -1,5 +1,5 @@
 export default function Ingredient({name, quantity, units}){
-  console.log(quantity);
+
     return (
            
         <div>

@@ -254,7 +254,7 @@ export default function RecipeForm() {
       description: data.description,
       ingredients: ingredients,
       tags: tabTags,
-      userId: idUser
+      UserId: idUser
     });
     console.log("tabTemp =>", tabTemp);
     mutate(tabTemp[0])
