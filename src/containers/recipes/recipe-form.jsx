@@ -187,6 +187,7 @@ import axios from "axios";
 import { PostRecipe } from "../../../API/recipe";
 import { useSelector } from "react-redux";
 import { set } from "react-hook-form";
+import ConfirmModal from "../../components/modal/confirm-modal";
 
 export default function RecipeForm() {
   const tags = [
@@ -195,7 +196,7 @@ export default function RecipeForm() {
     { label: "Dessert", value: "Dessert", id: "3" },
   ];
   const idUser = useSelector((state) => state.user.user.user.id);
-
+  
   const [isIngredientsValidate, setIngredientValidate] = useState(false);
   const disabledButton = `mt-5 bg-gray-300 text-white font-[Poppins] py-2 px-6 rounded md:ml-8 hover:bg-gray-400 
   duration-500`;
@@ -205,7 +206,8 @@ export default function RecipeForm() {
   const [ingredients, setIngredients] = useState([]);
   const [tag, setTag] = useState([]);
   const { mutate } = PostRecipe();
-
+  const [modal, setModal] = useState(false);
+  
   const recupEnfant = (ingredients) => {
     setIngredients(ingredients);
     setIngredientValidate(true);
@@ -244,6 +246,7 @@ export default function RecipeForm() {
   } = useForm({});
 
   const submit = (data) => {
+    setModal(!modal);
     console.log(data);
     const tabTags = data.tags.map((t) => {
       return { id: t.id };
@@ -260,6 +263,7 @@ export default function RecipeForm() {
   };
   return (
     <div className="w-96 m-auto">
+      <ConfirmModal modal={modal} />
       <Title text={"CREATE A NEW RECIPE HERE !"} />
       {showMultiSelect && (
         <form
@@ -433,13 +437,14 @@ const FormIngredients = ({ func, tab, isIngredientsValidate }) => {
 
 const PictureForm = () => {
   const { register, handleSubmit } = useForm();
-
+  const [picture, setPicture] = useState(null);
   const handleSubmitImage = (data) => {
     const formData = new FormData();
+    setPicture(data.file[0]);
 
-    formData.append("picture", data.file[0]);
+    formData.append("image", picture);
     console.log(data.file[0]);
-    axios.post("url/api", formData);
+    axios.patch("http://localhost:8080/api/recipe/63/updateimage", formData);
   };
   return (
     <form onSubmit={handleSubmit(handleSubmitImage)}>

@@ -16,4 +16,9 @@
     border-right-color: #6EF426;
     animation:s2 1s infinite linear;
   }
-  @keyframes s2 {to{transform: rotate(1turn)}}
+
+
+  .down {
+    margin-top: 250px ;
+    visibility: visible;
+  }

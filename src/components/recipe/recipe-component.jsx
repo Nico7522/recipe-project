@@ -16,7 +16,7 @@ export default function Recipe({
   comments,
   reactions,
 }) {
-  console.log(imgURL);
+
  
     comments.sort((a, b) => {
         const dateA = new Date(a.createdAt);
