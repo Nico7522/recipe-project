@@ -6,6 +6,7 @@ import {
   } from "react-query";
   import axios from "axios";
 
-export const fetchUser = (userLog) => {
-    return axios.post('http://localhost:8080/api/user/login', userLog).then(({data}) => { return data})
+export const fetchUser = async (userLog) => {
+    const { data } = await axios.post('http://localhost:8080/api/user/login', userLog);
+  return data;
 }

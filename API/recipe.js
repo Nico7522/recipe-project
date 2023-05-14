@@ -96,3 +96,32 @@ export const useUpdateRecipe = (recipeToUpdate, setError) => {
     },
   });
 };
+
+export const deleteRecipe = (id) => {
+  const queryClient = useQueryClient()
+  return useMutation(async (id) => {
+    axios.delete( `http://localhost:8080/api/recipe/${id}`);
+  },
+  {
+    onMutate: async (id) => {
+      await queryClient.cancelQueries(['Recipes',id]);
+      const previousRecipes = queryClient.getQueriesData(['Recipes', id]);
+
+      queryClient.setQueryData(['Recipes', id]);
+      return { previousRecipes }
+    },
+    onError: (err,  id , context) => {
+      queryClient.setQueryData(['Recipes', id], context.previousRecipes)
+    },
+
+    // { id } => déstructure l'id du context
+    onSettled: ( data ,err, { id }) => {
+      queryClient.invalidateQueries(['Recipes', id])
+    }
+  }
+ 
+  
+  
+
+  )
+}

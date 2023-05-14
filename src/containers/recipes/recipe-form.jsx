@@ -196,7 +196,7 @@ export default function RecipeForm() {
     { label: "Dessert", value: "Dessert", id: "3" },
   ];
   const idUser = useSelector((state) => state.user.user.user.id);
-  
+
   const [isIngredientsValidate, setIngredientValidate] = useState(false);
   const disabledButton = `mt-5 bg-gray-300 text-white font-[Poppins] py-2 px-6 rounded md:ml-8 hover:bg-gray-400 
   duration-500`;
@@ -207,7 +207,7 @@ export default function RecipeForm() {
   const [tag, setTag] = useState([]);
   const { mutate } = PostRecipe();
   const [modal, setModal] = useState(false);
-  
+
   const recupEnfant = (ingredients) => {
     setIngredients(ingredients);
     setIngredientValidate(true);
@@ -245,9 +245,9 @@ export default function RecipeForm() {
     getValues,
   } = useForm({});
 
+  const [tabTempo, setTabTempo] = useState([])
   const submit = (data) => {
-    setModal(!modal);
-    console.log(data);
+    setModal(true);
     const tabTags = data.tags.map((t) => {
       return { id: t.id };
     });
@@ -259,11 +259,17 @@ export default function RecipeForm() {
       tags: tabTags,
       UserId: idUser,
     });
-    mutate(tabTemp[0]);
+    setTabTempo(tabTemp)
   };
+  
+  const sendData = () => {
+    setModal(false)
+    mutate(tabTempo[0]);
+
+  }
   return (
     <div className="w-96 m-auto">
-      <ConfirmModal modal={modal} />
+      <ConfirmModal sendData={sendData} toogleModal={setModal} modal={modal} />
       <Title text={"CREATE A NEW RECIPE HERE !"} />
       {showMultiSelect && (
         <form
@@ -276,7 +282,7 @@ export default function RecipeForm() {
           </div>
           <div className="flex flex-col text-center">
             <label htmlFor="description">Description</label>
-            <input {...register("description")} id="desc" cols="50" rows="5" />
+            <input {...register("description")} id="desc"/>
           </div>
 
           <h3 className="text-3xl text-center">Tag👇👇👇</h3>
@@ -299,14 +305,14 @@ export default function RecipeForm() {
             )}
           />
 
-          <div className="text-center -ml-7">
+          <div className="text-center -ml-12">
             <Button
+              style={"-ml-8"}
+              text={"CREATE"}
               styleDisable={disabledButton}
               disable={!isIngredientsValidate}
               type={"submit"}
-            >
-              CREATE
-            </Button>
+            ></Button>
           </div>
         </form>
       )}
@@ -419,10 +425,10 @@ const FormIngredients = ({ func, tab, isIngredientsValidate }) => {
             </select>
           </div>
         ))}
-
-        <Button type={"submit"}>Validate your ingredients</Button>
+        <div className="text-center -ml-12">
+          <Button text={"Validate your ingredients"} type={"submit"}></Button>
+        </div>
       </form>
-      <PictureForm />
     </div>
   );
 };
@@ -434,23 +440,3 @@ const FormIngredients = ({ func, tab, isIngredientsValidate }) => {
 //     name: yup.string().required()
 //   }))
 // })
-
-const PictureForm = () => {
-  const { register, handleSubmit } = useForm();
-  const [picture, setPicture] = useState(null);
-  const handleSubmitImage = (data) => {
-    const formData = new FormData();
-    setPicture(data.file[0]);
-
-    formData.append("image", picture);
-    console.log(data.file[0]);
-    axios.patch("http://localhost:8080/api/recipe/63/updateimage", formData);
-  };
-  return (
-    <form onSubmit={handleSubmit(handleSubmitImage)}>
-      <label htmlFor="file">Image</label>
-      <input {...register("file")} type="file" id="picture" />
-      <button type="submit">Upload your image</button>
-    </form>
-  );
-};
