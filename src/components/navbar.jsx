@@ -12,10 +12,14 @@ const NavBar = () => {
   const dispatch = useDispatch()
   const navigation = useNavigate()
   const { token, userStatus, userId, avatar, fullName } = useFetchUser();
-  console.log(token);
+  const [isToken, setIsToken] = useState(null)
+  useEffect(() => {
+    setIsToken(token)
+  }, [token])
   const logOut = () => {
-    location.reload()
+    setIsToken(null)
     dispatch(logoutAction())
+    navigation('/')
   }
   let Links = [
     { name: "HOME", link: "/" },
@@ -60,7 +64,7 @@ const NavBar = () => {
               </a>
             </li>
           ))}
-          {token !== null ?(
+          {isToken !== null ?(
             <div className=" relative mb-2 ml-3 md:-mb-3 md:ml-5 md:text-center md:w-18 md:m-auto md:flex md:flex-col md:justify-center md:items-center md:border-4 md:border-green-300">
               <div className="absolute top-0 right-1" onClick={() => logOut()}>
                 {" "}
