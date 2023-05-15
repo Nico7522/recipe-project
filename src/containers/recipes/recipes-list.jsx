@@ -6,24 +6,14 @@ import { Link } from 'react-router-dom';
 import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useFetchUser } from "../../hooks/user-hooks";
 
 export default function RecipesList({limit, offset}){
-  const [token, setToken] = useState(null)
-  const [userStatus, setUserStatus] = useState(null)
-  const [userId, setUserId] = useState(null)
-    const { isLoading, data, error } = useFetchAllRecipes()
-    const isLogged = useSelector(state => state.user.user.token)
-    const status = useSelector(state => state.user.user.user.status)
-    const id = useSelector(state => state.user.user.user.id)
+  const { isLoading, data, error } = useFetchAllRecipes()
+  const [token, userStatus, userId ] = useFetchUser()
 
-    useEffect(() => {
-      if (isLogged) {
-        setToken(isLogged)
-        setUserStatus(status)
-        setUserId(id)
-      }
-      console.log(userId);
-    }, [token])
+
+
     if (isLoading) {
       return <div className="customloader"></div>
     };

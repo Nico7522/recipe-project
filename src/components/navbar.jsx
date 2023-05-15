@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useFetchUser } from "../hooks/user-hooks";
 import Button from "./Button";
+import UserProfil from "./profil/profil";
 
 const NavBar = () => {
+  const [token, userStatus, userId, avatar, fullName] = useFetchUser();
   let Links = [
     { name: "HOME", link: "/" },
     { name: "RECIPES", link: "/recipes" },
@@ -46,10 +49,20 @@ const NavBar = () => {
               </a>
             </li>
           ))}
-
-          <Link to="/user/signin">
-            <Button text={"LOG IN"} style={"btn"}></Button>
-          </Link>
+          {token !== null ? (
+            <Link to={"/user/profil/" + userId}>
+            <div className="mb-2 ml-3 md:-mb-3 md:ml-5 md:text-center md:w-18 md:m-auto md:flex md:flex-col md:justify-center md:items-center md:border-4 md:border-green-300">
+              <img src={"http://localhost:8080/" + avatar} width="50" height="30" />
+              <span className=" mt-3 para">{fullName}</span>
+            </div>
+            
+            </Link>
+          ) : (
+            <Link to="/user/signin">
+              <Button text={"LOG IN"} style={"btn"}></Button>
+            </Link>
+          )}
+     
 
           <Link to="/user/signup">
             {" "}

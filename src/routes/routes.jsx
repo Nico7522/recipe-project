@@ -9,6 +9,7 @@ import RecipeCreatePage from "../pages/recipes/recipe-create.pages";
 import RecipeDetailsPage from "../pages/recipes/recipe-details.page";
 import RecipesPage from "../pages/recipes/recipes-page";
 import LoginPage from "../pages/user/login/login-page";
+import ProfilPage from "../pages/user/profil/profil-page";
 import RegisterPage from "../pages/user/register/register-page";
 
 export const routes = [
@@ -56,6 +57,10 @@ export const routes = [
                     {
                         path: 'signup',
                         element: <RegisterPage />
+                    },
+                    {
+                        path: 'profil/:userId',
+                        element: <ProfilPage />
                     }
                 ]
             },

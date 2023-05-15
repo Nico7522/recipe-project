@@ -74,13 +74,13 @@ function App() {
 
   //Version avec import fonction
 
-  const { isLoading, data } = useFetchAllRecipes();
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-  if (error) {
-    return <p>{error.response.data}</p>;
-  }
+  // const { isLoading, data } = useFetchAllRecipes();
+  // if (isLoading) {
+  //   return <p>Loading...</p>;
+  // }
+  // if (error) {
+  //   return <p>{error.response.data}</p>;
+  // }
 
   // Version sans import
   // const { isLoading, error, data } = useQuery('fetchRecipes', () =>
@@ -137,7 +137,7 @@ function App() {
 
   return (
     <>
-      <header className="-pt-5">
+      <header className="-pt-5 fixed z-10">
         <NavBar />
       </header>
       <main className="mt-32">
