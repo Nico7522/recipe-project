@@ -10,7 +10,7 @@ import { useFetchUser } from "../../hooks/user-hooks";
 
 export default function RecipesList({limit, offset}){
   const { isLoading, data, error } = useFetchAllRecipes()
-  const [token, userStatus, userId ] = useFetchUser()
+  const {token, userStatus, userId } = useFetchUser()
 
 
 
@@ -26,9 +26,9 @@ export default function RecipesList({limit, offset}){
         <>
        
         <Title text={'ALL RECIPES !'}/>
-        <div className="absolute right-0 top-16 w-46">
+        <div className="absolute -mt-11 right-0">
         
-        <Link to='/recipes/create'><Button text={"CREATE A NEW RECIPE"}></Button></Link>
+        <Link to='/recipes/create'><Button  text={"CREATE A NEW RECIPE"}></Button></Link>
         </div>
         {data.results.map(recipe => (
             <Recipe userId={userId} key={recipe.id} {...recipe} />

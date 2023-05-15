@@ -7,11 +7,11 @@ export const useFetchUser = () => {
   const [userId, setUserId] = useState(null);
 
   const isLogged = useSelector((state) => state.user.user.token);
-  const status = useSelector((state) => state.user.user.user.status);
-  const id = useSelector((state) => state.user.user.user.id);
-  const avatar = useSelector((state) => state.user.user.user.avatar);
-  const name = useSelector((state) => state.user.user.user.name);
-  const surname = useSelector((state) => state.user.user.user.surname);
+  const status = useSelector((state) => state.user.user.user?.status);
+  const id = useSelector((state) => state.user.user.user?.id);
+  const avatar = useSelector((state) => state.user.user.user?.avatar);
+  const name = useSelector((state) => state.user.user.user?.name);
+  const surname = useSelector((state) => state.user.user.user?.surname);
   const fullName = `${name} ${surname}`
 
   useEffect(() => {
@@ -20,8 +20,7 @@ export const useFetchUser = () => {
       setUserStatus(status);
       setUserId(id);
     }
-    console.log(userId);
-  }, [token]);
+  }, [token, isLogged, avatar]);
 
-  return [userId, token, userStatus, avatar, fullName];
+  return { userId, token, userStatus, avatar, fullName };
 };

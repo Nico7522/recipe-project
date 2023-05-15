@@ -1,11 +1,22 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useFetchUser } from "../hooks/user-hooks";
+import { logoutAction } from "../store/actions/user.action";
 import Button from "./Button";
 import UserProfil from "./profil/profil";
 
 const NavBar = () => {
-  const [token, userStatus, userId, avatar, fullName] = useFetchUser();
+  const dispatch = useDispatch()
+  const navigation = useNavigate()
+  const { token, userStatus, userId, avatar, fullName } = useFetchUser();
+  console.log(token);
+  const logOut = () => {
+    location.reload()
+    dispatch(logoutAction())
+  }
   let Links = [
     { name: "HOME", link: "/" },
     { name: "RECIPES", link: "/recipes" },
@@ -49,20 +60,28 @@ const NavBar = () => {
               </a>
             </li>
           ))}
-          {token !== null ? (
-            <Link to={"/user/profil/" + userId}>
-            <div className="mb-2 ml-3 md:-mb-3 md:ml-5 md:text-center md:w-18 md:m-auto md:flex md:flex-col md:justify-center md:items-center md:border-4 md:border-green-300">
-              <img src={"http://localhost:8080/" + avatar} width="50" height="30" />
+          {token !== null ?(
+            <div className=" relative mb-2 ml-3 md:-mb-3 md:ml-5 md:text-center md:w-18 md:m-auto md:flex md:flex-col md:justify-center md:items-center md:border-4 md:border-green-300">
+              <div className="absolute top-0 right-1" onClick={() => logOut()}>
+                {" "}
+                <Link>
+                  <ion-icon name="log-out"></ion-icon>
+                </Link>
+              </div>
+              <Link to={"/user/profil/" + userId}>
+                <img
+                  src={"http://localhost:8080/" + avatar}
+                  width="50"
+                  height="30"
+                />
+              </Link>
               <span className=" mt-3 para">{fullName}</span>
             </div>
-            
-            </Link>
           ) : (
             <Link to="/user/signin">
               <Button text={"LOG IN"} style={"btn"}></Button>
             </Link>
           )}
-     
 
           <Link to="/user/signup">
             {" "}

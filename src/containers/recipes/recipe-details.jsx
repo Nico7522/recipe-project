@@ -14,7 +14,7 @@ export default function RecipeDetails({ recipeId }) {
   const { error, data, isFetched, isLoading } = useFetchRecipeById({
     recipeId,
   });
-  const [ token, userStatus, userId] = useFetchUser()
+  const { token, userStatus, userId} = useFetchUser()
   if (isLoading) {
     return <p>Wait...</p>;
   }
