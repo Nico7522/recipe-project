@@ -78,6 +78,10 @@ export const routes = [
                     {
                         path: 'comments',
                         element: <AdminCommentsPage />
+                    },
+                    {
+                        path: 'users',
+                        // element:
                     }
                 ]
             }

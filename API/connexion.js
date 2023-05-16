@@ -42,6 +42,38 @@ export const resetPassword = async (id, password) => {
     { password: password }
   ).then(({data}) => (data))
    .catch((error) => (error.response.status))
-  
- 
 };
+
+export const RegisterUser = (user) => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    async (user) => {
+      const { data } = await axios.post('http://localhost:8080/api/user/signup', user)
+      return data
+    },
+    {
+      onMutate: async (user) => {
+        await queryClient.cancelQueries({
+          queryKey: ['Users', user]
+        });
+        const previousUsers = queryClient.getQueryData('Users');
+        queryClient.setQueryData('Users', (old) => [old, user]);
+        return { previousUsers }
+      },
+      onError : async (err, user, context) => {
+       
+        queryClient.setQueryData('Users', context.previousUsers)
+        return err
+      },
+      onSettled: async (err, variable, context) => {
+        console.log('context',context);
+        console.log('variable',variable);
+        console.log('err',err);
+        return context
+        queryClient.invalidateQueries("Users");
+
+      },
+    
+    }
+  )
+}

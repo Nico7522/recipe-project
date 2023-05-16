@@ -188,6 +188,7 @@ import { PostRecipe } from "../../../API/recipe";
 import { useSelector } from "react-redux";
 import { set } from "react-hook-form";
 import ConfirmModal from "../../components/modal/confirm-modal";
+import { useFetchUser } from "../../hooks/user-hooks";
 
 export default function RecipeForm() {
   const tags = [
@@ -195,7 +196,7 @@ export default function RecipeForm() {
     { label: "Healthy", value: "Healty", id: "2" },
     { label: "Dessert", value: "Dessert", id: "3" },
   ];
-  const idUser = useSelector((state) => state.user.user.user.id);
+  const { userId } = useFetchUser()
 
   const [isIngredientsValidate, setIngredientValidate] = useState(false);
   const disabledButton = `mt-5 bg-gray-300 text-white font-[Poppins] py-2 px-6 rounded md:ml-8 hover:bg-gray-400 
@@ -257,7 +258,7 @@ export default function RecipeForm() {
       description: data.description,
       ingredients: ingredients,
       tags: tabTags,
-      UserId: idUser,
+      UserId: userId,
     });
     setTabTempo(tabTemp)
   };

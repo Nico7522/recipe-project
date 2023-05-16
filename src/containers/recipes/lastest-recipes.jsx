@@ -1,8 +1,12 @@
+import { useEffect } from "react";
+import { useState } from "react"
 import { useFetchAllRecipes, useFetchLastestRecipes } from "../../../API/recipe"
 import Recipe from "../../components/recipe/recipe-component"
 
 export default function LastestRecipe(){
     const { isLoading, data, error } = useFetchLastestRecipes()
+    const [scrollTop, setScrollTop] = useState(0);
+   
     if (isLoading) {
       return <p>Loading...</p>
     };
@@ -10,12 +14,22 @@ export default function LastestRecipe(){
       return <p>{error.response.data}</p>
     }
 
+  
+
+
+
     return (
         <>
         {data.results.map(recipe => (
-            <Recipe key={recipe.id} {...recipe} />
-        ))}
+          <Recipe key={recipe.id} {...recipe} />
+          ))}
+        
         </>
+      
+      
+
+        
+        
     )
 }
 {/* <div className='mx-auto mt-5 w-10/12 border-4 border-indigo-500/100'>{data.results.map(r => (

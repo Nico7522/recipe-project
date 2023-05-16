@@ -1,8 +1,10 @@
+import Register from "../../../containers/user/register";
+
 export default function(){
 
     return(
         <>
-         <div className="customloader"></div>
+         <Register />
         </>
     )
 }

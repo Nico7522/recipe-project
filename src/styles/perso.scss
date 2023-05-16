@@ -26,3 +26,21 @@
   .modal-hidden {
     margin-top: -1000px;
   }
+
+  .date {
+    height: 10px;
+  }
+
+  .height {
+    height: 1000px;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll;
+  }
+
+
+
+.height::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
+
