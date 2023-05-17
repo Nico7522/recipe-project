@@ -145,7 +145,7 @@ export default function Register() {
           )}
         </div>
 
-        <Button style={"mr-8"} type={"submit"} text={"REGISTER"} />
+        <Button className={'w-56 m-auto mt-2'} type={"submit"} text={"REGISTER"} />
       </form>
     </div>
   );

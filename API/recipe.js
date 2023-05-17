@@ -7,6 +7,12 @@ import {
 import axios from "axios";
 import { useNavigation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useInfiniteQuery } from "react-query";
+
+const fetchRecipe = async (offset) => {
+  const { data } = axios.get("http://localhost:8080/api/recipe?limit=3&offset=" + offset);
+  return data;
+}
 
 export const useFetchLastestRecipes = () => {
   const queryClient = useQueryClient();
@@ -17,12 +23,14 @@ export const useFetchLastestRecipes = () => {
   );
 };
 
-// export const useFetchAllRecipes = () => {
-//   const queryClient = useQueryClient();
-//   return useQuery("Recipes", () =>
-//     fetch("http://localhost:8080/api/recipe?limit=3&offset=0").then((r) => r.json())
-//   );
-// };
+export const useFetchAllRecipesScroll = (offset) => {
+  const queryClient = useQueryClient();
+  return useInfiniteQuery({
+    queryKey: ['Recipes'],
+    queryFn: (offset) => fetchRecipe(3),
+    getNextPageParam: (lastPage, pages) => lastPage,
+  })
+};
 export const useFetchAllRecipes = (offset, stop) => {
   if (stop === true) {
     return;

@@ -83,13 +83,13 @@ const NavBar = () => {
             </div>
           ) : (
             <Link to="/user/signin">
-              <Button text={"LOG IN"} style={"btn"}></Button>
+              <Button text={"LOG IN"} className={"btn ml-1"}></Button>
             </Link>
           )}
 
           <Link to="/user/signup">
             {" "}
-            <Button text={"REGISTER"} style={"btn ml-3"}></Button>
+            <Button text={"REGISTER"} className={"btn ml-3"}></Button>
           </Link>
         </ul>
       </div>

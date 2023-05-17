@@ -34,7 +34,7 @@ export default function Recipe({
   return (
     <div
       key={id}
-      className="mx-auto w-10/12 border-4 bg-green-300 border-green-500 rounded-2xl relative "
+      className="mx-auto w-10/12 border-4 bg-green-300 border-green-500 rounded-2xl relative mt-5 "
     >      
       <h2 className="uppercase tracking-widest text-3xl text-center title">{name}</h2>
       <div className="w-1/4 flex flex-row justify-center m-auto">

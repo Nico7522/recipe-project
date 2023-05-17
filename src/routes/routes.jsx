@@ -1,5 +1,6 @@
 import App from "../App";
 import RecipesList from "../containers/recipes/recipes-list";
+import RecipeScroll from "../containers/recipes/recipes-scroll";
 import AboutPage from "../pages/about/about-page";
 import AdminPage from "../pages/admin/admin-page";
 import AdminCommentsPage from "../pages/admin/pages/admin-comments";
@@ -36,6 +37,10 @@ export const routes = [
                     {
                         path: 'create',
                         element: <RecipeCreatePage />
+                    },
+                    {
+                        path: 'test',
+                        element: <RecipeScroll />
                     }
                 ]
             },

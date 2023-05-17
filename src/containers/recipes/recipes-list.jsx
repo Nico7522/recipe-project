@@ -11,25 +11,32 @@ import SearchBar from "../../components/searchbar/searchbar";
 import { useRef } from "react";
 import { useId } from "react";
 import axios from "axios";
+import Loader from "../../components/loader/loader";
 
 export default function RecipesList() {
   const [offset, setOffset] = useState(0);
-  const [stop, setStop] = useState(false)
-  const { isLoading, data, error, isPreviousData } = useFetchAllRecipes(offset);
+  const [finish, setFinish] = useState(false);
+  const { isLoading, data, error, isPreviousData, isFetching } =
+    useFetchAllRecipes(offset);
+
   const { token, userStatus, userId } = useFetchUser();
   const [search, setSearch] = useState("");
   const [recipes, setRecipes] = useState([]);
+  const [newRecipes, setNewRecipes] = useState([]);
   // const [newRecipes, setNewRecipes] = useState([])
   const listInnerRef = useRef();
   const idP = useId();
 
   useEffect(() => {
-    if (data && stop === false) {
-      setRecipes(data.results);
+    if (data) {
+      setRecipes((recipes) => [...recipes, ...data.results]);
+
+      if (data.results.length === 0) {
+        setFinish(true);
+      }
     }
   }, [data]);
 
-  
   if (isLoading) {
     return <div className="customloader"></div>;
   }
@@ -37,27 +44,18 @@ export default function RecipesList() {
     return <p>{error.response.data}</p>;
   }
 
-
   const onScroll = () => {
     if (listInnerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
-      if (scrollTop + clientHeight === scrollHeight) {
-        if (!isPreviousData) {
-          if (data.results.length === 0) {
-            setStop(true)
-            return;
-          }
-          setOffset(offset + 3);
-          setRecipes([...recipes, ...data.results]);
-        }
+      if (!finish && !isFetching && scrollTop + clientHeight === scrollHeight) {
+        setOffset(offset + 3);
+      
       }
     }
   };
 
   return (
-
-    <div className="flex flex-col h-[calc(100vh-7.2rem)]">
-     
+    <div className=" z0 flex flex-col h-[calc(100vh-7.2rem)]">
       <div
         onScroll={onScroll}
         ref={listInnerRef}
@@ -84,6 +82,8 @@ export default function RecipesList() {
             ""
           )
         )}
+
+        {isFetching && <Loader className="flex justify-center" />}
       </div>
     </div>
   );
