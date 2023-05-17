@@ -12,8 +12,11 @@ import { useRef } from "react";
 import { useId } from "react";
 import axios from "axios";
 import Loader from "../../components/loader/loader";
+import { useInView } from "react-intersection-observer";
 
 export default function RecipesList() {
+  const { ref, inView } = useInView()
+
   const [offset, setOffset] = useState(0);
   const [finish, setFinish] = useState(false);
   const { isLoading, data, error, isPreviousData, isFetching } =
@@ -56,6 +59,7 @@ export default function RecipesList() {
 
   return (
     <div className=" z0 flex flex-col h-[calc(100vh-7.2rem)]">
+      { inView && console.log('coucou')}
       <div
         onScroll={onScroll}
         ref={listInnerRef}
