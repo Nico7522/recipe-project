@@ -17,19 +17,30 @@ export const useFetchLastestRecipes = () => {
   );
 };
 
-export const useFetchAllRecipes = () => {
+// export const useFetchAllRecipes = () => {
+//   const queryClient = useQueryClient();
+//   return useQuery("Recipes", () =>
+//     fetch("http://localhost:8080/api/recipe?limit=3&offset=0").then((r) => r.json())
+//   );
+// };
+export const useFetchAllRecipes = (offset, stop) => {
+  if (stop === true) {
+    return;
+  }
   const queryClient = useQueryClient();
-  return useQuery("Recipes", () =>
-    fetch("http://localhost:8080/api/recipe/").then((r) => r.json())
-  );
+  return useQuery({
+    queryKey: ["Recipes", offset],
+    queryFn: async () => fetch("http://localhost:8080/api/recipe?limit=3&offset=" + offset).then((res) => res.json()),
+    keepPreviousData: true,
+  });
 };
 
 export const useFetchRecipeById = ({ recipeId }) => {
   const queryClient = useQueryClient();
   return useQuery(["Recipes", recipeId], async () => {
-   return await axios
+    return await axios
       .get("http://localhost:8080/api/recipe/" + recipeId)
-      .then(({data}) => {
+      .then(({ data }) => {
         return data;
       });
   });

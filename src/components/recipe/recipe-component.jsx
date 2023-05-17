@@ -6,6 +6,7 @@ import { deleteRecipe } from "../../../API/recipe";
 import Comment from "../comments/comment";
 import Ingredient from "../ingredients/ingrediient";
 import Reaction from "../reactions/reactions";
+import { useId } from 'react';
 
 
 export default function Recipe({
@@ -26,12 +27,14 @@ export default function Recipe({
         const dateB = new Date(b.createdAt);
         return dateA - dateB;
       });
+
+      const idP = useId()
      
 
   return (
     <div
       key={id}
-      className="mx-auto mt-5 w-10/12 border-4 bg-green-300 border-green-500 rounded-2xl relative "
+      className="mx-auto w-10/12 border-4 bg-green-300 border-green-500 rounded-2xl relative "
     >      
       <h2 className="uppercase tracking-widest text-3xl text-center title">{name}</h2>
       <div className="w-1/4 flex flex-row justify-center m-auto">
@@ -44,7 +47,7 @@ export default function Recipe({
       </div>
       <div className="flex row-auto space-x-2 justify-center">
         
-        <Reaction reactions={reactions} />
+        <Reaction  reactions={reactions} />
 
   </div>
       
@@ -63,7 +66,7 @@ export default function Recipe({
         <h3 className="mb-5">Comment 👇👇👇</h3>
         {comments.map((c) => (
 
-      <Comment {...c}/>
+      <Comment  {...c}/>
         ))}
 
       </div>

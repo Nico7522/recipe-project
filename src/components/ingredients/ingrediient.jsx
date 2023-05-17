@@ -1,5 +1,7 @@
-export default function Ingredient({name, quantity, units}){
+import { useId } from "react"
 
+export default function Ingredient({name, quantity, units}){
+  const idP = useId()
     return (
            
         <div>

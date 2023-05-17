@@ -136,15 +136,15 @@ function App() {
   };
 
   return (
-    <>
-      <header className="-pt-5 fixed z-10">
+    <div className="">
+      <header className="z-10 top-0 start-0 end-0 fixed">
         <NavBar />
       </header>
-      <main className="mt-32">
+      <main className="mt-[7.2rem]">
         <Outlet />
       </main>
   
-    </>
+    </div>
   );
 }
 
