@@ -7,6 +7,7 @@ import Comment from "../comments/comment";
 import Ingredient from "../ingredients/ingrediient";
 import Reaction from "../reactions/reactions";
 import { useId } from 'react';
+import CommentForm from "../comments/comment-form";
 
 
 export default function Recipe({
@@ -34,7 +35,7 @@ export default function Recipe({
   return (
     <div
       key={id}
-      className="mx-auto w-10/12 border-4 bg-green-300 border-green-500 rounded-2xl relative mt-5 "
+      className="mx-auto w-10/12 shadow-2xl  bg-green-300 border-green-500 rounded-2xl relative mt-5 "
     >      
       <h2 className="uppercase tracking-widest text-3xl text-center title">{name}</h2>
       <div className="w-1/4 flex flex-row justify-center m-auto">
@@ -69,6 +70,9 @@ export default function Recipe({
       <Comment  {...c}/>
         ))}
 
+      </div>
+      <div>
+        <CommentForm />
       </div>
     </div>
   );

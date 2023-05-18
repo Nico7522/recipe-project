@@ -15,7 +15,7 @@ import Loader from "../../components/loader/loader";
 import { useInView } from "react-intersection-observer";
 
 export default function RecipesList() {
-  const { ref, inView } = useInView()
+  
 
   const [offset, setOffset] = useState(0);
   const [finish, setFinish] = useState(false);
@@ -58,12 +58,11 @@ export default function RecipesList() {
   };
 
   return (
-    <div className=" z0 flex flex-col h-[calc(100vh-7.2rem)]">
-      { inView && console.log('coucou')}
+    <div className="flex flex-col h-[calc(100vh-7.2rem)]">
       <div
         onScroll={onScroll}
         ref={listInnerRef}
-        className="flex-grow overflow-scroll scrollbar-hide flex flex-col gap-5"
+        className="flex-grow overflow-scroll scrollbar-hide flex flex-col gap-5 -mt-8"
       >
         <div className="flex flex-row items-center justify-between">
           <Title text={"ALL RECIPES !"} className="order-2 text-slate-100" />
@@ -78,7 +77,7 @@ export default function RecipesList() {
             <Button text={"CREATE A NEW RECIPE"}></Button>
           </Link>
         </div>
-
+        
         {recipes.map((recipe) =>
           recipe.name.includes(search) ? (
             <Recipe key={recipe.id} userId={userId} {...recipe} />
@@ -86,6 +85,8 @@ export default function RecipesList() {
             ""
           )
         )}
+
+       
 
         {isFetching && <Loader className="flex justify-center" />}
       </div>

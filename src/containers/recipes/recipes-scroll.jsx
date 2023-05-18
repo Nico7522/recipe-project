@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useEffect } from "react";
+
+import { useEffect} from "react";
 import { useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
@@ -8,6 +9,8 @@ import { Link } from "react-router-dom";
 export default function RecipeScroll() {
   const { ref, inView } = useInView();
   const [offset, setOffset] = useState(0);
+
+
   const {
     status,
     data,
@@ -20,26 +23,26 @@ export default function RecipeScroll() {
     hasNextPage,
     hasPreviousPage,
   } = useInfiniteQuery(
-    ["Recipes"],
-    async ({ pageParam = 0 }) => {
+    "Recipes",
+    async ({ pageParam = 0}) => {
       const { data } = await axios.get(
-        "http://localhost:8080/api/recipe?limit=3&offset=" + pageParam
+        `http://localhost:8080/api/recipe?limit=3&offset=${pageParam}`
       );
       return data;
     },
     {
-      getPreviousPageParam: (firstPage) => firstPage.id ?? undefined,
-      getNextPageParam: (lastPage) => lastPage.id ?? undefined,
+      getNextPageParam: (lastPage) => lastPage.data
     }
   );
 
   
   useEffect(() => {
-    console.log('offset', offset);
-    if (inView) {
-      setOffset(offset + 3);
-      fetchNextPage({ pageParam: offset });
-    }
+    
+  if (inView && hasNextPage) {
+    // setOffset(3)
+    // setOffset(offset+3)
+    fetchNextPage()
+  }
   }, [inView]);
 
   return (
@@ -52,7 +55,6 @@ export default function RecipeScroll() {
       ) : (
         <>
           <div>
-            {console.log(data)}
             <button
               onClick={() => fetchPreviousPage()}
               disabled={!hasPreviousPage || isFetchingPreviousPage}
@@ -64,8 +66,8 @@ export default function RecipeScroll() {
                 : "Nothing more to load"}
             </button>
           </div>
-          {data.pages.map((page) => (
-            <div key={page.id}>
+          {data.pages.map((page, pageIndex) => (
+            <div key={pageIndex} >
               {page.results.map((recipe) => (
                 <p
                   style={{
@@ -84,7 +86,7 @@ export default function RecipeScroll() {
           <div>
             <button
               ref={ref}
-              onClick={() => fetchNextPage({ pageParam: 3 })}
+              onClick={() => fetchNextPage()}
               disabled={!hasNextPage || isFetchingNextPage}
             >
               {isFetchingNextPage
@@ -102,10 +104,9 @@ export default function RecipeScroll() {
         </>
       )}
       <hr />
-      <Link href="/about">
-        <a>Go to another page</a>
+      <Link to="/about">
+       ff
       </Link>
-      {/* <ReactQueryDevtools initialIsOpen /> */}
     </div>
   );
 }
