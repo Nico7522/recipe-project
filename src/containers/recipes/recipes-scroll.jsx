@@ -26,19 +26,25 @@ export default function RecipeScroll() {
     "Recipes",
     async ({ pageParam = 0}) => {
       const { data } = await axios.get(
-        `http://localhost:8080/api/recipe?limit=3&offset=${pageParam}`
+        `http://localhost:8080/api/recipe?page=${pageParam}`
       );
       return data;
     },
     {
-      getNextPageParam: (lastPage) => lastPage.data
+      getPreviousPageParam: (firstPage) => firstPage.results ?? undefined,
+      getNextPageParam: (lastPage, allPages) => {
+        const nextPage = allPages.length + 1
+        console.log(nextPage);
+        return lastPage.results.length !== 0 ? nextPage : undefined
+
+        }
     }
   );
-
+   
   
   useEffect(() => {
     
-  if (inView && hasNextPage) {
+  if (inView) {
     // setOffset(3)
     // setOffset(offset+3)
     fetchNextPage()
