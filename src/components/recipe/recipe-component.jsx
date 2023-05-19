@@ -71,7 +71,7 @@ export default function Recipe({
         ))}
 
       </div>
-      <div>
+      <div className="flex flex-col m-auto w-96 items-center justify-center">
         <CommentForm />
       </div>
     </div>

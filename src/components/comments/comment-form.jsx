@@ -8,10 +8,13 @@ export default function CommentForm(){
 
     }
     return (
-        <form onSubmit={handleSubmit(handleComment)}>
+        <form className="flex flex-col justify-center items-center" onSubmit={handleSubmit(handleComment)}>
+            <div className="text-center">
             <label htmlFor="comment">Comment</label>
-            <input {...register('comment')} type="textarea" />
-            <Button type={'submit'} text={"POST"} />
+            
+            <textarea {...register('comment')} id="" cols="10" rows="5" className="w-96 rounded-lg shadow-2xl resize-none" placeholder="Your comment..."></textarea>
+            </div>
+            <Button className={'bg-green-500'} type={'submit'} text={"POST"} />
         </form>
     )
 }
