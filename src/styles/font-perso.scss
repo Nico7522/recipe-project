@@ -7,7 +7,12 @@
 
 @font-face {
     font-family: title;
-    src: url(../components/Wild\ Hazelnut.ttf);
+    src: url(../components/Mogra-Regular.ttf);
+}
+
+@font-face {
+    font-family: description;
+    src: url(../components/static/OpenSans-Regular.ttf)
 }
 
 .font {
@@ -16,4 +21,8 @@
 
 .title {
     font-family: title;
+}
+
+.description {
+    font-family: description;
 }

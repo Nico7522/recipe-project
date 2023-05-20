@@ -112,6 +112,7 @@ import { useId } from "react";
 import axios from "axios";
 import Loader from "../../components/loader/loader";
 import { useInView } from "react-intersection-observer";
+import { useFetchComments } from "../../../API/comment";
 
 
 export default function RecipeScroll() {
@@ -163,9 +164,7 @@ export default function RecipeScroll() {
     return <p>{error.response.data}</p>;
   }
 
-  if (inView) {
-    console.log('coucou');
-  }
+
 
   return (
 

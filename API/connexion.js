@@ -66,11 +66,9 @@ export const RegisterUser = (user) => {
         return err
       },
       onSettled: async (err, variable, context) => {
-        console.log('context',context);
-        console.log('variable',variable);
-        console.log('err',err);
-        return context
+    
         queryClient.invalidateQueries("Users");
+        return context
 
       },
     
