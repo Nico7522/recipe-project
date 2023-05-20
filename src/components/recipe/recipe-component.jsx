@@ -52,7 +52,7 @@ export default function Recipe({
         </div>
       </div>
       <div className="flex row-auto space-x-2 justify-center">
-        <Reaction reactions={reactions} />
+        <Reaction id={id} reactions={reactions} />
       </div>
 
       <div className="ml-5 bg-green-700 text-center  w-56 rounded-2xl">

@@ -28,6 +28,10 @@ export default function AdminPanel() {
       <Link to="users" className="w-56 m-auto">
         <Button text={"Users gestion"} style={"rounded-2xl m-auto"}></Button>
       </Link>
+
+      <div className="border-4 border-green-700 h-56 w-56 overflow-scroll break-words">
+        <p >sdsdsdsdqsqsqsqsqssqsqsqsqsqsqssqsqsqsqsqsqsqssqsqs</p>
+      </div>
     </div>
   );
 }
