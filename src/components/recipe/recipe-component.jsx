@@ -8,7 +8,9 @@ import Ingredient from "../ingredients/ingrediient";
 import Reaction from "../reactions/reactions";
 import { useId } from "react";
 import CommentForm from "../comments/comment-form";
+import { useNavigate } from "react-router-dom";
 
+// + " " + (!showComment && "h-12 break-words overflow-scroll")
 export default function Recipe({
   id,
   name,
@@ -21,6 +23,9 @@ export default function Recipe({
   userStatus,
   userId,
 }) {
+  const [showComment, setShowComment] = useState(
+    isNaN(window.location.href.slice(-1))
+  );
   const { mutate } = deleteRecipe();
   comments.sort((a, b) => {
     const dateA = new Date(a.createdAt);
@@ -28,19 +33,28 @@ export default function Recipe({
     return dateB - dateB;
   });
 
-  comments = comments.slice(-3);
+  if (isNaN(window.location.href.slice(-1))) {
+    comments = comments.slice(-3);
+  }
 
   const idP = useId();
+  const navigation = useNavigate();
+  const goToDetails = (id) => {
+    navigation("/recipes/" + id);
+  };
 
   return (
     <div
       key={id}
       className="mx-auto w-10/12 shadow-2xl  bg-green-300 border-green-500 rounded-2xl relative mt-5 pb-3 pt-3 "
     >
-      <h2 className="uppercase tracking-widest text-3xl text-center title underline">
+      <h2
+        onClick={() => goToDetails(id)}
+        className="uppercase tracking-widest text-3xl text-center title underline cursor-pointer"
+      >
         {name}
       </h2>
-      <div className=" text-center w-1/4 flex flex-row justify-center m-auto ">
+      <div className="text-center w-1/4 flex flex-row justify-center m-auto ">
         <img
           src={"http://localhost:8080" + imgURL}
           className="rounded-2xl block m-auto shadow-md "
@@ -67,9 +81,11 @@ export default function Recipe({
           <h3 className="mb-5 bg-green-700 rounded-2xl  font  text-center">
             Comment 👇👇👇
           </h3>
-          {comments.map((c) => (
-            <Comment {...c} />
-          ))}
+          <div className={!showComment && "h-56 break-words overflow-scroll"}>
+            {comments.map((c) => (
+              <Comment {...c} />
+            ))}
+          </div>
         </div>
         <div className="flex flex-col m-auto w-96 items-center justify-center">
           <CommentForm id={id} />

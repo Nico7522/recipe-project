@@ -23,12 +23,16 @@ export default function Reaction({ reactions, id }) {
     }
   });
   return (
-    <>
+    <div className=" flex flex-row cursor-pointer">
       <p onClick={() => mutate({reaction: "like",
     userId: 1,
     recipeId: id})}>❤ : {like}</p>
-      <p>🤤 : {tasty}</p>
-      <p>👎 : {dislike}</p>
-    </>
+      <p onClick={() => mutate({reaction: "tasty",
+    userId: 1,
+    recipeId: id})}>🤤 : {tasty}</p>
+      <p onClick={() => mutate({reaction: "dislike",
+    userId: 1,
+    recipeId: id})}>👎 : {dislike}</p>
+    </div>
   );
 }

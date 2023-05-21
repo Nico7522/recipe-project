@@ -25,7 +25,7 @@ const NavBar = () => {
     { name: "HOME", link: "/" },
     { name: "RECIPES", link: "/recipes" },
     { name: "INGREDIENTS", link: "/" },
-    { name: "RECIPES OF THE WEEKS", link: "/" },
+    { name: "RECIPES OF THE WEEKS", link: "/recipes/top" },
     { name: "CONTACT", link: "/" },
   ];
   let [open, setOpen] = useState(false);

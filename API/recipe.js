@@ -10,9 +10,11 @@ import { useNavigate } from "react-router-dom";
 import { useInfiniteQuery } from "react-query";
 
 const fetchRecipe = async (offset) => {
-  const { data } = axios.get("http://localhost:8080/api/recipe?limit=3&offset=" + offset);
+  const { data } = axios.get(
+    "http://localhost:8080/api/recipe?limit=3&offset=" + offset
+  );
   return data;
-}
+};
 
 export const useFetchLastestRecipes = () => {
   const queryClient = useQueryClient();
@@ -23,13 +25,21 @@ export const useFetchLastestRecipes = () => {
   );
 };
 
+export const useFetchTopRecipes = () => {
+  const queryClient = useQueryClient();
+  return useQuery(["Recipes"], async () => {
+    const { data } = await axios.get("http://localhost:8080/api/recipe/top");
+    return data;
+  });
+};
+
 export const useFetchAllRecipesScroll = (offset) => {
   const queryClient = useQueryClient();
   return useInfiniteQuery({
-    queryKey: ['Recipes'],
+    queryKey: ["Recipes"],
     queryFn: (offset) => fetchRecipe(3),
     getNextPageParam: (lastPage, pages) => lastPage,
-  })
+  });
 };
 export const useFetchAllRecipes = (offset, stop) => {
   if (stop === true) {
@@ -38,7 +48,10 @@ export const useFetchAllRecipes = (offset, stop) => {
   const queryClient = useQueryClient();
   return useQuery({
     queryKey: ["Recipes", offset],
-    queryFn: async () => fetch("http://localhost:8080/api/recipe?limit=3&offset=" + offset).then((res) => res.json()),
+    queryFn: async () =>
+      fetch("http://localhost:8080/api/recipe?limit=3&offset=" + offset).then(
+        (res) => res.json()
+      ),
     keepPreviousData: true,
   });
 };
