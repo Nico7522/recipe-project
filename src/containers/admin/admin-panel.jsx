@@ -5,33 +5,30 @@ import Title from "../../components/title/title";
 import { useFetchUser } from "../../hooks/user-hooks";
 
 export default function AdminPanel() {
+  const { userStatus } = useFetchUser();
 
-
-    const {userStatus} = useFetchUser()
-
-    if (userStatus !== "Admin") {
-        return <h2>Not authorized ! </h2>
-    }
-
+  if (userStatus !== "Admin") {
+    return <h2>Not authorized ! </h2>;
+  }
 
   return (
-    <div className="flex flex-col m-auto w-56 text-center  text-5xl" >
-        <Title style={"font 5xl mt-0"} text={"GESTION"} />
-      <Link to="recipes" className="w-56 m-auto">
+    <>
+    
+      <Title className={"font 5xl md:mt-40"} text={"GESTION"} />
+    <div className="flex flex-row justify-center items-center w-2/4 m-auto mt-32 p-10 bg-gray-700 rounded-md shadow-2xl text-3xl">
+      <Link to="recipes" className="w-56 m-auto p-4">
         <Button text={"Recipes gestion"} style={"rounded-2xl m-auto"}></Button>
       </Link>
 
-      <Link to="comments" className="w-56 m-auto -ml-7 ">
+      <Link to="comments" className="w-56 m-auto p-4 ">
         <Button text={"Comments gestion"} style={"rounded-2xl m-auto"}></Button>
       </Link>
 
-      <Link to="users" className="w-56 m-auto">
-        <Button text={"Users gestion"} style={"rounded-2xl m-auto"}></Button>
+      <Link to="users" className="w-56 p-4 m-auto">
+        <Button text={"Users gestion"} style={"rounded-2xl m-auto "}></Button>
       </Link>
-
-      <div className="border-4 border-green-700 h-56 w-56 overflow-scroll break-words">
-        <p >sdsdsdsdqsqsqsqsqssqsqsqsqsqsqssqsqsqsqsqsqsqssqsqs</p>
-      </div>
     </div>
+    </>
+
   );
 }

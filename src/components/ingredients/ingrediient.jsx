@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useId, useState } from "react";
+import { useCalcMacro } from "../../hooks/macro-hooks";
 
 export default function Ingredient({
   name,
@@ -11,27 +12,19 @@ export default function Ingredient({
   proteins,
   tabMacro,
 }) {
+
   const idP = useId();
-  const [macro, setMacro] = useState([]);
-  let totalKcals = 0;
-  tabMacro.forEach((i) => {
-    if (i.units === "grammes" || i.units === "litres") {
-      return (totalKcals += (i.calories / 100) * i.quantity);
-    }
-    if (i.units === "oz") {
-      totalKcals += i.calories * i.quantity;
-      return totalKcals
-    }
-    return totalKcals;
-  });
-  console.log("ingrédients =>", tabMacro);
-  console.log("kcals =>", totalKcals);
+  const {macro} = useCalcMacro(tabMacro)
+
+
   return (
     <div>
+      {console.log(macro)}
       <p>{name}</p>
       <p>
         {quantity} <span className="font">{units}</span>
       </p>
+  
     </div>
   );
 }

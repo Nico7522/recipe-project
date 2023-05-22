@@ -6,6 +6,7 @@ import {
   useFetchLastestRecipes,
 } from "../../../API/recipe";
 import Recipe from "../../components/recipe/recipe-component";
+import Title from "../../components/title/title";
 
 export default function LastestRecipe() {
   const { isLoading, data, error } = useFetchLastestRecipes();
@@ -19,6 +20,8 @@ export default function LastestRecipe() {
 
   return (
     <>
+      <Title text={'LASTEST RECIPES'} className={"md:mt-40"} />
+
       {data.results.map((recipe) => (
         <Recipe key={recipe.id} {...recipe} />
       ))}

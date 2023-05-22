@@ -34,6 +34,6 @@ export default function RecipeDetails({ recipeId }) {
   return (
   <>
   <Recipe userId={userId} token={token} {...data.result} />
- {userId === data.result.creatorId && <div onClick={() => mutate(data.result.id)} className="w-96 m-auto text-center"><Button style={"bg-red-300 -ml-8"}  text={"DELETE"}/></div>}
+ {userId === data.result.creatorId && <div onClick={() => mutate(data.result.id)} className="w-96 m-auto text-center mt-5 mb-5"><Button style={"bg-red-300 -ml-8"}  text={"DELETE"}/></div>}
   </>)
 }

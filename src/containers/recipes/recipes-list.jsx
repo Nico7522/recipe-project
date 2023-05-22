@@ -174,8 +174,8 @@ export default function RecipeScroll() {
       
       className="flex-grow overflow-scroll scrollbar-hide flex flex-col gap-5"
     >
-      <div className="flex flex-row items-center justify-between -mt-12">
-        <Title text={"ALL RECIPES !"} className="order-2" />
+      <div className="flex flex-row items-center justify-between">
+        <Title text={"ALL RECIPES !"} className="order-2 md:mt-20 lg:mt-20" />
 
         <SearchBar
           search={search}

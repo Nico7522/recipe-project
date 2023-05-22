@@ -16,7 +16,7 @@ export default function TopRecipe(){
  
     return (
         <>
-        <Title text={'MOST POPULAR RECIPE'} />
+      <Title text={'MOST POPULAR RECIPES'} className={"md:mt-40"} />
               {data.map((recipe) => (
         <Recipe key={recipe.id} {...recipe} />
       ))}
