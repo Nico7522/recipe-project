@@ -33,6 +33,11 @@ export default function Recipe({
     return dateB - dateB;
   });
 
+  let tabMacro = [];
+  ingredients.forEach(macro => {
+    tabMacro.push(macro)
+  });
+
   if (isNaN(window.location.href.slice(-1))) {
     comments = comments.slice(-3);
   }
@@ -72,7 +77,7 @@ export default function Recipe({
       <div className="ml-5 bg-green-700 text-center  w-56 rounded-2xl">
         <h3 className="font">Ingredients 👇👇👇</h3>
         {ingredients.map((i) => (
-          <Ingredient {...i} />
+          <Ingredient {...i} tabMacro={tabMacro} />
         ))}
       </div>
 
