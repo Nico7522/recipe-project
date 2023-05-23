@@ -16,6 +16,15 @@ const fetchRecipe = async (offset) => {
   return data;
 };
 
+export const getAll = () => {
+  const queryClient = useQueryClient();
+  return useQuery(['Recipes'], async () => {
+   const {data} = await axios.get('http://localhost:8080/api/recipe/admin');
+   console.log(data);
+   return data.recipes
+  })
+}
+
 export const useFetchLastestRecipes = () => {
   const queryClient = useQueryClient();
   return useQuery(["Recipes", { limit: 3, offset: 0 }], () =>

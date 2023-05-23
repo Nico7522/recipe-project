@@ -27,9 +27,9 @@ export default function User({
       const creationDateTime = new Date(createdAt).toLocaleTimeString();
 
     return (
-        <>
+        
     
-            <div className="w-72 h-auto border-2 border-green-400 m-auto ">
+            <div className="sm:w-24 md:w-32 lg:w-36 xl:w-3/4 h-auto border-2 border-green-400 m-auto break-words 2xl:break-normal">
               <h2 onClick={() => navigation("/user/profil/" + id)} className="font text-center text-3xl ">Details</h2>
               <img
                 src={"http://localhost:8080" + avatar}
@@ -63,7 +63,7 @@ export default function User({
             </div>
           
 
-        </>
+        
       );
     
 }

@@ -56,7 +56,7 @@ export default function UserProfil({
           Not autorized !
         </h2>
       ) : (
-        <div className="w-96 h-auto border-2 border-green-400 m-auto ">
+        <div className="w-96 h-auto border-2 border-green-400  mt-40 m-auto ">
           <h2 className="font text-center text-3xl ">User details </h2>
           <img
             src={"http://localhost:8080" + avatar}
@@ -83,7 +83,7 @@ export default function UserProfil({
           </p>
           <h3 className="text-center text-2xl">Creation date : </h3>{" "}
           <p className="text-center text-2xl border-2 border-green-200 bg-green-100 m-auto">
-            {creationDate} {creationDateTime}
+            {createdAt}
           </p>
           <h3 className="text-center text-2xl">Recipes : </h3>
           {recipes.map((r) => (
@@ -94,8 +94,6 @@ export default function UserProfil({
               {r.name}
             </h2>
           ))}
-        </div>
-      )}
       <div className="w-96 m-auto mt-5 text-center ">
         <Button
           style={"mr-8"}
@@ -114,6 +112,8 @@ export default function UserProfil({
             <Button style={"mr-8"} text={"RESET"} />
           </form>
           {pswReset !== '' &&( <div className="text-center font">{textResetPsw}</div> )}
+        </div>
+      )}
         </div>
       )}
     </>

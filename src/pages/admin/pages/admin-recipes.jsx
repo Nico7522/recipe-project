@@ -1,6 +1,10 @@
+import RecipeGestion from "../../../containers/admin/recipesgestion/recipe-gestion";
+
 export default function AdminRecipesPage(){
     return(
-        <p>IS COMMING</p>
+        <>
+            <RecipeGestion />
+        </>
     )
 
 }
