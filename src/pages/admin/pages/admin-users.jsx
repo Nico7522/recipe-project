@@ -1,6 +1,6 @@
 import UserGestion from "../../../containers/admin/usersgestion/user-gestion";
 
-export default function AdminGestionUsers(){
+export default function AdminUserPage(){
 
     return (
         <UserGestion />

@@ -20,8 +20,8 @@ export const useFetchUser = () => {
     return await axios
       .get("http://localhost:8080/api/user")
       .then(({ data }) => {
-        console.log(data);
-        return data;
+        
+        return data.results;
       });
   });
 };
@@ -73,5 +73,43 @@ export const RegisterUser = (user) => {
       },
     
     }
+  )
+}
+
+
+
+export const updateStatus = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(({id, statusChange}) => { return axios.patch(`http://localhost:8080/api/user/${id}`, {status: statusChange})},
+  {
+    onMutate: async (data, statusChange) => {
+      await queryClient.cancelQueries({
+        queryKey: ["Users", data.id],
+      });
+      console.log('data', data);
+      const previousUser = queryClient.getQueryData([
+        "Users",
+        data.id
+      ]);
+      queryClient.setQueryData(['Users', data.id], data)
+      
+      console.log('prev', previousUser);
+      return { previousUser, statusChange}
+    },
+    onError: (err,data, context) => {
+      console.log(context.previousUser);
+      queryClient.setQueryData(
+        ["Users", context.data.id],
+        context.previousUser
+        );
+      },
+      onSettled: (data, error, variables, context) => {
+
+      queryClient.invalidateQueries({
+        queryKey: ["Users", data.id],
+      });
+    },
+  }
   )
 }
