@@ -113,9 +113,13 @@ import axios from "axios";
 import Loader from "../../components/loader/loader";
 import { useInView } from "react-intersection-observer";
 import { useFetchComments } from "../../../API/comment";
+import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 export default function RecipeScroll() {
+  const [searchParams, setSearchParams] = useSearchParams()
+
   const { ref, inView } = useInView();
   const [offset, setOffset] = useState(0);
   const { token, userStatus, userId } = useFetchUser();
@@ -132,11 +136,11 @@ export default function RecipeScroll() {
     fetchPreviousPage,
     hasNextPage,
     hasPreviousPage,
-  } = useInfiniteQuery(
-    "Recipes",
+  } = useInfiniteQuery([
+    "Recipes", {tag: searchParams.get('tag') || "" }],
     async ({ pageParam = 0}) => {
       const { data } = await axios.get(
-        `http://localhost:8080/api/recipe?page=${pageParam}`
+        `http://localhost:8080/api/recipe?tag=${searchParams.get('tag') || ''}&page=${pageParam}`
       );
       return data;
     },
@@ -149,13 +153,21 @@ export default function RecipeScroll() {
         }
     }
   );
-   
+   const searchs = searchParams.get('tag') && `&tag=${searchParams.get('tag')}`
   
   useEffect(() => { 
   if (inView) {
     fetchNextPage()
   }
   }, [inView]);
+  const handleSearchTag = (t) => {
+    setSearchParams({'tag': t})
+
+  }
+  const navigation = useNavigate()
+  const handleReset = () => {
+    navigation('/recipes')
+  }
 
   if (isLoading) {
     return <div className="customloader"></div>;
@@ -169,7 +181,7 @@ export default function RecipeScroll() {
   return (
 
     <div className="flex flex-col " >
-      
+      <button onClick={() => handleReset()}>ALL</button>
     <div
       
       className="flex-grow overflow-scroll scrollbar-hide flex flex-col gap-5"
@@ -192,7 +204,7 @@ export default function RecipeScroll() {
       {data.pages.map((page, pageIndex) => (
           <div key={pageIndex} >
             {page.results.map((recipe) => (
-                          <Recipe key={recipe.id} userId={userId} {...recipe} />
+                          <Recipe handleSearchTag={handleSearchTag} key={recipe.id} userId={userId} {...recipe} />
 
             ))}
      <button

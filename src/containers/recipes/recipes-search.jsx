@@ -7,7 +7,7 @@ import { Outlet } from "react-router-dom";
 
 
 
-export default function RecipeScroll() {
+export default function RecipesSearch() {
   const [searchParams, setSearchParams] = useSearchParams()
   const {data, isError, isLoading } = useQuery(['Recipes', {tags: searchParams.get('tag')}], async ()  => { const { data } = await axios.get('http://localhost:8080/api/recipe/admin?tag=' + searchParams.get('tag')); return data})
   const { handleSubmit, register} = useForm({
@@ -25,24 +25,17 @@ useEffect(() => {
     return <p>wait...</p>
   }
 
- const handleTag = ({tags}) => {
-
-  setSearchParams({'tag': tags})
-  console.log(searchParams.get('tag'));
- 
- }
   return(
       
       <div>
-        {console.log(data)}
-          <form onClick={handleSubmit(handleTag)}>
+          {/* <form onClick={handleSubmit(handleTag)}>
               <select {...register('tags')} id="tags">
                   <option value="Healthy">Healthy</option>
                   <option value="Vegan">Vegan</option>
                   <option value="Dessert">Dessert</option>
               </select>
               <button type="submit">Valid</button>
-          </form>
+          </form> */}
           {data.results.map((r) => (
             <div>
               <h2>{r.name}</h2>

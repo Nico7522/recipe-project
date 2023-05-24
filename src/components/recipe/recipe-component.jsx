@@ -25,6 +25,7 @@ export default function Recipe({
   creatorId,
   userStatus,
   userId,
+  handleSearchTag
 }) {
   const [showComment, setShowComment] = useState(
     isNaN(window.location.href.slice(-1))
@@ -52,6 +53,10 @@ export default function Recipe({
   const goToDetails = (id) => {
     navigation("/recipes/" + id);
   };
+
+  const handle = (t) => {
+   handleSearchTag(t)
+  }
 
   return (
     <div
@@ -97,7 +102,7 @@ export default function Recipe({
       </div>
       <div className="flex flex-col bg bg-green-800 text-lime-50 w-60 m-auto rounded-2xl shadow-2xl">
       {tags.map((t) => (
-        <h3 className="text-white text-2xl text-center">{ShowTags(t)}</h3>
+        <h3 onClick={() => handle(t)} className="text-white text-2xl text-center">{ShowTags(t)}</h3>
       ))}
 
       </div>

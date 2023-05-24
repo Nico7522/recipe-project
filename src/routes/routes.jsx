@@ -1,6 +1,7 @@
 import App from "../App";
 import RecipesList from "../containers/recipes/recipes-list";
 import RecipeScroll from "../containers/recipes/recipes-scroll";
+import RecipesSearch from "../containers/recipes/recipes-search";
 import AboutPage from "../pages/about/about-page";
 import AdminPage from "../pages/admin/admin-page";
 import AdminCommentsPage from "../pages/admin/pages/admin-comments";
@@ -45,8 +46,8 @@ export const routes = [
                         element : <TopRecipePage />
                     },
                     {
-                        path: 'test',
-                        element: <RecipeScroll />
+                        path: 'search',
+                        element: <RecipesSearch />
                     }
                 ]
             },
