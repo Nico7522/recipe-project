@@ -1,13 +1,23 @@
 import { getAll } from "../../../../API/recipe"
+import RecipeAdmin from "../../../components/recipe/recipe-admin";
 
 export default function RecipeGestion() {
     const {data, isError, isLoading} = getAll()
-    console.log(data);
+
+    if (isLoading) {
+        return <p>Wait...</p>
+    }
+
+    if (isError) {
+        return <p>Error !</p>
+    }
+    
     return (
-        <div>
-            {isLoading ? <p>Wait...</p> : isError ? <p>Error!</p> : (data.map(r => {
-                return <h2>{r.name}</h2>
-            }))}
+        <div className="grid grid-cols-4 gap-4 w-3/4 m-auto mt-32">
+
+         {data.map((recipe) => {
+            return <RecipeAdmin {...recipe} />
+         })}
         </div>
     )
 }

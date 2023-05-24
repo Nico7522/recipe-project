@@ -21,7 +21,7 @@ export const getAll = () => {
   return useQuery(['Recipes'], async () => {
    const {data} = await axios.get('http://localhost:8080/api/recipe/admin');
    console.log(data);
-   return data.recipes
+   return data.results
   })
 }
 
@@ -165,10 +165,47 @@ export const deleteRecipe = (id) => {
       // { id } => déstructure l'id du context
       onSettled: (data, err, context) => {
         queryClient.invalidateQueries(["Recipes", context.id]);
-        console.log(context);
-        setTimeout(() => {
-          naviguation("/recipes");
-        }, 2000);
+        // console.log(context);
+        // setTimeout(() => {
+        //   naviguation("/recipes");
+        // }, 2000);
+      },
+    }
+  );
+};
+
+export const updateValidity = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    ({ id, validity }) => {
+      return axios.patch(`http://localhost:8080/api/recipe/admin/${id}`, {
+        valid: validity,
+      });
+    },
+    {
+      onMutate: async (data) => {
+        await queryClient.cancelQueries({
+          queryKey: ["Recipes", data.id],
+        });
+        const previousRecipe = queryClient.getQueryData(["Recipes", data.id]);
+        queryClient.setQueryData(["Recipes", data.id], data);
+
+        return { previousRecipe, data };
+      },
+      onError: (error, data, context) => {
+        console.log(context.previousRecipe);
+        queryClient.setQueryData(
+          ["Recipes", context.data.id],
+          context.previousRecipe
+        );
+      },
+      onSettled: (data, error,  variables, context) => {
+    
+
+        queryClient.invalidateQueries({
+          queryKey: ["Recipes", data.id],
+        });
       },
     }
   );

@@ -10,6 +10,7 @@ import { useId } from "react";
 import CommentForm from "../comments/comment-form";
 import { useNavigate } from "react-router-dom";
 import { useCalcMacro } from "../../hooks/macro-hooks";
+import ShowTags from "../../../utils/show-tags";
 
 // + " " + (!showComment && "h-12 break-words overflow-scroll")
 export default function Recipe({
@@ -18,6 +19,7 @@ export default function Recipe({
   imgURL,
   description,
   ingredients,
+  tags,
   comments,
   reactions,
   creatorId,
@@ -29,6 +31,7 @@ export default function Recipe({
   );
   const {macro} = useCalcMacro(ingredients)
   const { mutate } = deleteRecipe();
+
   comments.sort((a, b) => {
     const dateA = new Date(a.createdAt);
     const dateB = new Date(b.createdAt);
@@ -76,16 +79,26 @@ export default function Recipe({
         <Reaction id={id} reactions={reactions} />
       </div>
 
-      <div className="ml-5 bg-green-700 text-center  w-56 rounded-2xl pb-2">
+    <div className="flex flex-row space-x-36 items-center justify-center m-auto w-3/4 mb-5">
+
+    
+      <div className="ml-5 bg-green-700 text-center w-96 rounded-2xl pb-2">
         <h3 className="font">Ingredients 👇👇👇</h3>
         {ingredients.map((i) => (
           <Ingredient {...i} tabMacro={tabMacro} />
         ))}
-            <div className="bg-green-800 text-lime-50	 w-3/4 m-auto rounded-2xl shadow-2xl">
+            <div className="bg-green-800 text-lime-50 w-96 m-auto rounded-2xl shadow-2xl">
       <h3>Total : {macro.kcals} kcals</h3>
       <p>Carbohydrates : {macro.carbohydrates} g</p>
       <p>Fats : {macro.fats} g</p>
       <p>proteins : {macro.proteins} g</p>
+
+      </div>
+      </div>
+      <div className="flex flex-col bg bg-green-800 text-lime-50 w-60 m-auto rounded-2xl shadow-2xl">
+      {tags.map((t) => (
+        <h3 className="text-white text-2xl text-center">{ShowTags(t)}</h3>
+      ))}
 
       </div>
       </div>

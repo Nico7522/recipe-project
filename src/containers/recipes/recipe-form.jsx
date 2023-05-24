@@ -196,7 +196,7 @@ export default function RecipeForm() {
     { label: "Healthy", value: "Healty", id: "2" },
     { label: "Dessert", value: "Dessert", id: "3" },
   ];
-  const { userId } = useFetchUser()
+  const { userId } = useFetchUser();
 
   const [isIngredientsValidate, setIngredientValidate] = useState(false);
   const disabledButton = `mt-5 bg-gray-300 text-white font-[Poppins] py-2 px-6 rounded md:ml-8 hover:bg-gray-400 
@@ -246,7 +246,7 @@ export default function RecipeForm() {
     getValues,
   } = useForm({});
 
-  const [tabTempo, setTabTempo] = useState([])
+  const [tabTempo, setTabTempo] = useState([]);
   const submit = (data) => {
     setModal(true);
     const tabTags = data.tags.map((t) => {
@@ -260,14 +260,13 @@ export default function RecipeForm() {
       tags: tabTags,
       UserId: userId,
     });
-    setTabTempo(tabTemp)
+    setTabTempo(tabTemp);
   };
-  
-  const sendData = () => {
-    setModal(false)
-    mutate(tabTempo[0]);
 
-  }
+  const sendData = () => {
+    setModal(false);
+    mutate(tabTempo[0]);
+  };
   return (
     <div className="w-96 m-auto">
       <ConfirmModal sendData={sendData} toogleModal={setModal} modal={modal} />
@@ -277,13 +276,18 @@ export default function RecipeForm() {
           className="w-96 m-auto flex flex-col"
           onSubmit={handleSubmit(submit)}
         >
-          <div>
+          <div className="flex flex-col text-center">
             <label htmlFor="name">Name</label>
             <input {...register("name")} type="text" />
           </div>
           <div className="flex flex-col text-center">
             <label htmlFor="description">Description</label>
-            <input {...register("description")} id="desc"/>
+
+            <textarea
+              {...register("description")}
+              id="desc"
+              className="w-96 h-60 rounded-lg shadow-2xl resize-none"
+            ></textarea>
           </div>
 
           <h3 className="text-3xl text-center">Tag👇👇👇</h3>
@@ -308,7 +312,6 @@ export default function RecipeForm() {
 
           <div className="text-center -ml-12">
             <Button
-              style={"-ml-8"}
               text={"CREATE"}
               styleDisable={disabledButton}
               disable={!isIngredientsValidate}
@@ -369,9 +372,6 @@ const FormIngredients = ({ func, tab, isIngredientsValidate }) => {
 
     let i = 0;
     while (i < tabId.length) {
-      console.log(tabId[i].id);
-      console.log(tabFinalQuantity[i].quantity);
-      console.log(tabFinalUnits[i].unit);
       tabIngre.push({
         id: tabId[i].id,
         quantity: tabFinalQuantity[i].quantity,
@@ -426,7 +426,7 @@ const FormIngredients = ({ func, tab, isIngredientsValidate }) => {
             </select>
           </div>
         ))}
-        <div className="text-center -ml-12">
+        <div className="text-center">
           <Button text={"Validate your ingredients"} type={"submit"}></Button>
         </div>
       </form>
