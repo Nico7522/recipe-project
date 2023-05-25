@@ -92,7 +92,7 @@ export default function Recipe({
         {ingredients.map((i) => (
           <Ingredient {...i} tabMacro={tabMacro} />
         ))}
-            <div className="bg-green-800 text-lime-50 w-96 m-auto rounded-2xl shadow-2xl">
+      <div className="bg-green-800 text-lime-50 w-96 m-auto rounded-2xl shadow-2xl">
       <h3>Total : {macro.kcals} kcals</h3>
       <p>Carbohydrates : {macro.carbohydrates} g</p>
       <p>Fats : {macro.fats} g</p>
@@ -102,7 +102,7 @@ export default function Recipe({
       </div>
       <div className="flex flex-col bg bg-green-800 text-lime-50 w-60 m-auto rounded-2xl shadow-2xl">
       {tags.map((t) => (
-        <h3 onClick={() => handle(t)} className="text-white text-2xl text-center">{ShowTags(t)}</h3>
+        <h3 onClick={() => handle(t)} className="text-white text-2xl text-center cursor-pointer">{ShowTags(t)}</h3>
       ))}
 
       </div>

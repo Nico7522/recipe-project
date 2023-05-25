@@ -1,8 +1,19 @@
+import { data } from "autoprefixer";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { useSearchParams } from "react-router-dom";
 import Button from "../button";
 
-export default function SearchBar({ setSearch, search, className }) {
+export default function SearchBar({ setSearchParams, search, className }) {
+  // const [searchParams, setSearchParams] = useSearchParams()
+  const {register, handleSubmit} = useForm()
+
+  const handleSearch = (data) => {
+    setSearchParams({'name': data.name});
+
+  }
   return (
-    <form className={className}>
+    <form className={className} onSubmit={handleSubmit(handleSearch)}>
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -28,8 +39,9 @@ export default function SearchBar({ setSearch, search, className }) {
           </svg>
         </div>
         <input
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          // value={search}
+          // onChange={(e) => setSearch(e.target.value)}
+          {...register('name')}
           type="search"
           id="default-search"
           className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -38,6 +50,7 @@ export default function SearchBar({ setSearch, search, className }) {
         />
 
       </div>
+      <Button type={'submit'} text={'Search'} />
     </form>
   );
 }

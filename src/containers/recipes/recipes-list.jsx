@@ -137,10 +137,10 @@ export default function RecipeScroll() {
     hasNextPage,
     hasPreviousPage,
   } = useInfiniteQuery([
-    "Recipes", {tag: searchParams.get('tag') || "" }],
+    "Recipes", {tag: searchParams.get('tag') || searchParams.get('name') || "" }],
     async ({ pageParam = 0}) => {
       const { data } = await axios.get(
-        `http://localhost:8080/api/recipe?tag=${searchParams.get('tag') || ''}&page=${pageParam}`
+        `http://localhost:8080/api/recipe?tag=${searchParams.get('tag') || ''}&name=${searchParams.get('name') || '' }&page=${pageParam}`
       );
       return data;
     },
@@ -164,10 +164,6 @@ export default function RecipeScroll() {
     setSearchParams({'tag': t})
 
   }
-  const navigation = useNavigate()
-  const handleReset = () => {
-    navigation('/recipes')
-  }
 
   if (isLoading) {
     return <div className="customloader"></div>;
@@ -181,7 +177,6 @@ export default function RecipeScroll() {
   return (
 
     <div className="flex flex-col " >
-      <button onClick={() => handleReset()}>ALL</button>
     <div
       
       className="flex-grow overflow-scroll scrollbar-hide flex flex-col gap-5"
@@ -191,7 +186,7 @@ export default function RecipeScroll() {
 
         <SearchBar
           search={search}
-          setSearch={setSearch}
+          setSearchParams={setSearchParams}
           className="order-1"
         />
 

@@ -19,7 +19,7 @@ export default function Ingredient({
 
   return (
     <div>
-      {console.log(macro)}
+      
       <p>{name}</p>
       <p>
         {quantity} <span className="font">{units}</span>
