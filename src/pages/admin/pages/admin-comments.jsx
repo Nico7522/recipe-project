@@ -1,5 +1,7 @@
+import CommentGestion from "../../../containers/admin/commentsgestion/comment-gestion";
+
 export default function AdminCommentsPage(){
     return(
-        <p>IS COMMING! </p>
+        <CommentGestion />
     )
 }

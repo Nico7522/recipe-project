@@ -14,6 +14,16 @@ export const useFetchComments = () => {
     return data.results;
   });
 };
+
+export const useFetchCommentsAdmin = () => {
+  const queryClient = useQueryClient();
+  return useQuery("Comments", async () => {
+    const { data } = await axios.get("http://localhost:8080/api/comment");
+
+    return data;
+  });
+};
+
 export const postComment = () => {
   const queryClient = useQueryClient();
 
@@ -44,6 +54,43 @@ export const postComment = () => {
       onSettled: (data, context, variables, err, comment) => {
         queryClient.invalidateQueries("Comments");
         queryClient.invalidateQueries("Recipes");
+      },
+    }
+  );
+};
+
+export const validComment = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    ({ id, statusChange }) => {
+      return axios.patch(`http://localhost:8080/api/user/${id}`, {
+        status: statusChange,
+      });
+    },
+    {
+      onMutate: async (data) => {
+        await queryClient.cancelQueries({
+          queryKey: ["Users", data.id],
+        });
+        const previousUser = queryClient.getQueryData(["Users", data.id]);
+        queryClient.setQueryData(["Users", data.id], data);
+
+        return { previousUser, data };
+      },
+      onError: (error, data, context) => {
+        console.log(context.previousUser);
+        queryClient.setQueryData(
+          ["Users", context.data.id],
+          context.previousUser
+        );
+      },
+      onSettled: (data, error,  variables, context) => {
+        console.log("sdsdsdd",context);
+
+        queryClient.invalidateQueries({
+          queryKey: ["Users", data.id],
+        });
       },
     }
   );
