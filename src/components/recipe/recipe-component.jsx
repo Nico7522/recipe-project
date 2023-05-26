@@ -36,7 +36,7 @@ export default function Recipe({
   comments.sort((a, b) => {
     const dateA = new Date(a.createdAt);
     const dateB = new Date(b.createdAt);
-    return dateB - dateB;
+    return dateA - dateB;
   });
 
   let tabMacro = [];

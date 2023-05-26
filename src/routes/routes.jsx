@@ -10,6 +10,7 @@ import AdminUserPage from "../pages/admin/pages/admin-users";
 import HomePage from "../pages/home/home.page";
 import RecipeCreatePage from "../pages/recipes/recipe-create.pages";
 import RecipeDetailsPage from "../pages/recipes/recipe-details.page";
+import RecipeSearchPage from "../pages/recipes/recipe-search-page";
 import TopRecipePage from "../pages/recipes/recipe-top";
 import RecipesPage from "../pages/recipes/recipes-page";
 import LoginPage from "../pages/user/login/login-page";
@@ -47,8 +48,9 @@ export const routes = [
                     },
                     {
                         path: 'search',
-                        element: <RecipesSearch />
-                    }
+                        element: <RecipeSearchPage />
+                    },
+                   
                 ]
             },
             {

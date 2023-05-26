@@ -47,9 +47,10 @@ export const postReaction = (reaction) => {
       onError: async (err, reaction, context) => {
         queryClient.setQueryData("Comments", context.previousReactions);
       },
-      onSettled: (data, context, variables, err, comment) => {
+      onSettled: (data, error, variables, comment) => {
+        
         queryClient.invalidateQueries("Reactions");
-        queryClient.invalidateQueries("Recipes");
+        queryClient.invalidateQueries("Recipes", variables.recipeId);
       },
     }
   );

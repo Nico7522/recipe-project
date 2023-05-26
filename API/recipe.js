@@ -9,11 +9,13 @@ import { useNavigation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useInfiniteQuery } from "react-query";
 
-const fetchRecipe = async (offset) => {
-  const { data } = axios.get(
-    "http://localhost:8080/api/recipe?limit=3&offset=" + offset
-  );
-  return data;
+export const useFetchRecipe =  (tags) => {
+  const queryClient = useQueryClient();
+
+  return useQuery(['Recipes'], async () => {
+    const { data } = await axios.get(`http://localhost:8080/api/recipe?tag=${tags}`);
+    return data.results
+  })
 };
 
 export const getAll = () => {
@@ -27,10 +29,9 @@ export const getAll = () => {
 
 export const useFetchLastestRecipes = () => {
   const queryClient = useQueryClient();
-  return useQuery(["Recipes", { limit: 3, offset: 0 }], () =>
-    fetch("http://localhost:8080/api/recipe?limit=3&offset=0").then((r) =>
-      r.json()
-    )
+  return useQuery(["Recipes", { limit: 3, offset: 0 }], async () =>{
+    const {data} = await axios.get("http://localhost:8080/api/recipe?page=1")
+  return data}
   );
 };
 

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { postComment, useFetchComments } from "../../../API/comment";
 import { useFetchUser } from "../../hooks/user-hooks";
-import Button from "../button";
+import Button from "../Button";
 
 export default function CommentForm({id}){
     const { userId }  = useFetchUser();
@@ -16,7 +16,7 @@ export default function CommentForm({id}){
             RecipeId : id
         }
         console.log('data', comment);
-       mutate(comment)
+        mutate(comment)
 
     }
 

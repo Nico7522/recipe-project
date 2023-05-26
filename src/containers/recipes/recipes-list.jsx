@@ -98,7 +98,7 @@
 
 import { useInfiniteQuery } from "react-query";
 // import { useFetchAllRecipes } from "../../../API/recipe";
-import Button from "../../components/button";
+// import Button from "../../components/button";
 import Recipe from "../../components/recipe/recipe-component";
 import Title from "../../components/title/title";
 import { Link } from "react-router-dom";
@@ -115,11 +115,12 @@ import { useInView } from "react-intersection-observer";
 import { useFetchComments } from "../../../API/comment";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button";
 
 
 export default function RecipeScroll() {
   const [searchParams, setSearchParams] = useSearchParams()
-
+  const navigation = useNavigate()
   const { ref, inView } = useInView();
   const [offset, setOffset] = useState(0);
   const { token, userStatus, userId } = useFetchUser();
@@ -140,7 +141,7 @@ export default function RecipeScroll() {
     "Recipes", {tag: searchParams.get('tag') || searchParams.get('name') || "" }],
     async ({ pageParam = 0}) => {
       const { data } = await axios.get(
-        `http://localhost:8080/api/recipe?tag=${searchParams.get('tag') || ''}&name=${searchParams.get('name') || '' }&page=${pageParam}`
+        `http://localhost:8080/api/recipe?page=${pageParam}&tag=${searchParams.get('tag') || ''}&name=${searchParams.get('name') || '' }`
       );
       return data;
     },
@@ -153,15 +154,16 @@ export default function RecipeScroll() {
         }
     }
   );
-   const searchs = searchParams.get('tag') && `&tag=${searchParams.get('tag')}`
+
   
   useEffect(() => { 
   if (inView) {
     fetchNextPage()
   }
   }, [inView]);
-  const handleSearchTag = (t) => {
-    setSearchParams({'tag': t})
+  const handleSearchTag = async (t) => {
+   setSearchParams({ 'tag': t })
+    navigation(`/recipes/search?tag=${t}`)
 
   }
 

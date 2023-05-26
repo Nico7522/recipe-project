@@ -53,7 +53,7 @@ export const postComment = () => {
       },
       onSettled: (data, context, variables, err, comment) => {
         queryClient.invalidateQueries("Comments");
-        queryClient.invalidateQueries("Recipes");
+        queryClient.invalidateQueries("Recipes", variables.RecipeId);
       },
     }
   );
