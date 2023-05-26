@@ -9,12 +9,15 @@ import { useNavigation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useInfiniteQuery } from "react-query";
 
-export const useFetchRecipe =  (tags) => {
+export const useFetchRecipe =  (params) => {
   const queryClient = useQueryClient();
+  console.log(params);
+  let search = ''
+    params.tags.forEach((r) => (search+= `&tag=${r}`))
+  return useQuery(['Recipes', {tags: params.tags}, {name: params.name}], async () => {
+    const { data } = await axios.get(`http://localhost:8080/api/search?tag=${search || ''}&name=${params.recipe || ''}`);
 
-  return useQuery(['Recipes'], async () => {
-    const { data } = await axios.get(`http://localhost:8080/api/recipe?tag=${tags}`);
-    return data.results
+    return data
   })
 };
 

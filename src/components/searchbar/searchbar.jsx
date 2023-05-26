@@ -2,14 +2,18 @@ import { data } from "autoprefixer";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
-import Button from "../button";
+import Button from "../Button";
+import { useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function SearchBar({ setSearchParams, search, className }) {
-  // const [searchParams, setSearchParams] = useSearchParams()
+export default function SearchBar({ className }) {
+  const [searchParams, setSearchParams] = useSearchParams()
   const {register, handleSubmit} = useForm()
-
+  const navigation = useNavigate()
   const handleSearch = (data) => {
     setSearchParams({'name': data.name});
+    navigation(`/recipes/search?name=${data.name}`)
+
 
   }
   return (

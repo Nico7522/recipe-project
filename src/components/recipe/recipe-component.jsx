@@ -33,11 +33,7 @@ export default function Recipe({
   const {macro} = useCalcMacro(ingredients)
   const { mutate } = deleteRecipe();
 
-  comments.sort((a, b) => {
-    const dateA = new Date(a.createdAt);
-    const dateB = new Date(b.createdAt);
-    return dateA - dateB;
-  });
+
 
   let tabMacro = [];
   ingredients.forEach(macro => {

@@ -15,7 +15,6 @@
 // import { useInView } from "react-intersection-observer";
 
 // export default function RecipesList() {
-  
 
 //   const [offset, setOffset] = useState(0);
 //   const [finish, setFinish] = useState(false);
@@ -52,7 +51,7 @@
 //       const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
 //       if (!finish && !isFetching && scrollTop + clientHeight === scrollHeight) {
 //         setOffset(offset + 3);
-      
+
 //       }
 //     }
 //   };
@@ -77,7 +76,7 @@
 //             <Button text={"CREATE A NEW RECIPE"}></Button>
 //           </Link>
 //         </div>
-        
+
 //         {recipes.map((recipe) =>
 //           recipe.name.includes(search) ? (
 //             <Recipe key={recipe.id} userId={userId} {...recipe} />
@@ -86,15 +85,11 @@
 //           )
 //         )}
 
-       
-
 //         {isFetching && <Loader className="flex justify-center" />}
 //       </div>
 //     </div>
 //   );
 // }
-
-
 
 import { useInfiniteQuery } from "react-query";
 // import { useFetchAllRecipes } from "../../../API/recipe";
@@ -116,11 +111,11 @@ import { useFetchComments } from "../../../API/comment";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
-
+import generateSearchParams from "../../../utils/generate-search-params";
 
 export default function RecipeScroll() {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const navigation = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigation = useNavigate();
   const { ref, inView } = useInView();
   const [offset, setOffset] = useState(0);
   const { token, userStatus, userId } = useFetchUser();
@@ -137,35 +132,45 @@ export default function RecipeScroll() {
     fetchPreviousPage,
     hasNextPage,
     hasPreviousPage,
-  } = useInfiniteQuery([
-    "Recipes", {tag: searchParams.get('tag') || searchParams.get('name') || "" }],
-    async ({ pageParam = 0}) => {
+  } = useInfiniteQuery(
+    [
+      "Recipes",
+      { tag: searchParams.get("tag") || searchParams.get("name") || "" },
+    ],
+    async ({ pageParam = 0 }) => {
       const { data } = await axios.get(
-        `http://localhost:8080/api/recipe?page=${pageParam}&tag=${searchParams.get('tag') || ''}&name=${searchParams.get('name') || '' }`
+        `http://localhost:8080/api/recipe?page=${pageParam}&tag=${
+          searchParams.get("tag") || ""
+        }`
       );
       return data;
     },
     {
       getPreviousPageParam: (firstPage) => firstPage.results ?? undefined,
       getNextPageParam: (lastPage, allPages) => {
-        const nextPage = allPages.length + 1
-        return lastPage.results.length !== 0 ? nextPage : undefined
-
-        }
+        const nextPage = allPages.length + 1;
+        return lastPage.results.length !== 0 ? nextPage : undefined;
+      },
     }
   );
 
-  
-  useEffect(() => { 
-  if (inView) {
-    fetchNextPage()
-  }
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
   }, [inView]);
-  const handleSearchTag = async (t) => {
-   setSearchParams({ 'tag': t })
-    navigation(`/recipes/search?tag=${t}`)
+    const handleSearchTag = async (t) => {
+    const search = generateSearchParams(["Main course", "Dessert"]);
+    console.log(search);
+    // let paramsURL = new URLSearchParams();
+    // setSearchParams({ tag: t });
+    // paramsURL.append("tag", "Main course");
+    // paramsURL.append("tag", "Dessert");
+    // let search = "";
+    // paramsURL.forEach((r) => (search += `&tag=${r}`));
 
-  }
+    navigation(`/recipes/search?${search}`);
+  };
 
   if (isLoading) {
     return <div className="customloader"></div>;
@@ -174,47 +179,43 @@ export default function RecipeScroll() {
     return <p>{error.response.data}</p>;
   }
 
-
-
   return (
+    <div className="flex flex-col ">
+      <div className="flex-grow overflow-scroll scrollbar-hide flex flex-col gap-5">
+        <div className="flex flex-row items-center justify-between">
+          <Title text={"ALL RECIPES !"} className="order-2 md:mt-20 lg:mt-20" />
 
-    <div className="flex flex-col " >
-    <div
-      
-      className="flex-grow overflow-scroll scrollbar-hide flex flex-col gap-5"
-    >
-      <div className="flex flex-row items-center justify-between">
-        <Title text={"ALL RECIPES !"} className="order-2 md:mt-20 lg:mt-20" />
+          <SearchBar
+            search={search}
+            setSearchParams={setSearchParams}
+            className="order-1"
+          />
 
-        <SearchBar
-          search={search}
-          setSearchParams={setSearchParams}
-          className="order-1"
-        />
+          <Link to="/recipes/create" className="order-3">
+            <Button text={"CREATE A NEW RECIPE"}></Button>
+          </Link>
+        </div>
 
-        <Link to="/recipes/create" className="order-3">
-          <Button text={"CREATE A NEW RECIPE"}></Button>
-        </Link>
-      </div>
-      
-
-      {data.pages.map((page, pageIndex) => (
-          <div key={pageIndex} >
+        {data.pages.map((page, pageIndex) => (
+          <div key={pageIndex}>
             {page.results.map((recipe) => (
-                          <Recipe handleSearchTag={handleSearchTag} key={recipe.id} userId={userId} {...recipe} />
-
+              <Recipe
+                handleSearchTag={handleSearchTag}
+                key={recipe.id}
+                userId={userId}
+                {...recipe}
+              />
             ))}
-     <button
-            ref={ref}
-            onClick={() => fetchNextPage()}
-            disabled={!hasNextPage || isFetchingNextPage}
-          ></button>
+            <button
+              ref={ref}
+              onClick={() => fetchNextPage()}
+              disabled={!hasNextPage || isFetchingNextPage}
+            ></button>
           </div>
         ))}
-     
-      {isFetching && <Loader className="flex justify-center" />}
-    </div >
-  </div>
 
-    );
-  }
+        {isFetching && <Loader className="flex justify-center" />}
+      </div>
+    </div>
+  );
+}
