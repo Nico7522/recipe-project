@@ -5,17 +5,21 @@ import { useSearchParams } from "react-router-dom";
 import Button from "../Button";
 import { useNavigation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function SearchBar({ className }) {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const {register, handleSubmit} = useForm()
-  const navigation = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams();
+  useEffect(() => {});
+  const { register, handleSubmit } = useForm();
+  const navigation = useNavigate();
   const handleSearch = (data) => {
-    setSearchParams({'name': data.name});
-    navigation(`/recipes/search?name=${data.name}`)
+    const searchParams = new URLSearchParams();
+    searchParams.append("name", "jean");
+    searchParams.append("name", "pierre");
 
-
-  }
+    const url = `/recipes/search?${searchParams.toString()}`;
+    navigation(url);
+  };
   return (
     <form className={className} onSubmit={handleSubmit(handleSearch)}>
       <label
@@ -45,16 +49,15 @@ export default function SearchBar({ className }) {
         <input
           // value={search}
           // onChange={(e) => setSearch(e.target.value)}
-          {...register('name')}
+          {...register("name")}
           type="search"
           id="default-search"
           className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Search a recipe..."
           required
         />
-
       </div>
-      <Button type={'submit'} text={'Search'} />
+      <Button type={"submit"} text={"Search"} />
     </form>
   );
 }
