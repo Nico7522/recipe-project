@@ -1,5 +1,5 @@
 import { useForm, Controller } from "react-hook-form";
-import Button from "../../components/button";
+import Button from "../../components/Button";
 import { RegisterUser } from "../../../API/connexion";
 import * as yup from "yup";
 import DatePicker from "../../components/datepicker/datepicker";

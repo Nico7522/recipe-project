@@ -3,7 +3,7 @@ import { Controller, useFormContext } from "react-hook-form"
 import { MultiSelect } from "react-multi-select-component";
 
 export default function FormInput(){
-    const { register, control } = useFormContext()
+    const { register, control} = useFormContext()
     const [tag, setTag] = useState([]);
 
     const tags = [
@@ -14,8 +14,13 @@ export default function FormInput(){
     return (
         <Controller
             control={control}
+            rules={{
+              required: { value: true, message: "Required" },
+          
+            }}
             name="tags"
-            render={({ field: { onChange, value }, formState }) => (
+            
+            render={({ field: { onChange, value }, formState, fieldState: {errors} }) => (
               <MultiSelect
                 options={tags}
                 value={tag}
