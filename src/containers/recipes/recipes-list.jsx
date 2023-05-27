@@ -93,7 +93,7 @@
 
 import { useInfiniteQuery } from "react-query";
 // import { useFetchAllRecipes } from "../../../API/recipe";
-// import Button from "../../components/button";
+
 import Recipe from "../../components/recipe/recipe-component";
 import Title from "../../components/title/title";
 import { Link } from "react-router-dom";
@@ -112,8 +112,10 @@ import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import generateSearchParams from "../../../utils/generate-search-params";
+import { FormProvider, useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
-export default function RecipeScroll() {
+export default function RecipeList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigation = useNavigate();
   const { ref, inView } = useInView();
@@ -159,17 +161,17 @@ export default function RecipeScroll() {
       fetchNextPage();
     }
   }, [inView]);
-    const handleSearchTag = async (t) => {
-    const search = generateSearchParams(["Main course", "Dessert"]);
-    console.log(search);
+  const handleSearchTag =  (t) => {
+    const searchParam = generateSearchParams(["Main course", "Dessert"]);
+    console.log(searchParam);
     // let paramsURL = new URLSearchParams();
-    // setSearchParams({ tag: t });
+    setSearchParams({ tag: t });
     // paramsURL.append("tag", "Main course");
     // paramsURL.append("tag", "Dessert");
     // let search = "";
     // paramsURL.forEach((r) => (search += `&tag=${r}`));
 
-    navigation(`/recipes/search?${search}`);
+    navigation(`/recipes/search?${searchParam}`);
   };
 
   if (isLoading) {
@@ -184,12 +186,17 @@ export default function RecipeScroll() {
       <div className="flex-grow overflow-scroll scrollbar-hide flex flex-col gap-5">
         <div className="flex flex-row items-center justify-between">
           <Title text={"ALL RECIPES !"} className="order-2 md:mt-20 lg:mt-20" />
+          
+       
+              <SearchBar
+               
+                
 
-          <SearchBar
-            search={search}
-            setSearchParams={setSearchParams}
-            className="order-1"
-          />
+                className="order-1"
+              />
+          
+            
+          
 
           <Link to="/recipes/create" className="order-3">
             <Button text={"CREATE A NEW RECIPE"}></Button>

@@ -5,6 +5,6 @@ export default function ProductListPage() {}
 return (
   <>
  
-    <RecipesList limit={null} offset={null} />
+    <RecipesList/>
   </>
 );
