@@ -2,7 +2,7 @@ import style from './loader.module.css'
 
 const Loader = ({className}) => (
     <div className={className}>
-       <div class={style['lds-roller']}><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+       <div className={style['lds-roller']}><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </div>
 );
 

@@ -61,7 +61,7 @@ export default function Recipe({
     >
       <h2
         onClick={() => goToDetails(id)}
-        className="uppercase tracking-widest text-3xl text-center title underline cursor-pointer"
+        className="uppercase tracking-widest w-60 m-auto text-3xl text-center title underline cursor-pointer"
       >
         {name}
       </h2>

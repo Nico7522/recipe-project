@@ -23,7 +23,7 @@ const NavBar = () => {
   }
   let Links = [
     { name: "HOME", link: "/" },
-    { name: "RECIPES", link: "/recipes" },
+    { name: "RECIPES", link: "/recipes/all" },
     { name: "INGREDIENTS", link: "/" },
     { name: "RECIPES OF THE WEEKS", link: "/recipes/top" },
     { name: "CONTACT", link: "/" },
@@ -31,7 +31,7 @@ const NavBar = () => {
   let [open, setOpen] = useState(false);
   return (
     <div className="shadow-md w-full">
-      <div className=" md:flex items-center justify-between bg-white py-4 md:px-10 px-7 dark:bg-black dark:shadow-green-300 dark:shadow-2xl">
+      <div className=" md:flex items-center justify-between bg-white py-4 md:px-10 px-7 dark:bg-black dark:shadow-green-300 dark:shadow-2xl ">
         <div
           className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] 
       text-gray-800"

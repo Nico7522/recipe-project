@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useQueryClient } from "react-query";
 import { useFetchRecipeById } from "../../../API/recipe";
-import Button from "../../components/button";
+import Button from "../../components/Button";
 import Recipe from "../../components/recipe/recipe-component";
 import { useFetchUser } from "../../hooks/user-hooks";
 import { useQuery } from "react-query";

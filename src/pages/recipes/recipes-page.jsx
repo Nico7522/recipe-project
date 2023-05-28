@@ -6,7 +6,7 @@ export default function RecipesPage(){
 
     return(
         <>
-        
+
         <Outlet />
         
         </>

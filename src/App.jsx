@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div className="">
-      <header className="z-10 top-0 start-0 end-0 fixed">
+      <header className="z-50 top-0 start-0 end-0 fixed">
         <NavBar />
       </header>
       <main className="mt-[7.2rem]">
