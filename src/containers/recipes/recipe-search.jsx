@@ -5,7 +5,7 @@ import { useEffect } from "react"
 
 export default function RecipeSearch() {
     const [searchParams, setSearchParams] = useSearchParams()
-    const {data, isError, isLoading } = useFetchRecipe({tags:searchParams.getAll('tag'), recipe:searchParams.get('name')})
+    const {data, isError, isLoading } = useFetchRecipe({tags:searchParams.getAll('tags'), recipe:searchParams.get('name')})
 
     if (isLoading) {
         return <p>Wait...</p>

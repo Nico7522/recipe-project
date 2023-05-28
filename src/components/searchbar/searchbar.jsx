@@ -5,22 +5,31 @@ import Button from "../Button";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import FormInput from "../form/form-input";
+import generateSearchParams from "../../../utils/generate-search-params";
 
 export default function SearchBar({ className }) {
   // const { register, handleSubmit } = useForm();
   const navigation = useNavigate();
   const methods = useForm();
-  const handleSearch = (data) => {
-    const searchParams = new URLSearchParams();
-    searchParams.append("name", "jean");
-    searchParams.append("name", "pierre");
+  // const handleSearch = (data) => {
+  //   const searchParams = new URLSearchParams();
+  //   searchParams.append("name", "jean");
+  //   searchParams.append("name", "pierre");
 
-    const url = `/recipes/search?${searchParams.toString()}`;
-    navigation(url);
-  };
+  //   const url = `/recipes/search?${searchParams.toString()}`;
+  //   navigation(url);
+  // };
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = ({name, tags}) => {
+    let tabTags = [];
+    tags.forEach(tag => 
+     ( tabTags.push(tag.value))
+    );
+    const nameParams = generateSearchParams('name', name)
+    const tagsParams = generateSearchParams('tags', tabTags)
+    console.log(tagsParams);
+    const url = `/recipes/search?${nameParams || ""}&${tagsParams || ""}`;
+    navigation(`/recipes/search?${nameParams || ""}&${tagsParams || ""}`);
   };
 
   return (
@@ -71,7 +80,7 @@ export default function SearchBar({ className }) {
         </div>
         <Button type={"submit"} text={"Search"} />
       </form>
-      {console.log(methods.formState.errors)}
+     
     </FormProvider>
   );
 }
