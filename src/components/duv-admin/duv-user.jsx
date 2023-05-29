@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
 import { deleteUser, updateStatus } from "../../../API/connexion";
-import Button from "../button";
+import Button from "../Button";
 
 export default function DuvUser({id}) {
     const { register, handleSubmit } = useForm();

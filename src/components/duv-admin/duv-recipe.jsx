@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { deleteRecipe, updateValidity } from "../../../API/recipe";
-import Button from "../button";
+import Button from "../Button";
 
 export default function DuvRecipe({id, valid}) {
     const navigation = useNavigate()

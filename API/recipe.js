@@ -147,7 +147,7 @@ export const useUpdateRecipe = (recipeToUpdate, setError) => {
   });
 };
 
-export const deleteRecipe = (id) => {
+export const deleteRecipe = () => {
   const queryClient = useQueryClient();
   const naviguation = useNavigate();
   return useMutation(
@@ -155,11 +155,11 @@ export const deleteRecipe = (id) => {
       axios.delete(`http://localhost:8080/api/recipe/${id}`);
     },
     {
-      onMutate: async (id) => {
-        await queryClient.cancelQueries(["Recipes", id]);
-        const previousRecipes = queryClient.getQueriesData(["Recipes", id]);
+      onMutate: async (variables) => {
+        await queryClient.cancelQueries(["Recipes", variables.id]);
+        const previousRecipes = queryClient.getQueriesData(["Recipes", variables.id]);
 
-        queryClient.setQueryData(["Recipes", id]);
+        queryClient.setQueryData(["Recipes", variables.id]);
         return { previousRecipes };
       },
       onError: (err, id, context) => {
@@ -167,8 +167,9 @@ export const deleteRecipe = (id) => {
       },
 
       // { id } => déstructure l'id du context
-      onSettled: (data, err, context) => {
-        queryClient.invalidateQueries(["Recipes", context.id]);
+      onSettled: (data, error, variables, context) => {
+   
+        queryClient.invalidateQueries(["Recipes"]);
         // console.log(context);
         // setTimeout(() => {
         //   naviguation("/recipes");

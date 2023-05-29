@@ -112,26 +112,28 @@ export const updateStatus = () => {
   );
 };
 
-export const deleteUser = (id) => {
+export const deleteUser = () => {
   const queryClient = useQueryClient();
   return useMutation(
     async (id) => {
       axios.delete(`http://localhost:8080/api/user/${id}`);
     },
     {
-      onMutate: async (id) => {
-        await queryClient.cancelQueries(["Users", id]);
-        const previousUsers = queryClient.getQueriesData(["Users", id]);
+      onMutate: async (variables) => {
+        console.log('variables onMutate', variables);
+        await queryClient.cancelQueries(["Users", variables]);
+        const previousUsers = queryClient.getQueryData(["Users", variables]);
 
-        queryClient.setQueryData(["Users", id]);
+        queryClient.setQueryData(["Users", variables]);
         return { previousUsers };
       },
-      onError: (err, id, context) => {
-        queryClient.setQueryData(["Users", id], context.previousUsers);
+      onError: (error, variables, context) => {
+        queryClient.setQueryData(["Users", variables], context.previousUsers);
       },
 
-      onSettled: (data, err, {id}, context) => {
-        queryClient.invalidateQueries(["Users", id]);
+      onSettled: (data, err, variables, context) => {
+      
+        queryClient.invalidateQueries(["Users"]);
      
       },
     }
