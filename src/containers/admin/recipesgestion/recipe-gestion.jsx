@@ -13,7 +13,7 @@ export default function RecipeGestion() {
     }
     
     return (
-        <div className="grid grid-cols-4 gap-4 w-3/4 m-auto mt-32">
+        <div className="grid grid-cols-4 gap-4 w-3/4 m-auto mt-32 bg-slate-400">
 
          {data.map((recipe) => {
             return <RecipeAdmin {...recipe} />

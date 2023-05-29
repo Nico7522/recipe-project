@@ -12,7 +12,7 @@ export default function RecipeAdmin({
   return (
     <div className="w-72 h-96">
        
-    <div className="w-72 h-80 overflow-scroll overflow-x-hidden overflow-y-scroll scrollbar scrollbar-thumb-rounded-md scrollbar-thumb-green-700 scrollbar-track-gray-100 scrollbar-w-2 border-red-400 border-2  bg-black break-words text-center">
+    <div className="w-68 h-80 rounded-md overflow-scroll overflow-x-hidden overflow-y-scroll scrollbar scrollbar-thumb-rounded-md scrollbar-thumb-green-700 scrollbar-track-gray-100 scrollbar-w-2  bg-black break-words text-center">
         <h2 className="text-align text-white">Valid : {valid ? 'True' : "False"}</h2>
       <img
         src={"http://localhost:8080" + imgURL}

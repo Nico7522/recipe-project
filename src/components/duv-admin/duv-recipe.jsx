@@ -10,7 +10,7 @@ export default function DuvRecipe({id, valid}) {
     duration-500`
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row justify-center">
       <Button valid={!valid} styleDisable={styleDisable} disable={valid && true} onClick={() => changeStatus.mutate({id, validity: true})} text={"Valide"} />
       <Button valid={valid} styleDisable={styleDisable} disable={!valid && true} onClick={() => changeStatus.mutate({id, validity: false})} text={"Unvalide"} className={"bg-red-500"} />
       <Button onClick={() => removeRecipe.mutate(id)} text={"Delete"} className={"bg-red-400"} />
