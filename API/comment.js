@@ -20,7 +20,7 @@ export const useFetchCommentsAdmin = () => {
   return useQuery("Comments", async () => {
     const { data } = await axios.get("http://localhost:8080/api/comment");
 
-    return data;
+    return data.results;
   });
 };
 
@@ -63,33 +63,33 @@ export const validComment = () => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    ({ id, statusChange }) => {
-      return axios.patch(`http://localhost:8080/api/user/${id}`, {
-        status: statusChange,
+    ({ id, validity }) => {
+      return axios.patch(`http://localhost:8080/api/comment/${id}`, {
+        valid: validity,
       });
     },
     {
       onMutate: async (data) => {
         await queryClient.cancelQueries({
-          queryKey: ["Users", data.id],
+          queryKey: ["Comments", data.id],
         });
-        const previousUser = queryClient.getQueryData(["Users", data.id]);
-        queryClient.setQueryData(["Users", data.id], data);
+        const previousUser = queryClient.getQueryData(["Comments", data.id]);
+        queryClient.setQueryData(["Comments", data.id], data);
 
         return { previousUser, data };
       },
       onError: (error, data, context) => {
         console.log(context.previousUser);
         queryClient.setQueryData(
-          ["Users", context.data.id],
+          ["Comments", context.data.id],
           context.previousUser
         );
       },
       onSettled: (data, error,  variables, context) => {
-        console.log("sdsdsdd",context);
+       
 
         queryClient.invalidateQueries({
-          queryKey: ["Users", data.id],
+          queryKey: ["Comments", data.id],
         });
       },
     }

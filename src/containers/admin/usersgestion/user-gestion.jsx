@@ -1,6 +1,7 @@
 import { useFetchUser } from "../../../../API/connexion";
 import UserProfil from "../../../components/profil/profil";
 import User from "../../../components/profil/user";
+import LastestRecipe from "../../recipes/lastest-recipes";
 
 export default function UserGestion() {
   const { data, isLoading, isError } = useFetchUser();
@@ -12,6 +13,7 @@ export default function UserGestion() {
   if (isError) {
     return <p>Error !</p>;
   }
+
   return (
     <>
       <h2>TO DO ! </h2>
@@ -20,6 +22,8 @@ export default function UserGestion() {
         {data.map((user) => {
           return <User {...user} />;
         })}
+
+       
       </div>
     </>
   );
