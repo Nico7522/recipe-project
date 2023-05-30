@@ -15,6 +15,19 @@ export const useFetchComments = () => {
   });
 };
 
+export const useFetchCommentById = ({cId}) => {
+  console.log('ddddd',cId);
+  const queryClient = useQueryClient();
+  return useQuery(['Comments', cId], async () => {
+    const { data } = await axios.get(
+      `http://localhost:8080/api/recipe/comment/${cId}`
+    )
+    return data.result.text
+    
+  })
+
+}
+
 export const useFetchCommentsAdmin = () => {
   const queryClient = useQueryClient();
   return useQuery("Comments", async () => {

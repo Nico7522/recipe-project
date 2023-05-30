@@ -1,4 +1,5 @@
 import App from "../App";
+import UpdateRecipe from "../containers/recipes/recipe-update";
 import RecipesList from "../containers/recipes/recipes-list";
 
 import AboutPage from "../pages/about/about-page";
@@ -6,6 +7,7 @@ import AdminPage from "../pages/admin/admin-page";
 import AdminCommentsPage from "../pages/admin/pages/admin-comments";
 import AdminRecipesPage from "../pages/admin/pages/admin-recipes";
 import AdminUserPage from "../pages/admin/pages/admin-users";
+import CommentUpdatePage from "../pages/comment/commentuptade-page";
 import HomePage from "../pages/home/home.page";
 import RecipeCreatePage from "../pages/recipes/recipe-create.pages";
 import RecipeDetailsPage from "../pages/recipes/recipe-details.page";
@@ -54,10 +56,7 @@ export const routes = [
             path: "top",
             element: <TopRecipePage />,
           },
-          // {
-          //     path: 'search',
-          //     element: <RecipeSearchPage />
-          // },
+      
         ],
       },
       {
@@ -106,6 +105,15 @@ export const routes = [
           },
         ],
       },
+      {
+        path: "comment",
+        children: [
+          {
+            path: ':commentId',
+            element: <CommentUpdatePage />
+          }
+        ]
+      }
     ],
   },
 ];

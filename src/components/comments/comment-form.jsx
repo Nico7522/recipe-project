@@ -1,12 +1,16 @@
 import { useForm } from "react-hook-form"
-import { postComment, useFetchComments } from "../../../API/comment";
+import { postComment, useFetchCommentById, useFetchComments } from "../../../API/comment";
 import { useFetchUser } from "../../hooks/user-hooks";
 import Button from "../Button";
+import { useEffect, useState } from "react";
 
 export default function CommentForm({id}){
     const { userId }  = useFetchUser();
+    const [text, setText] = useState('')
     const { mutate, error } = postComment();
     const { data } = useFetchComments()
+   
+
     const { register, handleSubmit} = useForm()
     const handleComment =  (data) => {
         console.log('data', data);
@@ -20,6 +24,9 @@ export default function CommentForm({id}){
 
     }
 
+
+   
+    
     return (
         <form className="flex flex-col justify-center items-center" onSubmit={handleSubmit(handleComment)}>
             <div className="text-center p-2">
