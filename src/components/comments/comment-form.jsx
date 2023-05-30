@@ -4,14 +4,14 @@ import { useFetchUser } from "../../hooks/user-hooks";
 import Button from "../Button";
 import { useEffect, useState } from "react";
 
-export default function CommentForm({id}){
+export default function CommentForm({id, update, comment}){
     const { userId }  = useFetchUser();
     const [text, setText] = useState('')
     const { mutate, error } = postComment();
     const { data } = useFetchComments()
-   
+  
 
-    const { register, handleSubmit} = useForm()
+    const { register, handleSubmit, setValue, resetField} = useForm()
     const handleComment =  (data) => {
         console.log('data', data);
         const comment = {
@@ -23,7 +23,13 @@ export default function CommentForm({id}){
         mutate(comment)
 
     }
-
+    if (update) {
+        setValue('comment', comment)
+    }
+    
+    if (!update) {
+        setValue('comment', "")
+    }
 
    
     
@@ -36,7 +42,7 @@ export default function CommentForm({id}){
             </div>
             {error && userId && <span className="text-red-500">Error ! </span>}
             {(error && !userId) && <span className="text-red-500">You must be logged !</span>}
-            <Button className={'bg-green-500'} type={'submit'} text={"POST"} />
+            {update === false ? <Button className={'bg-green-500'} type={'submit'} text={"POST"} /> : <Button className={'bg-green-500'} type={'submit'} text={"EDIT"} /> }
         </form>
     )
 }

@@ -27,6 +27,8 @@ export default function Recipe({
   userId,
   handleSearchTag
 }) {
+  const [update, setUpdate] = useState(false)
+  const [comment, setComment] = useState(false)
   const [showComment, setShowComment] = useState(
     isNaN(window.location.href.slice(-1))
   );
@@ -52,6 +54,12 @@ export default function Recipe({
 
   const handle = (t) => {
    handleSearchTag(t)
+  }
+  const onUpdate = () => {
+    setUpdate(!update)
+  }
+  const handleComment = (text) => {
+    setComment(text)
   }
 
   return (
@@ -111,12 +119,12 @@ export default function Recipe({
           </h3>
           <div className={!showComment && "h-40 overflow-y-scroll scrollbar scrollbar-thumb-rounded-md scrollbar-thumb-green-700 scrollbar-track-gray-100 scrollbar-w-2"}>
             {comments.map((c) => (
-              <Comment {...c} />
+              <Comment update={update} onUpdate={onUpdate} handleComment={handleComment} {...c} />
             ))}
           </div>
         </div>
         <div className="flex flex-col m-auto w-96 items-center justify-center">
-          <CommentForm id={id} />
+          <CommentForm update={update} id={id} comment={comment} />
         </div>
       </div>
     </div>
