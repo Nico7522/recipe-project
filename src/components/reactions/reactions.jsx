@@ -1,9 +1,11 @@
 import { postReaction, useFetchReactions } from "../../../API/reaction";
+import { useFetchUser } from "../../hooks/user-hooks";
 
 export default function Reaction({ reactions, id }) {
  
   // const {data, error, isLoading} = useFetchReactions()
   const {mutate} = postReaction()
+  const { userId } = useFetchUser()
   let like = 0;
   let tasty = 0;
   let dislike = 0;
@@ -25,13 +27,13 @@ export default function Reaction({ reactions, id }) {
   return (
     <div className=" flex flex-row cursor-pointer">
       <p onClick={() => mutate({reaction: "like",
-    userId: 1,
+    userId: userId,
     recipeId: id})}>❤ : {like}</p>
       <p onClick={() => mutate({reaction: "tasty",
-    userId: 1,
+    userId: userId,
     recipeId: id})}>🤤 : {tasty}</p>
       <p onClick={() => mutate({reaction: "dislike",
-    userId: 1,
+    userId: userId,
     recipeId: id})}>👎 : {dislike}</p>
     </div>
   );
