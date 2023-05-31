@@ -74,20 +74,19 @@ export const validComment = () => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    ({ id, validity }) => {
-      return axios.patch(`http://localhost:8080/api/comment/${id}`, {
+      async ({ id, validity }) => {
+     return axios.patch(`http://localhost:8080/api/comment/${id}`, {
         valid: validity,
       });
     },
     {
-      onMutate: async (data) => {
-        await queryClient.cancelQueries({
-          queryKey: ["Comments", data.id],
-        });
-        const previousUser = queryClient.getQueryData(["Comments", data.id]);
-        queryClient.setQueryData(["Comments", data.id], data);
+      onMutate: async (variables) => {
+        console.log(variables);
+        await queryClient.cancelQueries({ queryKey: ['Comments', variables.id] });
+        const previousComment = queryClient.getQueryData(["Comments", variables.id]);
+        queryClient.setQueryData(["Comments", variables.id], variables);
 
-        return { previousUser, data };
+        return { previousComment, variables };
       },
       onError: (error, data, context) => {
         console.log(context.previousUser);
@@ -96,10 +95,9 @@ export const validComment = () => {
           context.previousUser
         );
       },
-      onSettled: (data, error, variables, context) => {
-        queryClient.invalidateQueries({
-          queryKey: ["Comments", data.id],
-        });
+      onSettled: ({data}, error, {id, validity}, context) => {
+      
+        queryClient.invalidateQueries({ queryKey: ['Comments', data.result.id] });
       },
     }
   );

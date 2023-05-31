@@ -19,7 +19,7 @@ export default function CommentGestion() {
     const {
         status,
         isLoading,
-        
+        isIdle,
         data,
         error,
         isFetching,
@@ -47,7 +47,7 @@ export default function CommentGestion() {
         }
       );
 
-    if (isLoading) {
+    if (isLoading || isIdle) {
         return <p>Wait...</p>
     }
 
@@ -60,13 +60,14 @@ export default function CommentGestion() {
             {data.pages.map((page, pageIndex) => (
           <div className="lg:flex lg:flex-row md:flex md:flex-col sm:flex sm:flex-wrap  m-auto w-4/5" key={pageIndex} >
             {page.map((c) => (
-                          <section className="max-w-86 h-60 m-auto mt-2 bg-green-700 flex flex-col shadow-2xl rounded-md">
+                          <section className=" w-86 max-w-96 h-60 m-auto mt-2 bg-green-700 flex flex-col shadow-2xl rounded-md">
+                          
                           <div className="text-center font">
                            {c.valid ? <p className="text-green-800">Valid</p> : <p className="text-red-800">Unvalid</p>}
        
                           </div>
                         
-                       <div className="flex flex-col justify-center max-w-60 h-40 m-auto mt-1 bg-green-700 rounded-2xl text-center break-words overflow-scroll overflow-x-hidden overflow-y-scroll scrollbar scrollbar-thumb-rounded-md scrollbar-thumb-red-700 scrollbar-track-green-700 scrollbar-w-1 "> 
+                       <div className="flex flex-col justify-center w-48 max-w-56 h-40 m-auto mt-1 bg-green-700 rounded-2xl text-center break-words overflow-scroll overflow-x-hidden overflow-y-scroll scrollbar scrollbar-thumb-rounded-md scrollbar-thumb-red-700 scrollbar-track-green-700 scrollbar-w-1 "> 
                            {c.userId ? <h3 > <span className="font">User ID :</span>{c.userId} <span className="font">& Author : </span>{c.userName}</h3> : <p className="bg-red-300">No user found</p>}
                            <p className=""><span className="font">Comment :</span>{c.text}</p>
                            <h3 className="flex flex-col" > {c.recipeId && <span className="font">Recipe ID :</span>}{c.recipeId} {c.recipeName && <span className="font">& Name : </span>}{c.recipeName}</h3>
