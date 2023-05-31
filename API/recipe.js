@@ -205,12 +205,10 @@ export const updateValidity = () => {
           context.previousRecipe
         );
       },
-      onSettled: (data, error,  variables, context) => {
-    
+      onSettled: ({data}, error,  variables, context) => {
+        console.log(data);
 
-        queryClient.invalidateQueries({
-          queryKey: ["Recipes", data.id],
-        });
+        queryClient.invalidateQueries({ querKey: ['Recipes', data.result.id] });
       },
     }
   );

@@ -97,7 +97,7 @@ export const validComment = () => {
       },
       onSettled: ({data}, error, {id, validity}, context) => {
       
-        queryClient.invalidateQueries({ queryKey: ['Comments', data.result.id] });
+        queryClient.invalidateQueries({ querKey: ['Comments', data.result.id] });
       },
     }
   );
