@@ -1,17 +1,37 @@
-import { useNavigate } from "react-router-dom"
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function Comment({id, text, userName, createdAt, update, onUpdate, handleComment}) {
-    const navigation = useNavigate()
- const handleComm = (text) => {
-        onUpdate(false)
-        handleComment(text)
+export default function Comment({
+  id,
+  text,
+  userName,
+  createdAt,
+  update,
+  setUpdate,
+  handleComment,
+}) {
+
+
+  const navigation = useNavigate();
+  const handleComm = (text, e) => {
     // navigation('/comment/'+id)
- }
-    return (
-        <div onClick={() => handleComm(text)} className="border-b-2 border-green-700">
-            <span className="font">{userName ? userName : 'Name not found'}</span>
-            <span> [{createdAt}]</span>
-            <p>{text}</p>
-        </div>
-    )
+  };
+  const handleEdit = (text, id) => {
+    handleComment({text:text, id:id});
+    setUpdate(true)
+  };
+
+  return (
+    <div
+      
+      className="border-b-2 border-green-700"
+    >
+      <button onClick={() => handleEdit(text, id)}>EDIT</button>
+     
+    
+      <span className="font">{userName ? userName : "Name not found"}</span>
+      <span> [{createdAt}]</span>
+      <p>{text}</p>
+    </div>
+  );
 }

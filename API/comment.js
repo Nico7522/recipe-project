@@ -15,18 +15,16 @@ export const useFetchComments = () => {
   });
 };
 
-export const useFetchCommentById = ({cId}) => {
-  console.log('ddddd',cId);
+export const useFetchCommentById = ({ cId }) => {
+  console.log("ddddd", cId);
   const queryClient = useQueryClient();
-  return useQuery(['Comments', cId], async () => {
+  return useQuery(["Comments", cId], async () => {
     const { data } = await axios.get(
       `http://localhost:8080/api/recipe/comment/${cId}`
-    )
-    return data.result.text
-    
-  })
-
-}
+    );
+    return data.result.text;
+  });
+};
 
 export const useFetchCommentsAdmin = () => {
   const queryClient = useQueryClient();
@@ -98,12 +96,43 @@ export const validComment = () => {
           context.previousUser
         );
       },
-      onSettled: (data, error,  variables, context) => {
-       
-
+      onSettled: (data, error, variables, context) => {
         queryClient.invalidateQueries({
           queryKey: ["Comments", data.id],
         });
+      },
+    }
+  );
+};
+
+export const updateComment = () => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    async (up) => {
+      return axios.put(
+        "http://localhost:8080/api/recipe/comment/" + up.idComment,
+        { text: up.text }
+      );
+    },
+    {
+      onMutate: async (up) => {
+        await queryClient.cancelQueries(["Comments", up.idComment]);
+        const previousComment = queryClient.getQueryData([
+          "Comments",
+          up.idComment,
+        ]);
+        queryClient.setQueryData(["Comments", up.idComment], up);
+        return { previousComment, up };
+      },
+      onError: (err, up, context) => {
+        queryClient.setQueryData(
+          ["Comments", context.up.idComment],
+          context.previousComment
+        );
+      },
+      onSettled: (data, error, variables) => {
+        console.log(variables);
+        queryClient.invalidateQueries(["Comments", variables.id]);
       },
     }
   );
