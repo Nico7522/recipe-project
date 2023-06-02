@@ -22,7 +22,10 @@ export const useFetchUser = () => {
       .then(({ data }) => {
         return data.results;
       });
-  });
+      
+  }
+  );
+  
 };
 
 export const useFetchUserById = ({ logedUserId }) => {
@@ -86,6 +89,7 @@ export const updateStatus = () => {
     },
     {
       onMutate: async (data) => {
+   
         await queryClient.cancelQueries({
           queryKey: ["Users", data.id],
         });
@@ -94,6 +98,7 @@ export const updateStatus = () => {
 
         return { previousUser, data };
       },
+
       onError: (error, data, context) => {
         console.log(context.previousUser);
         queryClient.setQueryData(
@@ -101,12 +106,10 @@ export const updateStatus = () => {
           context.previousUser
         );
       },
-      onSettled: (data, error,  variables, context) => {
-        console.log("sdsdsdd",context);
-
-        queryClient.invalidateQueries({
-          queryKey: ["Users", data.id],
-        });
+      onSettled: ({ data }, error, variables, context) => {
+        queryClient.invalidateQueries(
+          ["Users", data.id],
+        );
       },
     }
   );
@@ -120,7 +123,7 @@ export const deleteUser = () => {
     },
     {
       onMutate: async (variables) => {
-        console.log('variables onMutate', variables);
+        console.log("variables onMutate", variables);
         await queryClient.cancelQueries(["Users", variables]);
         const previousUsers = queryClient.getQueryData(["Users", variables]);
 
@@ -132,9 +135,9 @@ export const deleteUser = () => {
       },
 
       onSettled: (data, err, variables, context) => {
-      
-        queryClient.invalidateQueries(["Users"]);
-     
+        queryClient.invalidateQueries({
+          queryKey: ["Users"],
+        });
       },
     }
   );
