@@ -7,6 +7,7 @@ import {
 import axios from "axios";
 import { fetchUser } from "./FETCH/fetch-user";
 import { updateUserStatut } from "./PATCH/patch-user-statut";
+import { removeUser } from "./DELETE/delete-user";
 // L'ORDRE DANS LE QUEL ON PASSE LES ARGUMENTS EST IMPORTANT !!!!!!!!!
 export const fetchUserLogin = async (userLog) => {
   const { data } = await axios.post(
@@ -53,17 +54,17 @@ export const RegisterUser = (user) => {
     {
       onMutate: async (user) => {
         await queryClient.cancelQueries({
-          queryKey: ["Users", user],
+          queryKey: ["Users"],
         });
         const previousUsers = queryClient.getQueryData("Users");
         queryClient.setQueryData("Users", (old) => [old, user]);
         return { previousUsers };
       },
-      onError: async (err, user, context) => {
+      onError: (err, user, context) => {
         queryClient.setQueryData("Users", context.previousUsers);
         return err;
       },
-      onSettled: async (err, context, variable) => {
+      onSettled: (err, context, variable) => {
         queryClient.invalidateQueries("Users");
         return context;
       },
@@ -71,79 +72,50 @@ export const RegisterUser = (user) => {
   );
 };
 
-export const updateStatus = () => {
-  const queryClient = useQueryClient();
-  return useMutation(
-    async ({ id, statusChange }) => {
-      return axios.patch(`http://localhost:8080/api/user/${id}`, {
-        status: statusChange,
-      });
-    },
-    {
-      onMutate: async (data) => {
-        console.log(data);
-        await queryClient.cancelQueries({
-          queryKey: ["Users", data.id],
-        });
-        const previousUser = queryClient.getQueryData(["Users", data.id]);
-        queryClient.setQueryData(["Users", data.id], data.statusChange);
-
-        return { previousUser, data };
-      },
-
-      onError: (error, data, context) => {
-        console.log(context.previousUser);
-        queryClient.setQueryData(
-          ["Users", context.data.id],
-          context.previousUser
-        );
-      },
-      onSettled: ({ data }, error, variables, context) => {
-        queryClient.invalidateQueries({ queryKey: ["Users", data.id] });
-      },
-    }
-  );
-};
-
-export const updateStatutTest = () => {
+// Update du statut des utilisateurs
+export const updateStatut = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateUserStatut,
-    onSuccess: ({ data }) => {
-      queryClient.setQueryData(["Users", data.result.id], data);
+    onMutate: async (data) => {
+      await queryClient.cancelQueries({
+        queryKey: ["Users", data.id],
+      });
+      const previousUser = queryClient.getQueryData(["Users", data.id]);
+      queryClient.setQueryData(["Users", data.id], data);
+      return { previousUser, data };
     },
-
-    onSettled: ({ data }) => {
-      console.log(data.result.id);
+    onError: (error, variables, context) => {
+      queryClient.setQueryData(
+        ["Users", context.data.id],
+        context.previousRecipe
+      );
+    },
+    onSettled: ({ data }, error, variables) => {
       queryClient.invalidateQueries({ queryKey: ["Users", data.result.id] });
     },
   });
 };
 
+
+// Supprimer des utilisateurs
 export const deleteUser = () => {
   const queryClient = useQueryClient();
-  return useMutation(
-    async (id) => {
-      axios.delete(`http://localhost:8080/api/user/${id}`);
+  return useMutation({
+    mutationFn: removeUser,
+    onMutate: async (id) => {
+      await queryClient.cancelQueries(["Users", id]);
+      const previousUsers = queryClient.getQueryData(["Users", id]);
+      queryClient.setQueryData(["Users", id]);
+      return { previousUsers };
     },
-    {
-      onMutate: async (variables) => {
-        console.log("variables onMutate", variables);
-        await queryClient.cancelQueries(["Users", variables]);
-        const previousUsers = queryClient.getQueryData(["Users", variables]);
-
-        queryClient.setQueryData(["Users", variables]);
-        return { previousUsers };
-      },
-      onError: (error, variables, context) => {
-        queryClient.setQueryData(["Users", variables], context.previousUsers);
-      },
-
-      onSettled: (data, err, variables, context) => {
-        queryClient.invalidateQueries({
-          queryKey: ["Users"],
-        });
-      },
-    }
-  );
+    onError: (error, id, context) => {
+      queryClient.setQueryData(["Users", id], context.previousUsers);
+    },
+    onSettled: (data, err, variables, context) => {
+      queryClient.invalidateQueries({
+        queryKey: ["Users"],
+      });
+    },
+  });
 };

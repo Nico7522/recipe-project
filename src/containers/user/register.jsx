@@ -16,7 +16,7 @@ export default function Register() {
   if (data) {
     dispatch(loginAction(data.result))
     setTimeout(() => {
-      navigation('/recipes')
+      navigation('/recipes/all')
     }, 1500);
   }
 
@@ -53,7 +53,6 @@ export default function Register() {
 
   const submitRegister = (data) => {
     const user = data
-    console.log("user",user);
     mutate(user)
     
  

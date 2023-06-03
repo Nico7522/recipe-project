@@ -1,19 +1,16 @@
 import { useForm } from "react-hook-form";
-import { deleteUser, updateStatus, updateStatutTest, useFetchUser } from "../../../API/connexion";
+import { deleteUser, updateStatut} from "../../../API/connexion";
 import Button from "../Button";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 
 export default function DuvUser({ id }) {
-
   const { register, handleSubmit } = useForm();
-  const updateUser = updateStatus()
-  const test = updateStatutTest()
+  const update = updateStatut()
   const banUser = deleteUser();
   const handleStatus = ({ status }) => {
     const statusChange = status;
-
-    test.mutate({id, statusChange})
+     update.mutate({id, statusChange})
    
   };
   return (

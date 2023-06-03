@@ -38,7 +38,7 @@ export default function Login() {
     if (data) {
     console.log(data);
       dispatch(loginAction(data.result))
-      naviguation('/recipes')
+      naviguation('/recipes/all')
     }
   return (
     <form onSubmit={handleSubmit(onLogin)} className="text-center mt-96 m-auto w-80 border-sky-400 border-2 flex flex-col justify-center content-center">

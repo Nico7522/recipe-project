@@ -9,6 +9,7 @@ import { useNavigation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useInfiniteQuery } from "react-query";
 import { fetchRecipe } from "./FETCH/fetch-recipe";
+import { updateRecipeValidity } from "./PATCH/patch-recipe-validity";
 
 export const useFetchRecipe = (params) => {
   const queryClient = useQueryClient();
@@ -176,25 +177,19 @@ export const deleteRecipe = () => {
       // { id } => déstructure l'id du context
       onSettled: (data, error, variables, context) => {
         queryClient.invalidateQueries(["Recipes"]);
-        // console.log(context);
-        // setTimeout(() => {
-        //   naviguation("/recipes");
-        // }, 2000);
+  
       },
     }
   );
 };
 
+
+// Update de la validité des recipes
 export const updateValidity = () => {
   const queryClient = useQueryClient();
-
   return useMutation(
-    ({ id, validity }) => {
-      return axios.patch(`http://localhost:8080/api/recipe/admin/${id}`, {
-        valid: validity,
-      });
-    },
     {
+      mutationFn: updateRecipeValidity,
       onMutate: async (data) => {
         await queryClient.cancelQueries({
           queryKey: ["Recipes", data.id],
@@ -212,7 +207,7 @@ export const updateValidity = () => {
         );
       },
       onSettled: ({ data }, error, variables, context) => {
-        console.log(data);
+        console.log(data.result.id);
 
         queryClient.invalidateQueries({ querKey: ["Recipes", data.result.id] });
       },
