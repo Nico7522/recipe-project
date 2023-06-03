@@ -3,10 +3,10 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useFetchUser } from "../hooks/user-hooks";
-import { logoutAction } from "../store/actions/user.action";
-import Button from "./Button";
-import UserProfil from "./profil/profil";
+import { useFetchUser } from "../../hooks/user-hooks.js";
+import { logoutAction } from "../../store/actions/user.action.js";
+import Button from "../Button";
+import UserProfil from "../profil/profil";
 
 const NavBar = () => {
   const dispatch = useDispatch()

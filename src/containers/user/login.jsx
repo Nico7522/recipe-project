@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import {} from 'react-hook-form'
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { fetchUser} from '../../../API/connexion';
+import { fetchUserLogin} from '../../../API/connexion';
 import * as yup from 'yup'
 import { useDispatch } from 'react-redux';
 import { loginAction } from '../../store/actions/user.action';
@@ -23,7 +23,7 @@ export default function Login() {
     });
 
     const {isLoading, isError, error, data, mutate} = useMutation({
-      mutationFn:(userLog) => fetchUser(userLog),
+      mutationFn:(userLog) => fetchUserLogin(userLog),
       onMutate: (variables) => {return variables},
       onError: (error) => {return error},
       onSuccess: (data) => {return data.result},

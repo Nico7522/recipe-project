@@ -8,34 +8,38 @@ import axios from "axios";
 import { useNavigation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useInfiniteQuery } from "react-query";
+import { fetchRecipe } from "./FETCH/fetch-recipe";
 
-export const useFetchRecipe =  (params) => {
+export const useFetchRecipe = (params) => {
   const queryClient = useQueryClient();
   console.log(params);
-  let search = ''
-    params.tags.forEach((r) => (search+= `&tag=${r}`))
-  return useQuery(['Recipes', {tags: params.tags}, {name: params.name}], async () => {
-    const { data } = await axios.get(`http://localhost:8080/api/search?tag=${search || ''}&name=${params.recipe || ''}`);
+  let search = "";
+  params.tags.forEach((r) => (search += `&tag=${r}`));
+  return useQuery(
+    ["Recipes", { tags: params.tags }, { name: params.name }],
+    async () => {
+      const { data } = await axios.get(
+        `http://localhost:8080/api/search?tag=${search || ""}&name=${
+          params.recipe || ""
+        }`
+      );
 
-    return data
-  })
+      return data;
+    }
+  );
 };
 
 export const getAll = () => {
   const queryClient = useQueryClient();
-  return useQuery(['Recipes'], async () => {
-   const {data} = await axios.get('http://localhost:8080/api/recipe/admin');
-   console.log(data);
-   return data.results
-  })
-}
+  return useQuery({ queryKey: ["Recipes"] , queryFn: fetchRecipe });
+};
 
 export const useFetchLastestRecipes = () => {
   const queryClient = useQueryClient();
-  return useQuery(["Recipes", { limit: 3, offset: 0 }], async () =>{
-    const {data} = await axios.get("http://localhost:8080/api/recipe?page=1")
-  return data}
-  );
+  return useQuery(["Recipes", { limit: 3, offset: 0 }], async () => {
+    const { data } = await axios.get("http://localhost:8080/api/recipe?page=1");
+    return data;
+  });
 };
 
 export const useFetchTopRecipes = () => {
@@ -157,7 +161,10 @@ export const deleteRecipe = () => {
     {
       onMutate: async (variables) => {
         await queryClient.cancelQueries(["Recipes", variables.id]);
-        const previousRecipes = queryClient.getQueriesData(["Recipes", variables.id]);
+        const previousRecipes = queryClient.getQueriesData([
+          "Recipes",
+          variables.id,
+        ]);
 
         queryClient.setQueryData(["Recipes", variables.id]);
         return { previousRecipes };
@@ -168,7 +175,6 @@ export const deleteRecipe = () => {
 
       // { id } => déstructure l'id du context
       onSettled: (data, error, variables, context) => {
-   
         queryClient.invalidateQueries(["Recipes"]);
         // console.log(context);
         // setTimeout(() => {
@@ -205,10 +211,10 @@ export const updateValidity = () => {
           context.previousRecipe
         );
       },
-      onSettled: ({data}, error,  variables, context) => {
+      onSettled: ({ data }, error, variables, context) => {
         console.log(data);
 
-        queryClient.invalidateQueries({ querKey: ['Recipes', data.result.id] });
+        queryClient.invalidateQueries({ querKey: ["Recipes", data.result.id] });
       },
     }
   );

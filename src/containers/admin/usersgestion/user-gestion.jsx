@@ -4,7 +4,7 @@ import User from "../../../components/profil/user";
 import LastestRecipe from "../../recipes/lastest-recipes";
 
 export default function UserGestion() {
-  const { data, isLoading, isError } = useFetchUser();
+  const { data: users, isLoading, isError } = useFetchUser()
 
   if (isLoading) {
     return <p>Wait...</p>;
@@ -19,7 +19,7 @@ export default function UserGestion() {
       <h2>TO DO ! </h2>
 
       <div className="sm:flex sm:flex-wrap sm:m-auto bg-white w-3/4 max-w-7xl m-auto xl:flex xl:flex-wrap xl:gap-2 ">
-        {data.map((user) => {
+        {users.map((user) => {
           return <User {...user} />;
         })}
 

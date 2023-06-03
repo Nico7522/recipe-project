@@ -1,13 +1,6 @@
-import axios from "axios";
+
 import "./App.css";
-import NavBar from "./components/navbar";
-import { useQueryClient, useMutation, useQuery } from "react-query";
-import {
-  useFetchAllRecipes,
-  useFetchRecipeById,
-  useUpdateRecipe,
-} from "../API/recipe";
-import { useState } from "react";
+import NavBar from "./components/navbar/navbar";
 import { Outlet } from "react-router-dom";
 
 
