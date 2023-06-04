@@ -21,7 +21,7 @@ export default function FormSearch() {
   };
   return (
     <FormProvider {...methods}>
-      <form className="flex flex-col w-28 ml-2 " onSubmit={methods.handleSubmit(handleSearch)}>
+      <form className="flex flex-col w-20 sm:w-28 ml-2 " onSubmit={methods.handleSubmit(handleSearch)}>
         <SearchBar />
         <FormInput />
         <Button className={"z-10"} type={"submit"} text={"Search"} />

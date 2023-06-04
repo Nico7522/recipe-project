@@ -184,10 +184,10 @@ export default function RecipeList() {
   return (
     <div className="flex flex-col -mt-20 ml-12">
       <div className="flex-grow overflow-scroll scrollbar-hide flex flex-col gap-5">
-        <div className="flex flex-col items-center justify-center w-96 m-auto">
+        <div className="flex flex-col items-center justify-center  ">
           <Title text={"ALL RECIPES !"} className="order-2 md:mt-20 lg:mt-20" />
           
-          <Link to="/recipes/create" className="order-3 ">
+          <Link to="/recipes/create" className="order-3">
             <Button text={"CREATE A NEW RECIPE"}></Button>
           </Link>
         </div>

@@ -14,7 +14,7 @@ export default function RecipeSearch() {
         return <p>Error ! </p>
     }
     return (
-        <div>
+        <div className="flex flex-col mt-20 -ml-14">
 
         {data.map((recipe) => (
             <Recipe {...recipe}/>

@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useFetchUser } from "../../hooks/user-hooks.js";
 import { logoutAction } from "../../store/actions/user.action.js";
-import Button from "../Button";
+
 import UserProfil from "../profil/profil";
+import Button from "../button.jsx";
 
 const NavBar = () => {
   const dispatch = useDispatch()

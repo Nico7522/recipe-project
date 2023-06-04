@@ -200,7 +200,7 @@ export default function RecipeForm() {
   const { userId } = useFetchUser();
 
   const [isIngredientsValidate, setIngredientValidate] = useState(false);
-  const disabledButton = `mt-5 bg-gray-300 text-white font-[Poppins] py-2 px-6 rounded md:ml-8 hover:bg-gray-400 
+  const disabledButton = `bg-gray-300 text-white font-[Poppins] py-2 px-6 rounded hover:bg-gray-400 
   duration-500`;
   const [options, setOptions] = useState([]);
   const [showMultiSelect, setShowMultiSelect] = useState(false);
@@ -269,7 +269,7 @@ export default function RecipeForm() {
     mutate(tabTempo[0]);
   };
   return (
-    <div className="w-96 m-auto">
+    <div className="w-96 mt-36 mb-52 m-auto bg-green-100">
       <ConfirmModal sendData={sendData} toogleModal={setModal} modal={modal} />
       <Title text={"CREATE A NEW RECIPE HERE !"} />
       {showMultiSelect && (
@@ -311,7 +311,7 @@ export default function RecipeForm() {
             )}
           />
 
-          <div className="text-center -ml-12">
+          <div className="text-center mt-2">
             <Button
               text={"CREATE"}
               styleDisable={disabledButton}
@@ -427,7 +427,7 @@ const FormIngredients = ({ func, tab, isIngredientsValidate }) => {
             </select>
           </div>
         ))}
-        <div className="text-center">
+        <div className="text-center mt-2">
           <Button text={"Validate your ingredients"} type={"submit"}></Button>
         </div>
       </form>

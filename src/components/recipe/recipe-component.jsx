@@ -65,7 +65,7 @@ export default function Recipe({
   return (
     <div
       key={id}
-      className="mx-auto w-10/12 shadow-2xl bg-green-300 border-green-500 rounded-2xl relative mt-5 pb-3 pt-3 "
+      className="mx-auto w-9/12	 shadow-2xl bg-green-100 border-8 border-green-500  relative mt-5 pb-3 pt-3 "
     >
       <h2
         onClick={() => goToDetails(id)}
@@ -74,21 +74,26 @@ export default function Recipe({
         {name}
       </h2>
       <div className="text-center flex flex-col lg:flex-row">
+        <div className="rounded-2xl m-auto shadow-md">
         <img
           src={"http://localhost:8080" + imgURL}
-          width={250}
           
-          className="rounded-2xl m-auto shadow-md "
+          
+          
+          
+          className="h-80 w-96"
           alt=""
         />
+
+        </div>
         {console.log(!isNaN(window.location.href.slice(-1)))}
         {userId === creatorId && !isNaN(window.location.href.slice(-1)) && <ImageForm id={id} />}
-        <div className="rounded-2xl bg-green-700 shadow-lg sm:mt-2 p-3 mt-2 sm:w-96 sm:m-auto lg:-ml-12 xl:-ml-28">
+        <div className="rounded-2xl bg-green-700 shadow-lg sm:mt-2 p-3 mt-2 sm:w-96 sm:m-auto  xl:-ml-12">
           <h2 className="text-2xl font">Description</h2>
           <p className="para description overflow-hidden break-words ">{description}</p>
         </div>
       </div>
-      <div className="flex row-auto space-x-2 justify-center">
+      <div className="flex row-auto space-x-2 justify-center bg-green-700 rounded-xl sm:w-80 m-auto mt-2 mb-2">
         <Reaction id={id} reactions={reactions} />
       </div>
 

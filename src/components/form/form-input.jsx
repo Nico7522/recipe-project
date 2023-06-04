@@ -30,7 +30,7 @@ export default function FormInput() {
           labelledBy="Select"
           disableSearch
           hasSelectAll={false}
-          className=" w-28 z-20"
+          className="w-20 sm:w-28  z-20"
         />
       )}
     />
