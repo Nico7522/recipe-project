@@ -73,7 +73,7 @@ export default function Recipe({
       >
         {name}
       </h2>
-      <div className="text-center flex flex-col lg:flex-row">
+      <div className="text-center items-center justify-center flex flex-col lg:flex-row">
         <div className="rounded-2xl m-auto shadow-md">
         <img
           src={"http://localhost:8080" + imgURL}
@@ -87,7 +87,8 @@ export default function Recipe({
 
         </div>
         {console.log(!isNaN(window.location.href.slice(-1)))}
-        {userId === creatorId && !isNaN(window.location.href.slice(-1)) && <ImageForm id={id} />}
+        
+        {userId === creatorId && !isNaN(window.location.href.slice(-1)) && <div className="absolute top-0 left-2"><ImageForm id={id} /></div> }
         <div className="rounded-2xl bg-green-700 shadow-lg sm:mt-2 p-3 mt-2 sm:w-96 sm:m-auto  xl:-ml-12">
           <h2 className="text-2xl font">Description</h2>
           <p className="para description overflow-hidden break-words ">{description}</p>
