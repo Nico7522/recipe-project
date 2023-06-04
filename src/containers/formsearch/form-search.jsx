@@ -2,8 +2,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import SearchBar from "../../components/searchbar/searchbar";
 import FormInput from "../../components/form/form-input";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/Button";
+
 import generateSearchParams from "../../../utils/generate-search-params";
+import Button from "../../components/button";
 
 export default function FormSearch() {
   const methods = useForm();

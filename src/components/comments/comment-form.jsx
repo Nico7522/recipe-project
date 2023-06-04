@@ -6,9 +6,10 @@ import {
   useFetchComments,
 } from "../../../API/comment";
 import { useFetchUser } from "../../hooks/user-hooks";
-import Button from "../Button";
+
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Button from "../button";
 
 export default function CommentForm({
   id,
@@ -68,7 +69,7 @@ export default function CommentForm({
           id=""
           cols="10"
           rows="5"
-          className="w-96 rounded-lg shadow-2xl resize-none"
+          className=" w-36 sm:w-96 rounded-lg shadow-2xl resize-none"
           placeholder="Your comment..."
         ></textarea>
       </div>

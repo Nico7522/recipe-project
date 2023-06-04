@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useInfiniteQuery } from "react-query";
 import { fetchRecipe } from "./FETCH/fetch-recipe";
 import { updateRecipeValidity } from "./PATCH/patch-recipe-validity";
+import { updateImageRecipe } from "./PATCH/patch-image-recipe";
 
 export const useFetchRecipe = (params) => {
   const queryClient = useQueryClient();
@@ -214,3 +215,22 @@ export const updateValidity = () => {
     }
   );
 };
+
+export const updateImage = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateImageRecipe,
+    onMutate: async (data) => {
+      await queryClient.cancelQueries({ queryKey: ["Recipes", data.id] });
+      const previousRecipe = queryClient.getQueryData(["Recipes", data.id]);
+      queryClient.setQueryData(["Recipes", data.id], data);
+      return { previousRecipe, data}
+    },
+    onError: (error, data, context) => {
+      queryClient.setQueryData(["Recipes", context.data.id], context.previousRecipe);
+    },
+    onSettled: (data, error, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: ["Recipes"] })
+    }
+  })
+}
