@@ -8,6 +8,7 @@ import AdminCommentsPage from "../pages/admin/pages/admin-comments";
 import AdminRecipesPage from "../pages/admin/pages/admin-recipes";
 import AdminUserPage from "../pages/admin/pages/admin-users";
 import CommentUpdatePage from "../pages/comment/commentuptade-page";
+import DevelopmentPage from "../pages/development/development-page";
 import HomePage from "../pages/home/home.page";
 import RecipeCreatePage from "../pages/recipes/recipe-create.pages";
 import RecipeDetailsPage from "../pages/recipes/recipe-details.page";
@@ -103,6 +104,10 @@ export const routes = [
             path: "users",
             element: <AdminUserPage />,
           },
+          {
+            path: 'development',
+            element: <DevelopmentPage/>
+          }
         ],
       },
       {

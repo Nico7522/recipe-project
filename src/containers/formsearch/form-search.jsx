@@ -5,25 +5,38 @@ import { useNavigate } from "react-router-dom";
 
 import generateSearchParams from "../../../utils/generate-search-params";
 import Button from "../../components/button";
+import IngredientsForm from "../../components/formingredient/form-ingredients";
 
 export default function FormSearch() {
   const methods = useForm();
   const navigation = useNavigate();
-  const handleSearch = ({name, tags}) => {
-    
+  const handleSearch = (data) => {
+    let tabIngredients = [];
+    for (const i in data) {
+      if (data[i] === true) {
+        tabIngredients.push(i);
+      }
+    }
+    console.log(tabIngredients);
+
     let tabTags = [];
-    tags.forEach((tag) => tabTags.push(tag.value));
-    const nameParams = generateSearchParams("name", name);
+    data.tags.forEach((tag) => tabTags.push(tag.value));
+    const nameParams = generateSearchParams("name", data.name);
     const tagsParams = generateSearchParams("tags", tabTags);
+    const ingredientsParam = generateSearchParams("ingredients", tabIngredients)
     console.log(tagsParams);
-    const url = `/recipes/search?${nameParams || ""}&${tagsParams || ""}`;
-    navigation(`/recipes/all/search?${nameParams}&${tagsParams}`);
+    const url = `/recipes/search?${nameParams || ""}&${tagsParams || ""}&${ingredientsParam || ""}`;
+    navigation(`/recipes/all/search?${nameParams}&${tagsParams}&${ingredientsParam || ""}`);
   };
   return (
     <FormProvider {...methods}>
-      <form className="flex flex-col w-20 sm:w-28 ml-2 " onSubmit={methods.handleSubmit(handleSearch)}>
+      <form
+        className="flex flex-col w-20 sm:w-28 ml-2 "
+        onSubmit={methods.handleSubmit(handleSearch)}
+      >
         <SearchBar />
         <FormInput />
+        <IngredientsForm />
         <Button className={"z-10"} type={"submit"} text={"Search"} />
       </form>
     </FormProvider>
