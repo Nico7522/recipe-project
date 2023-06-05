@@ -27,9 +27,10 @@ export default function FormSearch() {
  
     const nameParams = generateSearchParams("name", data.name);
     const tagsParams = generateSearchParams("tags", tabTags);
+    console.log('tagsParam', tagsParams);
     const ingredientsParam = generateSearchParams("ingredients", tabIngredients)
     console.log(tagsParams);
-    const url = `/recipes/all/search?${data.name && nameParams || ''}&${tagsParams || ''}${ingredientsParam || ""}`;
+    const url = `/recipes/all/search?${data.name && nameParams || ''}&${tagsParams || ''}&${ingredientsParam || ""}`;
     navigation(url);
   };
   return (
