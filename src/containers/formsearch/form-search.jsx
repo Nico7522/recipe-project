@@ -20,13 +20,17 @@ export default function FormSearch() {
     console.log(tabIngredients);
 
     let tabTags = [];
-    data.tags.forEach((tag) => tabTags.push(tag.value));
+    if (data.tags) {
+      data.tags.forEach((tag) => tabTags.push(tag.value));
+      
+    }
+ 
     const nameParams = generateSearchParams("name", data.name);
     const tagsParams = generateSearchParams("tags", tabTags);
     const ingredientsParam = generateSearchParams("ingredients", tabIngredients)
     console.log(tagsParams);
-    const url = `/recipes/search?${nameParams || ""}&${tagsParams || ""}&${ingredientsParam || ""}`;
-    navigation(`/recipes/all/search?${nameParams}&${tagsParams}&${ingredientsParam || ""}`);
+    const url = `/recipes/all/search?${data.name && nameParams || ''}&${tagsParams || ''}${ingredientsParam || ""}`;
+    navigation(url);
   };
   return (
     <FormProvider {...methods}>

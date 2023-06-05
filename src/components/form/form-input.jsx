@@ -8,7 +8,7 @@ export default function FormInput() {
 
   const tags = [
     { label: "Vegan", value: "Vegan", id: "1" },
-    { label: "Healthy", value: "Healty", id: "2" },
+    { label: "Healthy", value: "Healthy", id: "2" },
     { label: "Dessert", value: "Dessert", id: "3" },
   ];
   return (

@@ -16,14 +16,16 @@ export const useFetchRecipe = (params) => {
   const queryClient = useQueryClient();
   console.log(params);
   let search = "";
+  let searchIngredient = ""
   params.tags.forEach((r) => (search += `&tag=${r}`));
+  params.ingredients.forEach((r) => (searchIngredient += `&ingredient=${r}`));
   return useQuery(
-    ["Recipes", { tags: params.tags }, { name: params.name }],
+    ["Recipes", { tags: params.tags }, { name: params.recipe }, { ingredient: params.ingredients}],
     async () => {
       const { data } = await axios.get(
         `http://localhost:8080/api/search?tag=${search || ""}&name=${
           params.recipe || ""
-        }`
+        }&ingredients=${searchIngredient || ""}`
       );
 
       return data;
