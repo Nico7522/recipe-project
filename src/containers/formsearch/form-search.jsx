@@ -6,8 +6,11 @@ import qs from "qs"
 import generateSearchParams from "../../../utils/generate-search-params";
 import Button from "../../components/button";
 import IngredientsForm from "../../components/formingredient/form-ingredients";
+import { useDispatch } from "react-redux";
+import { paramsAction } from "../../store/actions/params.action";
 
 export default function FormSearch() {
+  const dispatch = useDispatch()
   const methods = useForm();
   const navigation = useNavigate();
   const handleSearch = (data) => {
@@ -24,6 +27,13 @@ export default function FormSearch() {
       data.tags.forEach((tag) => tabTags.push(tag.value));
       
     }
+    const infoReducer = {
+      name: data.name,
+      tags: tabTags,
+      ingredients: tabIngredients
+    }
+    dispatch(paramsAction(infoReducer))
+  
     const tag = qs.stringify({tag: tabTags})
     const ingredient = qs.stringify({ingredient: tabIngredients})
     const name = qs.stringify({name: data.name})

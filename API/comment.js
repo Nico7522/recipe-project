@@ -96,7 +96,7 @@ export const validComment = () => {
         );
       },
       onSettled: ({data}, error, {id, validity}, context) => {
-      
+        console.log(data);
         queryClient.invalidateQueries({ querKey: ['Comments', data.result.id] });
       },
     }
@@ -131,6 +131,38 @@ export const updateComment = () => {
       onSettled: (data, error, variables) => {
         console.log(variables);
         queryClient.invalidateQueries(["Comments", variables.id]);
+      },
+    }
+  );
+};
+
+export const deleteComment = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    async (id) => {
+      axios.delete(`http://localhost:8080/api/comment/${id}`);
+    },
+    {
+      onMutate: async (variables) => {
+        await queryClient.cancelQueries(["Recipes", variables.id]);
+        const previousComment = queryClient.getQueriesData([
+          "Comments",
+          variables.id,
+        ]);
+
+        queryClient.setQueryData(["Comments", variables.id]);
+        return { previousComment };
+      },
+      onError: (err, id, context) => {
+        queryClient.setQueryData(["Comments", id], context.previousRecipes);
+      },
+
+      // { id } => déstructure l'id du context
+      onSettled: (data, error, variables, context) => {
+   
+        queryClient.invalidateQueries(["Comment", variables.id]);
+  
       },
     }
   );

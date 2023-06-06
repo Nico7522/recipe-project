@@ -14,6 +14,7 @@ import { updateImageRecipe } from "./PATCH/patch-image-recipe";
 import qs from "qs"
 import assert  from 'assert'
 import { useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 export const useFetchRecipe = (params) => {
   const queryClient = useQueryClient();
 
@@ -24,11 +25,15 @@ export const useFetchRecipe = (params) => {
   // let searchIngredient = ""
   // params.tags.forEach((r) => (search += `&tag=${r}`));
   // params.ingredients.forEach((r) => (searchIngredient += `&ingredient=${r}`));
+  const isNamePresent = useSelector((state) => state.params.name)
+  const isTagsPresent = useSelector((state) => state.params.tags)
+  const isIngredientsPresent = useSelector((state) => state.params.ingredients)
+  console.log(isTagsPresent);
   return useQuery(
-    ["Recipes", { tags: params.tags  }, { name: params.recipe }, { ingredient: params.ingredients}],
+    ["Recipes", { tags: isTagsPresent  }, { name: isNamePresent }, { ingredient: isIngredientsPresent}],
     async () => {
       const { data } = await axios.get(
-        `http://localhost:8080/api/search${url}`
+        `http://localhost:8080/api/search?`, {params : {tags: isTagsPresent, ingredient: isIngredientsPresent, name: isNamePresent}, paramsSerializer: param => {return qs.stringify(param)}},
       );
 
       return data;

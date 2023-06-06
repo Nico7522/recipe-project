@@ -22,6 +22,13 @@ const NavBar = () => {
     dispatch(logoutAction())
     navigation('/')
   }
+  const darkMode = () => {
+    localStorage.theme === "dark"
+      ? localStorage.removeItem("theme")
+      : localStorage.setItem("theme", "dark");
+
+    location.reload();
+  };
   let Links = [
     { name: "HOME", link: "/" },
     { name: "RECIPES", link: "/recipes/all" },
@@ -32,7 +39,7 @@ const NavBar = () => {
   let [open, setOpen] = useState(false);
   return (
     <div className="shadow-md w-full">
-      <div className=" md:flex items-center justify-between bg-white py-4 md:px-10 px-7 dark:bg-black dark:shadow-green-300 dark:shadow-2xl ">
+      <div className=" md:flex items-center justify-between bg-white py-4 md:px-10 px-7 dark:bg-black dark:border-b-green-300 dark:border-b-2">
         <div
           className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] 
       text-gray-800"
@@ -92,6 +99,12 @@ const NavBar = () => {
             {" "}
             <Button text={"REGISTER"} className={"btn ml-3"}></Button>
           </Link>
+        <button
+          onClick={() => darkMode()}
+          className={`${localStorage.theme === "dark" ? 'bg-yellow-200' : "bg-black text-white" } w-12 rounded-2xl ml-2 -mr-7`}
+        >
+         {localStorage.theme === "dark" ? <ion-icon name="sunny"></ion-icon> : <ion-icon name="moon"></ion-icon>}
+        </button>
         </ul>
       </div>
     </div>

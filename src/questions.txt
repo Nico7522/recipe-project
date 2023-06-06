@@ -1,0 +1,2 @@
+questions sur les params: commennt bien les gérer en front et back.
+question sur le delete en cascade: comment faire ?

@@ -56,8 +56,8 @@ export default function UserProfil({
           Not autorized !
         </h2>
       ) : (
-        <div className="w-96 h-auto border-2 border-green-400  mt-40 m-auto ">
-          <h2 className="font text-center text-3xl ">User details </h2>
+        <div className="w-96 h-auto border-2 border-green-400 mt-32 md:mt-40 m-auto ">
+          <h2 className="font text-center text-3xl text-white ">User details </h2>
           <img
             src={"http://localhost:8080" + avatar}
             alt="avatar"

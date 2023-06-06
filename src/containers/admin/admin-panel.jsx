@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Button from "../../components/Button";
+
 import Title from "../../components/title/title";
 import { useFetchUser } from "../../hooks/user-hooks";
+import Button from "../../components/button";
 
 export default function AdminPanel() {
   const { userStatus } = useFetchUser();
@@ -14,23 +15,23 @@ export default function AdminPanel() {
   return (
     <>
       <Title className={"font 5xl md:mt-40"} text={"GESTION"} />
-      <div className="flex flex-row justify-center items-center w-2/4 m-auto mt-32 p-10 bg-gray-700 rounded-md shadow-2xl text-3xl">
-        <Link to="recipes" className="w-56 m-auto p-4">
+      <div className="flex flex-col md:flex-row justify-center items-center w-3/4 m-auto mt-32 p-10 bg-gray-700 rounded-md shadow-2xl text-3xl">
+        <Link to="recipes">
           <Button
             text={"Recipes gestion"}
-            style={"rounded-2xl m-auto"}
+            style={"rounded-2xl"}
           ></Button>
         </Link>
 
-        <Link to="comments" className="w-56 m-auto p-4 ">
+        <Link to="comments" className="p-4 ">
           <Button
             text={"Comments gestion"}
-            style={"rounded-2xl m-auto"}
+            style={"rounded-2xl"}
           ></Button>
         </Link>
 
-        <Link to="users" className="w-56 p-4 m-auto">
-          <Button text={"Users gestion"} style={"rounded-2xl m-auto "}></Button>
+        <Link to="users">
+          <Button text={"Users gestion"} style={"rounded-2xl"}></Button>
         </Link>
       </div>
     </>
