@@ -11,21 +11,24 @@ import { useInfiniteQuery } from "react-query";
 import { fetchRecipe } from "./FETCH/fetch-recipe";
 import { updateRecipeValidity } from "./PATCH/patch-recipe-validity";
 import { updateImageRecipe } from "./PATCH/patch-image-recipe";
-
+import qs from "qs"
+import assert  from 'assert'
+import { useSearchParams } from "react-router-dom";
 export const useFetchRecipe = (params) => {
   const queryClient = useQueryClient();
-  console.log(params);
-  let search = "";
-  let searchIngredient = ""
-  params.tags.forEach((r) => (search += `&tag=${r}`));
-  params.ingredients.forEach((r) => (searchIngredient += `&ingredient=${r}`));
+
+  const url = window.location.search
+  // let hashedUrl = qs.stringify(url)
+  // console.log(params);
+  // let search = "";
+  // let searchIngredient = ""
+  // params.tags.forEach((r) => (search += `&tag=${r}`));
+  // params.ingredients.forEach((r) => (searchIngredient += `&ingredient=${r}`));
   return useQuery(
-    ["Recipes", { tags: params.tags }, { name: params.recipe }, { ingredient: params.ingredients}],
+    ["Recipes", { tags: params.tags  }, { name: params.recipe }, { ingredient: params.ingredients}],
     async () => {
       const { data } = await axios.get(
-        `http://localhost:8080/api/search?tag=${search || ""}&name=${
-          params.recipe || ""
-        }&ingredients=${searchIngredient || ""}`
+        `http://localhost:8080/api/search${url}`
       );
 
       return data;

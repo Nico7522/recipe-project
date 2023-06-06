@@ -11,7 +11,7 @@ export default function AllRecipesPage() {
    
   return (
     <div className={`md:mt-36 lg:mt-40 xl:mt-56 relative`}>
-      <div className={`absolute top-18 sm:top-1 md:top-16 lg:top-30 xl:top-14 transition-all duration-200 ease-in ${(currentWidth < 380) && show === false ? "-ml-96" : "ml-0"}`} >
+      <div className={`absolute top-18 sm:top-1 md:top-20 lg:top-30 xl:top-14 transition-all duration-200 ease-in ${(currentWidth < 380) && show === false ? "-ml-96" : "ml-0"}`} >
         <FormSearch />
       </div>
       <div className="relative">

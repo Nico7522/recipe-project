@@ -35,7 +35,7 @@ const SearchIngredient = ({ handleIngredient }) => {
   const handleSearch = (e) => {
     e.preventDefault();
     axios
-      .get("http://localhost:8080/api/ingredient?ingredient=" + ingredient)
+      .get("http://localhost:8080/api/ingredient", { params: { ingredient: ingredient}})
       .then(({ data }) =>
         handleIngredient({ name: data.results[0].name, id: data.results[0].id })
       );
@@ -57,12 +57,4 @@ const SearchIngredient = ({ handleIngredient }) => {
   );
 };
 
-// const { register, handleSubmit } = useForm();
-// const handleSearch = (data) => {
 
-//     for (const i in data) {
-//       setTabIngredient([...tabIngredient, i])
-//     }
-//     console.log(tabIngredient);
-
-// }
