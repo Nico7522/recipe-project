@@ -29,7 +29,7 @@ export default function User({
     return (
         
     
-            <div className="sm:w-24 md:w-32 lg:w-36 xl:w-48  h-auto m-auto border-2 border-green-400  break-words 2xl:words-break">
+            <div className="sm:w-24 md:w-32 lg:w-36 xl:w-72 m-auto border-2 border-green-400  break-words 2xl:words-break">
               <h2 onClick={() => navigation("/user/profil/" + id)} className="font text-center text-3xl ">Details</h2>
               <img
                 src={"http://localhost:8080" + avatar}

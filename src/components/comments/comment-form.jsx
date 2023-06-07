@@ -18,16 +18,18 @@ export default function CommentForm({
   comment,
   handleComm,
   commId,
+  commentDeleted
 }) {
   const upComment = updateComment();
   const [isOnUpdate, setIsOnUpdate] = useState(false);
+  // const [commentDeleted, setCommentDeleted] = useState(false);
   const [updateFullified, setUpdateFullified] = useState(false);
   const { userId } = useFetchUser();
 
   const { mutate, error } = postComment();
   const { data } = useFetchComments();
 
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit, setValue, reset } = useForm();
   const handleComment = (data) => {
     if (update === false) {
       const comment = {
@@ -37,6 +39,7 @@ export default function CommentForm({
       };
 
       mutate(comment);
+      reset()
     }
     if (update) {
       upComment.mutate({ idComment: commId, text: data.comment });
@@ -84,6 +87,7 @@ export default function CommentForm({
       )}
       {update && <button onClick={() => handleCancelEdit()}>CANCEL</button>}
       {updateFullified && <p className="text-green-800">Comment updated !</p>}
+      {commentDeleted && <p className="text-red-800">Comment deleted !</p>}
     </form>
   );
 }

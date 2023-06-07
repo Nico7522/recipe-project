@@ -265,6 +265,7 @@ export default function RecipeForm() {
   };
 
   const sendData = () => {
+    console.log('tabTempo', tabTempo[0]);
     setModal(false);
     mutate(tabTempo[0]);
   };
@@ -341,7 +342,7 @@ const FormIngredients = ({ func, tab, isIngredientsValidate }) => {
     return <p>Wait...</p>;
   }
   const handleIngredients = (data) => {
-    console.log("data", data);
+    
     let tabId = [];
     let tabFinalId = [];
     const tabUnits = [];
@@ -353,7 +354,7 @@ const FormIngredients = ({ func, tab, isIngredientsValidate }) => {
     data.tab.map((p) => {
       tabId.push({ id: p.id });
     });
-    console.log("tabid", tabId);
+    
 
     for (let u in data) {
       tabUnits.push({

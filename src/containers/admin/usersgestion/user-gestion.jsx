@@ -57,21 +57,21 @@ if (isError) {
   return (
     <>
       
-      <div className="m-auto bg-white w-2/4  max-w-7xl overflow-scroll flex justify-center gap-1 ">
+      <div className="m-auto">
       {data.pages.map((page, pageIndex) => (
-        <div key={pageIndex} >
+        <div className="m-auto bg-white w-4/5 flex flex-row justify-center flex-wrap gap-1 " key={pageIndex} >
           {page.results.map((user) => (
             <User key={user.id} {...user} />
           ))}
-          <button
-            ref={ref}
-            onClick={() => fetchNextPage()}
-            disabled={!hasNextPage || isFetchingNextPage}
-          ></button>
         </div>
       ))}
-      </div>
       {isFetching && <Loader className="flex justify-center" />}
+      </div>
+      <button
+        ref={ref}
+        onClick={() => fetchNextPage()}
+        disabled={!hasNextPage || isFetchingNextPage}
+      ></button>
     </>
   );
 }

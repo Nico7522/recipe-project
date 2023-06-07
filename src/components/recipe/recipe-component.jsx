@@ -29,7 +29,7 @@ export default function Recipe({
   handleSearchTag,
 }) {
   const [update, setUpdate] = useState(false);
-
+  const [commentDeleted, setCommentDeleted] = useState(false)
   const [comment, setComment] = useState("");
   const [showComment, setShowComment] = useState(
     isNaN(window.location.href.slice(-1))
@@ -89,9 +89,12 @@ export default function Recipe({
         {console.log(!isNaN(window.location.href.slice(-1)))}
         
         {userId === creatorId && !isNaN(window.location.href.slice(-1)) && <div className="absolute top-0 left-2"><ImageForm id={id} /></div> }
-        <div className="rounded-2xl bg-green-700 shadow-lg sm:mt-2 p-3 mt-2 sm:w-96 sm:m-auto  xl:-ml-12">
-          <h2 className="text-2xl font">Description</h2>
-          <p className="para description overflow-hidden break-words ">{description}</p>
+        <div className="rounded-2xl bg-green-700 shadow-lg sm:mt-2 h-60 p-3 mt-2 sm:w-96 sm:m-auto  xl:-ml-12">
+          <h2 className="text-2xl font border-b-2 border-black">Description</h2>
+          <div className="h-48 overflow-scroll overflow-x-hidden scrollbar scrollbar-thumb-rounded-md scrollbar-thumb-green-700 scrollbar-track-gray-100 scrollbar-w-2">
+          <p className="para description break-words ">{description}</p>
+
+          </div>
         </div>
       </div>
       <div className="flex row-auto space-x-2 justify-center bg-green-700 rounded-xl sm:w-80 m-auto mt-2 mb-2">
@@ -138,6 +141,7 @@ export default function Recipe({
               <Comment
                 update={update}
                 setUpdate={setUpdate}
+                setCommentDeleted={setCommentDeleted}
                 handleComment={handleComment}
                 {...c}
               />
@@ -150,6 +154,7 @@ export default function Recipe({
             update={update}
             handleComm={handleComment}
             setUpdate={setUpdate}
+            commentDeleted={commentDeleted}
             id={id}
             comment={comment}
           />
