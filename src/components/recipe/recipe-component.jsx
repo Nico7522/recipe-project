@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useCalcMacro } from "../../hooks/macro-hooks";
 import ShowTags from "../../../utils/show-tags";
 import ImageForm from "../image-form/image-form";
+import CalculByPart from "../ingredients/form-calculbyparts";
 
 // + " " + (!showComment && "h-12 break-words overflow-scroll")
 export default function Recipe({
@@ -31,6 +32,7 @@ export default function Recipe({
   const [update, setUpdate] = useState(false);
   const [commentDeleted, setCommentDeleted] = useState(false)
   const [comment, setComment] = useState("");
+  const [numberOfParts, setNumberOfParts] = useState(0)
   const [showComment, setShowComment] = useState(
     isNaN(window.location.href.slice(-1))
   );
@@ -112,6 +114,8 @@ export default function Recipe({
             <p>Carbohydrates : {macro.carbohydrates} g</p>
             <p>Fats : {macro.fats} g</p>
             <p>proteins : {macro.proteins} g</p>
+            <h3>Number of parts ?</h3>
+            <CalculByPart macro={macro} />
           </div>
         </div>
         <div className="flex flex-col bg bg-green-800 text-lime-50 sm:w-72 mt-2  m-auto rounded-2xl shadow-2xl">

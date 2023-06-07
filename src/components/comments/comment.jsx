@@ -41,12 +41,12 @@ export default function Comment({
         {userId === creatorId && (
           <>
             <Button
-              className="ml-2 w-6 h-6 text-center py-0 px-0"
+              className="ml-2 w-6 h-6 text-center !py-0 !px-0"
               onClick={() => handleEdit(text, id)}
               text={"🧨"}
             />
             <Button
-              className="ml-2 w-6 h-6 text-center py-0 px-0 bg-red-300"
+              className="ml-2 w-6 h-6 text-center !py-0 !px-0 bg-red-300"
               onClick={() => handleDeleteComment(id)}
               text={"❌"}
             />
