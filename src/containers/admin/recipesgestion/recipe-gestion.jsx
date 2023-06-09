@@ -3,11 +3,16 @@ import { getAll } from "../../../../API/recipe";
 import RecipeAdmin from "../../../components/recipe/recipe-admin";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import ValidForm from "../../../components/validform/validform";
 
 export default function RecipeGestion() {
     const { ref, inView } = useInView();
-  // const {data, isError, isLoading} = getAll()
+    const [valid, setValid] = useState(undefined);
+
+    const handleValid = (valid) => {
+      setValid(valid);
+    };
   const {
     status,
     isLoading,
@@ -22,10 +27,10 @@ export default function RecipeGestion() {
     hasNextPage,
     hasPreviousPage,
   } = useInfiniteQuery(
-    ["Recipes"],
+    ["Recipes", {valid: valid}],
     async ({ pageParam = 0 }) => {
       const { data } = await axios.get(
-        `http://localhost:8080/api/recipe/admin?page=${pageParam}`
+        `http://localhost:8080/api/recipe/admin?page=${pageParam}&valid=${valid || ''}`
       );
       return data;
     },
@@ -52,13 +57,11 @@ export default function RecipeGestion() {
   }
 
   return (
-    <div className=" w-3/4 m-auto break-words overflow-scroll  bg-slate-400">
-      {/* {data.map((recipe) => {
-        return <RecipeAdmin {...recipe} />;
-      })} */}
+    <div className=" w-3/4 m-auto break-words  bg-slate-400">
+    <ValidForm text={"Only show unvalided recipe ?"} handleValid={handleValid} valid={valid} />
 
       {data.pages.map((page, pageIndex) => (
-        <div className="flex flex-row flex-wrap justify-center w-3/4 h-96 m-auto" key={pageIndex}>
+        <div className="flex flex-row flex-wrap justify-center w-3/4  m-auto" key={pageIndex}>
           {page.results.map((recipe) => (
             <RecipeAdmin key={recipe.id} {...recipe} />
           ))}

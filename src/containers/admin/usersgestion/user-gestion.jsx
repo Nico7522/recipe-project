@@ -4,12 +4,15 @@ import UserProfil from "../../../components/profil/profil";
 import User from "../../../components/profil/user";
 import LastestRecipe from "../../recipes/lastest-recipes";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import Loader from "../../../components/loader/loader";
+import ValidForm from "../../../components/validform/validform";
 
 export default function UserGestion() {
   const { ref, inView } = useInView();
+  
+
 
   const {
     status,
@@ -58,6 +61,7 @@ if (isError) {
     <>
       
       <div className="m-auto">
+
       {data.pages.map((page, pageIndex) => (
         <div className="m-auto bg-white w-4/5 flex flex-row justify-center flex-wrap gap-1 " key={pageIndex} >
           {page.results.map((user) => (
