@@ -11,6 +11,7 @@ export default function Ingredient({
   fats,
   proteins,
   tabMacro,
+
 }) {
 
   const idP = useId();
@@ -18,7 +19,7 @@ export default function Ingredient({
 
 
   return (
-    <div>
+    <div >
       
       <p>{name}</p>
       <p>

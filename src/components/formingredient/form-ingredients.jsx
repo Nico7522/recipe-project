@@ -15,15 +15,15 @@ export default function IngredientsForm() {
   return (
     <div className="z-10 border-4 break-words border-green-600">
       <SearchIngredient handleIngredient={handleIngredient} />
-      <form className="-ml-2 text-center  break-words">
-        <h3 className="font text-white  text-center w-20 ml-1 sm:ml-5">Selected ingredient</h3>
+      
+        <h3 className="font text-white  text-center w-20 ml-1 sm:ml-3">Selected ingredient</h3>
         {tabData.map((i) => (
           <div className="z-10 text-center ml-2 border-b-2 border-b-black">
             <label className=" text-white" >{i.name}</label>
             <input className="" {...register(`${i.name}`)} type="checkbox"/>
           </div>
         ))}
-      </form>
+      
     </div>
   );
 }
@@ -43,7 +43,7 @@ const SearchIngredient = ({ handleIngredient }) => {
 
   return (
     <div className="text-center m-auto">
-      <form>
+     
         <label htmlFor="ingredient" className="text-white break-words">Search ingredients</label>
         <input
         className="w-24 max-w-full"
@@ -51,7 +51,7 @@ const SearchIngredient = ({ handleIngredient }) => {
           type="text"
           onChange={(e) => setIngredient(e.target.value)}
         />
-      </form>
+ 
       <Button className={'text-xs max-w-full'} text={"Find ingredient"} onClick={(e) => handleSearch(e)} />
     </div>
   );

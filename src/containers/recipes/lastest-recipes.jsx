@@ -1,10 +1,4 @@
-import { useEffect } from "react";
-import { useRef } from "react";
-import { useState } from "react";
-import {
-  useFetchAllRecipes,
-  useFetchLastestRecipes,
-} from "../../../API/recipe";
+import { useFetchLastestRecipes } from "../../../API/recipe";
 import Recipe from "../../components/recipe/recipe-component";
 import Title from "../../components/title/title";
 
@@ -20,7 +14,7 @@ export default function LastestRecipe() {
 
   return (
     <>
-      <Title text={'LASTEST RECIPES'} className={"md:mt-40"} />
+      <Title text={"LASTEST RECIPES"} className={"md:mt-40"} />
 
       {data.results.map((recipe) => (
         <Recipe key={recipe.id} {...recipe} />
@@ -29,7 +23,4 @@ export default function LastestRecipe() {
   );
 }
 {
-  /* <div className='mx-auto mt-5 w-10/12 border-4 border-indigo-500/100'>{data.results.map(r => (
-  <h3 key={r.id}>{r.name}</h3> 
- ))}</div> */
 }

@@ -22,7 +22,7 @@ export default function RecipeSearch() {
         <Title text={"ALL RECIPES !"} className="mt-7 md:mt-20  mb-10" />
 
         {data.map((recipe) => (
-            <Recipe {...recipe}/>
+            <Recipe key={recipe.id} {...recipe}/>
         ))}
        
         </div>
