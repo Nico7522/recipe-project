@@ -98,14 +98,21 @@ export const useFetchRecipeById = ({ recipeId }) => {
   });
 };
 
-export const PostRecipe = (recipe) => {
-  const { token } = useFetchUser()
-  console.log(token);
+export const PostRecipe = () => {
+  const { token, config } = useFetchUser()
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ${token}'
+  }
+  
+  
   const queryClient = useQueryClient();
   return useMutation(
     async (recipe) => {
+     
+      console.log(recipe);
       try {
-        const response = axios.post("http://localhost:8080/api/recipe", recipe, { headers: {"Authorization": `Bearer ${token}`}})
+        const response = axios.post("http://localhost:8080/api/recipe", {...recipe}, config)
         console.log(response.data);
 
       } catch (error) {
@@ -113,6 +120,7 @@ export const PostRecipe = (recipe) => {
           console.log(error.response.data.message);
         } else {
           console.log(error.message);
+          console.log(error.response);
         }
     }},
     {

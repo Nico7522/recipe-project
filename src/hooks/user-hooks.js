@@ -5,16 +5,21 @@ export const useFetchUser = () => {
   const [token, setToken] = useState(null);
   const [userStatus, setUserStatus] = useState(null);
   const [userId, setUserId] = useState(null);
-  const config = {
-    headers: { Authorization: `Bearer ${token}` }
-  };
+
   const isLogged = useSelector((state) => state.user.user.token);
   const status = useSelector((state) => state.user.user.user?.status);
   const id = useSelector((state) => state.user.user.user?.id);
   const avatar = useSelector((state) => state.user.user.user?.avatar);
   const name = useSelector((state) => state.user.user.user?.name);
   const surname = useSelector((state) => state.user.user.user?.surname);
-  const fullName = `${name} ${surname}`
+  const fullName = `${name} ${surname}`;
+ 
+  const config = {
+    headers: {
+      "content-type": "application/json",
+      'Authorization': `Bearer ${isLogged}`,
+    },
+  };
 
   useEffect(() => {
     if (isLogged) {
