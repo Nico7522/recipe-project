@@ -5,7 +5,9 @@ export const useFetchUser = () => {
   const [token, setToken] = useState(null);
   const [userStatus, setUserStatus] = useState(null);
   const [userId, setUserId] = useState(null);
-
+  const config = {
+    headers: { Authorization: `Bearer ${token}` }
+  };
   const isLogged = useSelector((state) => state.user.user.token);
   const status = useSelector((state) => state.user.user.user?.status);
   const id = useSelector((state) => state.user.user.user?.id);
@@ -22,5 +24,5 @@ export const useFetchUser = () => {
     }
   }, [token, isLogged, avatar]);
 
-  return { userId, token, userStatus, avatar, fullName };
+  return { userId, token, userStatus, avatar, fullName, config };
 };

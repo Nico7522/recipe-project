@@ -15,9 +15,11 @@ import qs from "qs"
 import assert  from 'assert'
 import { useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useFetchUser } from "../src/hooks/user-hooks";
+
+
 export const useFetchRecipe = (params) => {
   const queryClient = useQueryClient();
-
   const url = window.location.search
   // let hashedUrl = qs.stringify(url)
   // console.log(params);
@@ -97,11 +99,22 @@ export const useFetchRecipeById = ({ recipeId }) => {
 };
 
 export const PostRecipe = (recipe) => {
+  const { token } = useFetchUser()
+  console.log(token);
   const queryClient = useQueryClient();
   return useMutation(
     async (recipe) => {
-      await axios.post("http://localhost:8080/api/recipe", recipe);
-    },
+      try {
+        const response = axios.post("http://localhost:8080/api/recipe", recipe, { headers: {"Authorization": `Bearer ${token}`}})
+        console.log(response.data);
+
+      } catch (error) {
+        if (error.response) {
+          console.log(error.response.data.message);
+        } else {
+          console.log(error.message);
+        }
+    }},
     {
       onMutate: async (recipe) => {
         await queryClient.cancelQueries({
@@ -113,7 +126,7 @@ export const PostRecipe = (recipe) => {
         return { previousRecipes };
       },
 
-      onError: (err, recipe, context) => {
+      onError: (error, recipe, context) => {
         queryClient.setQueryData("Recipes", context.previousRecipes);
       },
 

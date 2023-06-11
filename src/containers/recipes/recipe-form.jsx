@@ -207,9 +207,11 @@ export default function RecipeForm() {
   const [selected, setSelected] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [tag, setTag] = useState([]);
-  const { mutate } = PostRecipe();
+  const { mutate, error, data:dataRecipe } = PostRecipe();
   const [modal, setModal] = useState(false);
-
+if (error) {
+  console.log('error', error);
+}
   const recupEnfant = (ingredients) => {
     setIngredients(ingredients);
     setIngredientValidate(true);
