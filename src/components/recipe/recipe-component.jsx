@@ -116,13 +116,13 @@ export default function Recipe({
             <p>Fats : {macro.fats} g</p>
             <p>proteins : {macro.proteins} g</p>
             <h3>Number of parts ?</h3>
-            <CalculByPart key={id} macro={macro} />
+            <CalculByPart  macro={macro} />
           </div>
         </div>
         <div className="flex flex-col bg bg-green-800 text-lime-50 sm:w-72 mt-2  m-auto rounded-2xl shadow-2xl">
-          {tags.map((t) => (
+          {tags.map((t, index) => (
             <h3
-              key={id}
+              key={index}
               onClick={() => handle(t)}
               className="text-white text-2xl text-center cursor-pointer"
             >

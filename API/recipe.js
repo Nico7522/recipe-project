@@ -168,7 +168,7 @@ export const deleteRecipe = () => {
   const naviguation = useNavigate();
   return useMutation(
     async (id) => {
-      axios.delete(`http://localhost:8080/api/recipe/${id}`);
+      return axios.delete(`http://localhost:8080/api/recipe/${id}`);
     },
     {
       onMutate: async (variables) => {
@@ -182,11 +182,13 @@ export const deleteRecipe = () => {
         return { previousRecipes };
       },
       onError: (err, id, context) => {
+       
         queryClient.setQueryData(["Recipes", id], context.previousRecipes);
       },
 
       // { id } => déstructure l'id du context
       onSettled: (data, error, variables, context) => {
+       
         queryClient.invalidateQueries(["Recipes"]);
   
       },
