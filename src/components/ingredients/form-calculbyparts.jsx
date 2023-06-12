@@ -27,7 +27,7 @@ export default function CalculByPart({ macro }) {
           render={({ field, fieldState: { invalid, error } }) => (
             <input
               min={"1"}
-              className="text-black"
+              className="text-black w-7 text-center"
               {...field}
               onChange={(e) => {
                 setNumberOfParts(e.target.value);

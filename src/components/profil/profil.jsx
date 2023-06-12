@@ -3,9 +3,10 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { resetPassword } from "../../../API/connexion";
+
 import { useFetchUser } from "../../hooks/user-hooks";
 import Button from "../button";
+import { resetPassword } from "../../../API/connexion";
 
 export default function UserProfil({
   id,
@@ -19,10 +20,11 @@ export default function UserProfil({
   recipes,
 }) {
   const navigation = useNavigate();
-  const { userId, userStatus } = useFetchUser();
+  const { userId, userStatus, config } = useFetchUser();
   const [unAuthorized, setUnAuthorized] = useState(false);
   const [resetPsw, setResetPsw] = useState(false);
   const [pswReset, setPswReset] = useState("");
+  const reset = resetPassword()
   const birthdateFormated = new Date(birthdate).toLocaleDateString("fr", {
     day: "numeric",
     month: "long",
@@ -41,13 +43,16 @@ export default function UserProfil({
     }
   }, [userId]);
   const textResetPsw = pswReset === -1 ? <span className="text-red-500 m-auto">Password must be different !</span> : ( pswReset == 0 ?<span className="text-red-500">Password doesn\'t not match the requirements !</span> : <span className="text-green-500">Password changed ! </span> );
-
-  const { register, handleSubmit } = useForm();
-  const handleResetPsw = async ({ password }) => {
-    const isPswReset = await resetPassword(userId, password);
-    setPswReset(isPswReset);
-    console.log("isPswReset", isPswReset);
+  // console.log(reset.error);
+  const { register, handleSubmit, reset:resetValue } = useForm();
+  const handleResetPsw = ({ password }) => {
+    reset.mutate({userId, password, config});
+    // setPswReset(data);
+    resetValue()
+  
   };
+
+
 
   return (
     <>
@@ -111,7 +116,9 @@ export default function UserProfil({
             <input {...register("password")} type="password" />
             <Button style={"mr-8"} text={"RESET"} />
           </form>
-          {pswReset !== '' &&( <div className="text-center font">{textResetPsw}</div> )}
+          
+          {reset.error && ( <div className="text-center text-red-700 font text-2xl">{reset.error.response.data.message}</div> )}
+          {reset.isSuccess && ( <p className="text-center text-green-700 font text-2xl">Password changed ! </p> ) }
         </div>
       )}
         </div>

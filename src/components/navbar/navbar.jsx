@@ -73,7 +73,7 @@ const NavBar = () => {
             </li>
           ))}
           {isToken !== null ?(
-            <div className=" relative mb-2 ml-3 md:-mb-3 md:ml-5 md:text-center md:w-18 md:m-auto md:flex md:flex-col md:justify-center md:items-center md:border-4 md:border-green-300">
+            <div className=" relative mb-2 ml-3 md:-mb-3 md:ml-5 md:text-center md:w-18 md:m-auto md:flex md:flex-col md:justify-center md:items-center md:border-2 md:border-green-300">
               <div className="absolute top-0 right-1" onClick={() => logOut()}>
                 {" "}
                 <Link>
@@ -85,9 +85,10 @@ const NavBar = () => {
                   src={"http://localhost:8080/" + avatar}
                   width="50"
                   height="30"
+                  className="rounded-2xl"
                 />
               </Link>
-              <span className=" mt-3 para">{fullName}</span>
+              <span className=" mt-1 para">{fullName}</span>
             </div>
           ) : (
             <Link to="/user/signin">

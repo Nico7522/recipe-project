@@ -1,13 +1,11 @@
-import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {} from "react-hook-form";
-import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { fetchUserLogin, loginUser } from "../../../API/connexion";
+import { loginUser } from "../../../API/connexion";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
-import { loginAction } from "../../store/actions/user.action";
+
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -33,7 +31,7 @@ export default function Login() {
     resolver: yupResolver(schema),
   });
 
-  const {mutate, data, isLoading, error} = loginUser();
+  const { mutate, data, isLoading, error } = loginUser();
 
   const onLogin = async (userLog) => {
     mutate(userLog);
@@ -42,20 +40,28 @@ export default function Login() {
   if (isLoading) {
     return <div className="custom-loader"></div>;
   }
- 
+
   return (
     <form
       onSubmit={handleSubmit(onLogin)}
       className="text-center mt-96 m-auto w-80 border-sky-400 border-2 flex flex-col justify-center content-center"
     >
       <div className="mt-2 flex flex-col justify-center content-center">
-        <label htmlFor="mail" className=" text-white font text-2xl">Mail : </label>
+        <label htmlFor="mail" className=" text-white font text-2xl">
+          Mail :{" "}
+        </label>
         <input className="w-3/4 m-auto" {...register("email")}></input>
         {errors.email && <p>{errors.email.message}</p>}
       </div>
       <div className="mt-2 flex flex-col justify-center content-center ">
-        <label htmlFor="password" className="text-white font text-2xl">Password : </label>
-        <input className="w-3/4 m-auto" type="password" {...register("password")}></input>
+        <label htmlFor="password" className="text-white font text-2xl">
+          Password :{" "}
+        </label>
+        <input
+          className="w-3/4 m-auto"
+          type="password"
+          {...register("password")}
+        ></input>
         {errors.password && <p>{errors.password.message}</p>}
       </div>
       <button
