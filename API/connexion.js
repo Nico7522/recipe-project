@@ -8,6 +8,9 @@ import axios from "axios";
 import { fetchUser } from "./FETCH/fetch-user";
 import { updateUserStatut } from "./PATCH/patch-user-statut";
 import { removeUser } from "./DELETE/delete-user";
+import { useDispatch } from "react-redux";
+import { loginAction, logoutAction } from "../src/store/actions/user.action";
+import { useNavigate } from "react-router-dom";
 // L'ORDRE DANS LE QUEL ON PASSE LES ARGUMENTS EST IMPORTANT !!!!!!!!!
 export const fetchUserLogin = async (userLog) => {
   const { data } = await axios.post(
@@ -16,6 +19,22 @@ export const fetchUserLogin = async (userLog) => {
   );
   return data;
 };
+
+export const loginUser = () => {
+  const queryClient = useQueryClient()
+  const dispatch = useDispatch()
+  const nav = useNavigate()
+  return useMutation({
+    mutationFn: fetchUserLogin,
+    onSuccess: (data) => {
+        console.log(data);
+        dispatch(loginAction(data.result));
+        nav("/recipes/all");
+      
+    },
+    onSettled: () => { queryClient.invalidateQueries('Users')}
+  })
+}
 
 export const useFetchUser = () => {
   const queryClient = useQueryClient();

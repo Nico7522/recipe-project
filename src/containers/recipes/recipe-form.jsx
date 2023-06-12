@@ -207,11 +207,9 @@ export default function RecipeForm() {
   const [selected, setSelected] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [tag, setTag] = useState([]);
-  const { mutate, error, data:dataRecipe } = PostRecipe();
+  const { mutate, error, data: dataRecipe } = PostRecipe();
   const [modal, setModal] = useState(false);
-if (error) {
-  console.log('error', error);
-}
+
   const recupEnfant = (ingredients) => {
     setIngredients(ingredients);
     setIngredientValidate(true);
@@ -267,7 +265,8 @@ if (error) {
   };
 
   const sendData = () => {
-    console.log('tabTempo', tabTempo[0]);
+    // console.log('tabTempo', tabTempo[0]);
+
     setModal(false);
     mutate(tabTempo[0]);
   };
@@ -281,7 +280,13 @@ if (error) {
           onSubmit={handleSubmit(submit)}
         >
           <div className="flex flex-col text-center">
+            {error && (
+              <p className="text-red-800 text-center">
+                {error.response.data.message}
+              </p>
+            )}
             <label htmlFor="name">Name</label>
+
             <input {...register("name")} type="text" />
           </div>
           <div className="flex flex-col text-center">
@@ -344,7 +349,6 @@ const FormIngredients = ({ func, tab, isIngredientsValidate }) => {
     return <p>Wait...</p>;
   }
   const handleIngredients = (data) => {
-    
     let tabId = [];
     let tabFinalId = [];
     const tabUnits = [];
@@ -356,7 +360,6 @@ const FormIngredients = ({ func, tab, isIngredientsValidate }) => {
     data.tab.map((p) => {
       tabId.push({ id: p.id });
     });
-    
 
     for (let u in data) {
       tabUnits.push({

@@ -11,32 +11,43 @@ import { useInfiniteQuery } from "react-query";
 import { fetchRecipe } from "./FETCH/fetch-recipe";
 import { updateRecipeValidity } from "./PATCH/patch-recipe-validity";
 import { updateImageRecipe } from "./PATCH/patch-image-recipe";
-import qs from "qs"
-import assert  from 'assert'
+import qs from "qs";
+import assert from "assert";
 import { useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useFetchUser } from "../src/hooks/user-hooks";
 
-
 export const useFetchRecipe = (params) => {
   const queryClient = useQueryClient();
-  const url = window.location.search
+  const url = window.location.search;
   // let hashedUrl = qs.stringify(url)
   // console.log(params);
   // let search = "";
   // let searchIngredient = ""
   // params.tags.forEach((r) => (search += `&tag=${r}`));
   // params.ingredients.forEach((r) => (searchIngredient += `&ingredient=${r}`));
-  const isNamePresent = useSelector((state) => state.params.name)
-  const isTagsPresent = useSelector((state) => state.params.tags)
-  const isIngredientsPresent = useSelector((state) => state.params.ingredients)
+  const isNamePresent = useSelector((state) => state.params.name);
+  const isTagsPresent = useSelector((state) => state.params.tags);
+  const isIngredientsPresent = useSelector((state) => state.params.ingredients);
   console.log(isTagsPresent);
   return useQuery(
-    ["Recipes", { tags: isTagsPresent  }, { name: isNamePresent }, { ingredient: isIngredientsPresent}],
+    [
+      "Recipes",
+      { tags: isTagsPresent },
+      { name: isNamePresent },
+      { ingredient: isIngredientsPresent },
+    ],
     async () => {
-      const { data } = await axios.get(
-        `http://localhost:8080/api/search?`, {params : {tags: isTagsPresent, ingredient: isIngredientsPresent, name: isNamePresent}, paramsSerializer: param => {return qs.stringify(param)}},
-      );
+      const { data } = await axios.get(`http://localhost:8080/api/search?`, {
+        params: {
+          tags: isTagsPresent,
+          ingredient: isIngredientsPresent,
+          name: isNamePresent,
+        },
+        paramsSerializer: (param) => {
+          return qs.stringify(param);
+        },
+      });
 
       return data;
     }
@@ -45,7 +56,7 @@ export const useFetchRecipe = (params) => {
 
 export const getAll = () => {
   const queryClient = useQueryClient();
-  return useQuery({ queryKey: ["Recipes"] , queryFn: fetchRecipe });
+  return useQuery({ queryKey: ["Recipes"], queryFn: fetchRecipe });
 };
 
 export const useFetchLastestRecipes = () => {
@@ -99,30 +110,17 @@ export const useFetchRecipeById = ({ recipeId }) => {
 };
 
 export const PostRecipe = () => {
-  const { token, config } = useFetchUser()
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ${token}'
-  }
-  
-  
+  const { token, config } = useFetchUser();
+
   const queryClient = useQueryClient();
   return useMutation(
     async (recipe) => {
-     
-      console.log(recipe);
-      try {
-        const response = axios.post("http://localhost:8080/api/recipe", {...recipe}, config)
-        console.log(response.data);
-
-      } catch (error) {
-        if (error.response) {
-          console.log(error.response.data.message);
-        } else {
-          console.log(error.message);
-          console.log(error.response);
-        }
-    }},
+      return await axios.post(
+        "http://localhost:8080/api/recipe",
+        { ...recipe },
+        config
+      );
+    },
     {
       onMutate: async (recipe) => {
         await queryClient.cancelQueries({
@@ -203,50 +201,44 @@ export const deleteRecipe = () => {
         return { previousRecipes };
       },
       onError: (err, id, context) => {
-       
         queryClient.setQueryData(["Recipes", id], context.previousRecipes);
       },
 
       // { id } => déstructure l'id du context
       onSettled: (data, error, variables, context) => {
-       
         queryClient.invalidateQueries(["Recipes"]);
-  
       },
     }
   );
 };
 
-
 // Update de la validité des recipes
 export const updateValidity = () => {
   const queryClient = useQueryClient();
-  return useMutation(
-    {
-      mutationFn: updateRecipeValidity,
-      onMutate: async (data) => {
-        await queryClient.cancelQueries({
-          queryKey: ["Recipes", data.id],
-        });
-        const previousRecipe = queryClient.getQueryData(["Recipes", data.id]);
-        queryClient.setQueryData(["Recipes", data.id], data);
+  return useMutation({
+    mutationFn: updateRecipeValidity,
+    onMutate: async (data) => {
+      await queryClient.cancelQueries({
+        queryKey: ["Recipes", data.id],
+      });
+      const previousRecipe = queryClient.getQueryData(["Recipes", data.id]);
+      queryClient.setQueryData(["Recipes", data.id], data);
 
-        return { previousRecipe, data };
-      },
-      onError: (error, data, context) => {
-        console.log(context.previousRecipe);
-        queryClient.setQueryData(
-          ["Recipes", context.data.id],
-          context.previousRecipe
-        );
-      },
-      onSettled: ({ data }, error, variables, context) => {
-        console.log(data.result.id);
+      return { previousRecipe, data };
+    },
+    onError: (error, data, context) => {
+      console.log(context.previousRecipe);
+      queryClient.setQueryData(
+        ["Recipes", context.data.id],
+        context.previousRecipe
+      );
+    },
+    onSettled: ({ data }, error, variables, context) => {
+      console.log(data.result.id);
 
-        queryClient.invalidateQueries({ querKey: ["Recipes", data.result.id] });
-      },
-    }
-  );
+      queryClient.invalidateQueries({ querKey: ["Recipes", data.result.id] });
+    },
+  });
 };
 
 export const updateImage = () => {
@@ -257,13 +249,16 @@ export const updateImage = () => {
       await queryClient.cancelQueries({ queryKey: ["Recipes", data.id] });
       const previousRecipe = queryClient.getQueryData(["Recipes", data.id]);
       queryClient.setQueryData(["Recipes", data.id], data);
-      return { previousRecipe, data}
+      return { previousRecipe, data };
     },
     onError: (error, data, context) => {
-      queryClient.setQueryData(["Recipes", context.data.id], context.previousRecipe);
+      queryClient.setQueryData(
+        ["Recipes", context.data.id],
+        context.previousRecipe
+      );
     },
     onSettled: (data, error, variables, context) => {
-      queryClient.invalidateQueries({ queryKey: ["Recipes"] })
-    }
-  })
-}
+      queryClient.invalidateQueries({ queryKey: ["Recipes"] });
+    },
+  });
+};
