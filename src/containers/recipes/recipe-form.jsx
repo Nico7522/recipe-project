@@ -190,13 +190,17 @@ import { set } from "react-hook-form";
 import ConfirmModal from "../../components/modal/confirm-modal";
 import { useFetchUser } from "../../hooks/user-hooks";
 import Button from "../../components/button";
+import { tagsEnum } from "../../../utils/tags-enum";
 
 export default function RecipeForm() {
-  const tags = [
-    { label: "Vegan", value: "Vegan", id: "1" },
-    { label: "Healthy", value: "Healty", id: "2" },
-    { label: "Dessert", value: "Dessert", id: "3" },
-  ];
+  const tags = []
+  Object.keys(tagsEnum).map((key, value) => tags.push({ label: key, value: key, id: value+1 }))
+  
+  // const tags = [
+  //   { label: "Vegan", value: "Vegan", id: "1" },
+  //   { label: "Healthy", value: "Healty", id: "2" },
+  //   { label: "Dessert", value: "Dessert", id: "3" },
+  // ];
   const { userId } = useFetchUser();
 
   const [isIngredientsValidate, setIngredientValidate] = useState(false);
@@ -264,6 +268,7 @@ export default function RecipeForm() {
     setTabTempo(tabTemp);
   };
 
+  
   const sendData = () => {
     // console.log('tabTempo', tabTempo[0]);
 
