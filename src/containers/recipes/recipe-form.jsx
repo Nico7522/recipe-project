@@ -175,27 +175,23 @@
 // };
 
 // V2 TEST
-
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { MultiSelect } from "react-multi-select-component";
 import { useFetchIngredient } from "../../../API/ingredient";
-
 import Title from "../../components/title/title";
-import * as yup from "yup";
-import axios from "axios";
 import { PostRecipe } from "../../../API/recipe";
-import { useSelector } from "react-redux";
-import { set } from "react-hook-form";
 import ConfirmModal from "../../components/modal/confirm-modal";
 import { useFetchUser } from "../../hooks/user-hooks";
 import Button from "../../components/button";
 import { tagsEnum } from "../../../utils/tags-enum";
 
 export default function RecipeForm() {
-  const tags = []
-  Object.keys(tagsEnum).map((key, value) => tags.push({ label: key, value: key, id: value+1 }))
-  
+  const tags = [];
+  Object.keys(tagsEnum).map((key, value) =>
+    tags.push({ label: key, value: key, id: value + 1 })
+  );
+
   // const tags = [
   //   { label: "Vegan", value: "Vegan", id: "1" },
   //   { label: "Healthy", value: "Healty", id: "2" },
@@ -246,9 +242,7 @@ export default function RecipeForm() {
     handleSubmit,
     control,
     register,
-    reset,
     formState: { errors },
-    getValues,
   } = useForm({});
 
   const [tabTempo, setTabTempo] = useState([]);
@@ -268,7 +262,6 @@ export default function RecipeForm() {
     setTabTempo(tabTemp);
   };
 
-  
   const sendData = () => {
     // console.log('tabTempo', tabTempo[0]);
 

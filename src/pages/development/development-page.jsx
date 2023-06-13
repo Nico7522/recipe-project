@@ -1,5 +1,5 @@
-import DevelopmentContainer from "../../containers/formingredient/formingredient/form-ingredient";
-import FormIngredient from "../../containers/formingredient/formingredient/form-ingredient";
+import DevelopmentContainer from "../../containers/developement-container/developement-container";
+import FormIngredient from "../../containers/developement-container/developement-container";
 
 export default function DevelopmentPage() {
     return (
