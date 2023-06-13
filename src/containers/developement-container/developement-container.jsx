@@ -4,9 +4,10 @@
 // import { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 
-import { FormProvider } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import IngredientsForm from "./form/ingredients-form";
 import TagsForm from "./form/tags-form";
+import Button from "../../components/button";
 
 // export default function DevelopmentContainer(){
 //     const [value, setValue] = useState('')
@@ -37,16 +38,22 @@ import TagsForm from "./form/tags-form";
 // }
 
 export default function DevelopmentContainer() {
+  const methods = useForm()
+  const handleRecipe = (data) => {
+    console.log(data);
+  }
   return (
     <div>
-      <FormProvider>
-        <form>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(handleRecipe)}>
             <label htmlFor="name">Recipe name : </label>
-            <input type="text" />
+            <input type="text" {...methods.register('name')} />
             <label htmlFor="description">Description : </label>
-            <input type="text" />
+            <input type="text" {...methods.register('description')} />
           <TagsForm />
           <IngredientsForm />
+          <Button className={"z-10"} type={"submit"} text={"Search"} />
+
         </form>
       </FormProvider>
     </div>
