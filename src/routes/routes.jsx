@@ -22,6 +22,7 @@ import RecipesPage from "../pages/recipes/recipes-page";
 import LoginPage from "../pages/user/login/login-page";
 import ProfilPage from "../pages/user/profil/profil-page";
 import RegisterPage from "../pages/user/register/register-page";
+import ResetPasswordPage from "../pages/user/resetpassword/reset-password";
 
 export const routes = [
   {
@@ -82,6 +83,10 @@ export const routes = [
           {
             path: "profil/:userId",
             element: <ProfilPage />,
+          },
+          {
+            path: "resetpassword",
+            element: <ResetPasswordPage />,
           },
         ],
       },

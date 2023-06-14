@@ -91,9 +91,12 @@ const NavBar = () => {
               <span className=" mt-1 para">{fullName}</span>
             </div>
           ) : (
+            <div className="flex flex-col relative">
             <Link to="/user/signin">
               <Button text={"LOG IN"} className={"btn ml-1"}></Button>
             </Link>
+            <p onClick={() => navigation('/user/resetpassword')} className="text-xs top-9 left-2 absolute w-32 hover:underline hover:cursor-pointer">Forget password ?</p>
+            </div>
           )}
 
           <Link to="/user/signup">

@@ -6,12 +6,13 @@ export const updateUserStatut = ({ id, statusChange }) => {
   });
 };
 
-export const updatePassword = ({ userId, password, config }) => {
+export const updatePassword = ({ mail, password, config }) => {
   return axios.patch(
-    `http://localhost:8080/api/user/${userId}/resetpassword`,
+    `http://localhost:8080/api/user/resetpassword`,
     {
+      mail: mail,
       password: password,
     },
-    config
+    // config
   );
 };

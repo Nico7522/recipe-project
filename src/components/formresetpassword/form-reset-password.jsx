@@ -7,8 +7,8 @@ export default function FormResetPassword() {
   const { userId, userStatus, config } = useFetchUser();
   const reset = resetPassword();
   const { register, handleSubmit, reset: resetValue } = useForm();
-  const handleResetPsw = ({ password }) => {
-    reset.mutate({ userId, password, config });
+  const handleResetPsw = ({ mail, password }) => {
+    reset.mutate({ mail, password, config });
 
     resetValue();
   };
@@ -18,6 +18,8 @@ export default function FormResetPassword() {
         onSubmit={handleSubmit(handleResetPsw)}
         className="flex flex-col justify-center items-center	"
       >
+        <label htmlFor="email" className=" text-white">Mail : </label>
+        <input {...register("mail")} type="text" />
         <label htmlFor="password" className=" text-white">New password : </label>
         <input {...register("password")} type="password" />
         <Button style={"mr-8"} text={"RESET"} />
