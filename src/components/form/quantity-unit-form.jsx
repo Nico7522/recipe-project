@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 
-export default function QuantityUnitForm({ i, selectedIngredients }) {
+export default function QuantityUnitForm({ i }) {
     const { register } = useFormContext();
 
   return (

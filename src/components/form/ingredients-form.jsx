@@ -44,7 +44,7 @@ export default function IngredientsForm() {
       />{" "}
         <div className="flex flex-row items-center flex-wrap justify-center mt-2 mb-2 text-white">
       {selectedIngredients.map((i) => (
-        <QuantityUnitForm i={i} selectedIngredients={selectedIngredients} />
+        <QuantityUnitForm i={i} key={i.id} selectedIngredients={selectedIngredients} />
         ))}
         </div>
     </div>
