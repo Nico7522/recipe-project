@@ -8,6 +8,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import IngredientsForm from "./form/ingredients-form";
 import TagsForm from "./form/tags-form";
 import Button from "../../components/button";
+import { useFetchUser } from "../../hooks/user-hooks";
+import { postRecipe } from "../../../API/recipe";
+import { formArrayRecipe } from "../../../utils/formdatarecipe";
 
 // export default function DevelopmentContainer(){
 //     const [value, setValue] = useState('')
@@ -38,22 +41,46 @@ import Button from "../../components/button";
 // }
 
 export default function DevelopmentContainer() {
-  const methods = useForm()
+  const { userId } = useFetchUser();
+  const recipe = postRecipe();
+  const methods = useForm();
   const handleRecipe = (data) => {
-    console.log(data);
-  }
+    const arraySorted = formArrayRecipe(data);
+    const newRecipe = {
+      name: data.name,
+      description: data.description,
+      ingredients: arraySorted.ingredientsArray,
+      tags: arraySorted.tagsArray,
+      UserId: userId,
+    };
+    recipe.mutate(newRecipe);
+    methods.reset()
+  };
   return (
-    <div>
+    <div className="w-3/4 m-auto border-4 border-green-800">
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(handleRecipe)}>
-            <label htmlFor="name">Recipe name : </label>
-            <input type="text" {...methods.register('name')} />
-            <label htmlFor="description">Description : </label>
-            <input type="text" {...methods.register('description')} />
+        <form
+          className="flex flex-col text-center"
+          onSubmit={methods.handleSubmit(handleRecipe)}
+        >
+          <label className="text-white font text-2xl" htmlFor="name">
+            Recipe name :{" "}
+          </label>
+          <input className="w-96 m-auto" type="text" {...methods.register("name")} />
+          <label className="text-white font text-2xl" htmlFor="description">
+            Description :{" "}
+          </label>
+
+          <textarea
+            {...methods.register("description")}
+            id=""
+            cols="30"
+            rows="10"
+            className="w-96 m-auto h-60 rounded-lg shadow-2xl resize-none"
+          ></textarea>
           <TagsForm />
           <IngredientsForm />
-          <Button className={"z-10"} type={"submit"} text={"Search"} />
-
+          <Button className={"w-72 m-auto"} type={"submit"} text={"Search"} />
         </form>
       </FormProvider>
     </div>

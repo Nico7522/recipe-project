@@ -109,7 +109,7 @@ export const useFetchRecipeById = ({ recipeId }) => {
   });
 };
 
-export const PostRecipe = () => {
+export const postRecipe = () => {
   const { token, config } = useFetchUser();
 
   const queryClient = useQueryClient();
