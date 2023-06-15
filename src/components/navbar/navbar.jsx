@@ -91,17 +91,17 @@ const NavBar = () => {
               <span className=" mt-1 para">{fullName}</span>
             </div>
           ) : (
-            <div className="flex flex-col relative">
+            <div className="flex flex-col break-words relative mb-7 lg:mb-0">
             <Link to="/user/signin">
               <Button text={"LOG IN"} className={"btn ml-1"}></Button>
             </Link>
-            <p onClick={() => navigation('/user/resetpassword')} className="text-xs top-9 left-2 absolute w-32 hover:underline hover:cursor-pointer">Forget password ?</p>
+            <p onClick={() => navigation('/user/forgotpassword')} className="text-xs top-9 lg:top-14 xl:top-9 lg:w-32 md:top-16 min-[1150px]:top-9 left-2 absolute w-30 hover:underline hover:cursor-pointer">Forgot password ?</p>
             </div>
           )}
-
+          
           <Link to="/user/signup">
             {" "}
-            <Button text={"REGISTER"} className={"btn ml-3"}></Button>
+            <Button text={"REGISTER"} className={"btn"}></Button>
           </Link>
         <button
           onClick={() => darkMode()}

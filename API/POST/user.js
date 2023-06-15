@@ -8,3 +8,9 @@ export const userLogin = async (userLog) => {
     );
     return data;
   };
+
+// Forgot password (envoi du mail pour changer le mot de passe)
+export const forgotPassword = async (mail) => {
+  const { data } = await axios.post("http://localhost:8080/api/user/forgotpassword", { mail })
+  return data
+}
