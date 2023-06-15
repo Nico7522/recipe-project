@@ -32,7 +32,7 @@ const NavBar = () => {
   let Links = [
     { name: "HOME", link: "/" },
     { name: "RECIPES", link: "/recipes/all" },
-    { name: "INGREDIENTS", link: "/" },
+    { name: "INGREDIENTS", link: "/ingredients" },
     { name: "RECIPES OF THE WEEKS", link: "/recipes/top" },
     { name: "CONTACT", link: "/" },
   ];

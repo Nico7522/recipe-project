@@ -110,10 +110,9 @@ import { useInView } from "react-intersection-observer";
 import { useFetchComments } from "../../../API/comment";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/Button";
 import generateSearchParams from "../../../utils/generate-search-params";
-import { FormProvider, useForm } from "react-hook-form";
-import { useFormContext } from "react-hook-form";
+
+import Button from "../../components/button";
 
 export default function RecipeList() {
   const [searchParams, setSearchParams] = useSearchParams();
