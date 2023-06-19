@@ -1,8 +1,9 @@
 import axios from "axios";
+const URL_API = import.meta.env.VITE__URL_API;
 
 
 export const updateRecipeValidity = ({ id, validity }) => {
-        return axios.patch(`http://localhost:8080/api/recipe/admin/${id}`, {
+        return axios.patch(`${URL_API}recipe/admin/${id}`, {
           valid: validity,
         });
       

@@ -93,6 +93,7 @@
 
 import { useInfiniteQuery } from "react-query";
 // import { useFetchAllRecipes } from "../../../API/recipe";
+const URL_API = import.meta.env.VITE__URL_API;
 
 import Recipe from "../../components/recipe/recipe-component";
 import Title from "../../components/title/title";
@@ -140,7 +141,7 @@ export default function RecipeList() {
     ],
     async ({ pageParam = 0 }) => {
       const { data } = await axios.get(
-        `http://localhost:8080/api/recipe?page=${pageParam}&tag=${
+        `http://api.nicorecipe.com/api/recipe?page=${pageParam}&tag=${
           searchParams.get("tag") || ""
         }`
       );

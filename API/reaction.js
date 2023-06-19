@@ -3,13 +3,14 @@ import { useMutation } from "react-query";
 import { useQuery } from "react-query";
 import { useQueryClient } from "react-query";
 import { useQueries } from "react-query";
+const URL_API = import.meta.env.VITE__URL_API;
 
 export const useFetchReactions = () => {
   const queryClient = useQueryClient();
   return useQuery(
     ["Reactions"],
     () => {
-      return axios.get("http://localhost:8080/api/recipe/react");
+      return axios.get(`${URL_API}recipe/react`);
     },
     {
       onError: (err) => {},
@@ -25,7 +26,7 @@ export const postReaction = (reaction) => {
   const queryClient = useQueryClient();
   return useMutation(
     async (reaction) => {
-      await axios.post("http://localhost:8080/api/recipe/react", reaction)
+      await axios.post(`${URL_API}recipe/react`, reaction)
     },
 
     {

@@ -1,7 +1,6 @@
 import { useSearchParams } from "react-router-dom"
 import { useFetchRecipe } from "../../../API/recipe"
 import Recipe from "../../components/recipe/recipe-component"
-import { useEffect } from "react"
 import Title from "../../components/title/title"
 
 export default function RecipeSearch() {

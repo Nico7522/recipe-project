@@ -12,6 +12,8 @@ import { useDispatch } from "react-redux";
 import { loginAction } from "../src/store/actions/user.action";
 import { useNavigate } from "react-router-dom";
 import { userLogin } from "./POST/user";
+const URL_API = import.meta.env.VITE__URL_API;
+
 
 
 // Get all users
@@ -75,7 +77,7 @@ export const RegisterUser = () => {
   return useMutation(
     async (user) => {
       const { data } = await axios.post(
-        "http://localhost:8080/api/user/signup",
+        `${URL_API}user/signup`,
         user
       );
       return data;
