@@ -10,7 +10,7 @@ export const useFetchReactions = () => {
   return useQuery(
     ["Reactions"],
     () => {
-      return axios.get(`${URL_API}recipe/react`);
+      return axios.get(`${URL_API}/recipe/react`);
     },
     {
       onError: (err) => {},
@@ -26,7 +26,7 @@ export const postReaction = (reaction) => {
   const queryClient = useQueryClient();
   return useMutation(
     async (reaction) => {
-      await axios.post(`${URL_API}recipe/react`, reaction)
+      await axios.post(`${URL_API}/recipe/react`, reaction)
     },
 
     {

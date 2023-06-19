@@ -9,7 +9,7 @@ export const updateUserStatut = ({ id, statusChange }) => {
 
 export const updatePassword = ({ mail, password, config }) => {
   return axios.patch(
-    `${URL_API}user/resetpassword`,
+    `${URL_API}/user/resetpassword`,
     {
       mail: mail,
       password: password,

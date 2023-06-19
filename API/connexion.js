@@ -77,7 +77,7 @@ export const RegisterUser = () => {
   return useMutation(
     async (user) => {
       const { data } = await axios.post(
-        `${URL_API}user/signup`,
+        `${URL_API}/user/signup`,
         user
       );
       return data;

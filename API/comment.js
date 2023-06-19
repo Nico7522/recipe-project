@@ -9,7 +9,7 @@ export const useFetchComments = () => {
   const queryClient = useQueryClient();
   return useQuery("Comments", async () => {
     const { data } = await axios.get(
-      `${URL_API}recipe/comment`
+      `${URL_API}/recipe/comment`
     );
 
     return data.results;
@@ -29,7 +29,7 @@ export const useFetchCommentById = ({ cId }) => {
 export const useFetchCommentsAdmin = () => {
   const queryClient = useQueryClient();
   return useQuery("Comments", async () => {
-    const { data } = await axios.get(`${URL_API}comment`);
+    const { data } = await axios.get(`${URL_API}/comment`);
 
     return data.results;
   });
@@ -40,7 +40,7 @@ export const postComment = () => {
 
   return useMutation(
     async (comment) => {
-      await axios.post(`${URL_API}recipe/comment`, comment);
+      await axios.post(`${URL_API}/recipe/comment`, comment);
     },
 
     {
@@ -75,7 +75,7 @@ export const validComment = () => {
 
   return useMutation(
       async ({ id, validity }) => {
-     return axios.patch(`${URL_API}comment/${id}`, {
+     return axios.patch(`${URL_API}/comment/${id}`, {
         valid: validity,
       });
     },
@@ -108,7 +108,7 @@ export const updateComment = () => {
   return useMutation(
     async (up) => {
       return axios.put(
-        `${URL_API}recipe/comment/` + up.idComment,
+        `${URL_API}/recipe/comment/` + up.idComment,
         { text: up.text }
       );
     },
@@ -141,7 +141,7 @@ export const deleteComment = () => {
 
   return useMutation(
     async (id) => {
-      axios.delete(`${URL_API}comment/${id}`);
+      axios.delete(`${URL_API}/comment/${id}`);
     },
     {
       onMutate: async (variables) => {

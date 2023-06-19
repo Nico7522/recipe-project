@@ -63,7 +63,7 @@ export const getAll = () => {
 export const useFetchLastestRecipes = () => {
   const queryClient = useQueryClient();
   return useQuery(["Recipes", { limit: 3, offset: 0 }], async () => {
-    const { data } = await axios.get(`${URL_API}recipe?page=1`);
+    const { data } = await axios.get(`${URL_API}/recipe?page=1`);
     return data;
   });
 };
@@ -71,7 +71,7 @@ export const useFetchLastestRecipes = () => {
 export const useFetchTopRecipes = () => {
   const queryClient = useQueryClient();
   return useQuery(["Recipes"], async () => {
-    const { data } = await axios.get(`${URL_API}recipe/top`);
+    const { data } = await axios.get(`${URL_API}/recipe/top`);
     return data;
   });
 };
@@ -92,7 +92,7 @@ export const useFetchAllRecipes = (offset, stop) => {
   return useQuery({
     queryKey: ["Recipes", offset],
     queryFn: async () =>
-      fetch(`${URL_API}recipe?limit=3&offset=` + offset).then(
+      fetch(`${URL_API}/recipe?limit=3&offset=` + offset).then(
         (res) => res.json()
       ),
     keepPreviousData: true,
@@ -165,7 +165,7 @@ export const useUpdateRecipe = (recipeToUpdate, setError) => {
       return { previousRecipe, recipeToUpdate };
     },
     mutationFn: async (recipeToUpdate) =>
-      await axios.put("http://localhost:8080/api/recipe/1", recipeToUpdate),
+      await axios.put(`${URL_API}/recipe/1`, recipeToUpdate),
 
     onError: ({ response }, recipeToUpdate, context) => {
       console.log("response =>", response);
@@ -188,7 +188,7 @@ export const deleteRecipe = () => {
   const naviguation = useNavigate();
   return useMutation(
     async (id) => {
-      return axios.delete(`${URL_API}recipe/${id}`);
+      return axios.delete(`${URL_API}/recipe/${id}`);
     },
     {
       onMutate: async (variables) => {
