@@ -141,7 +141,7 @@ export default function RecipeList() {
     ],
     async ({ pageParam = 0 }) => {
       const { data } = await axios.get(
-        `http://api.nicorecipe.com/api/recipe?page=${pageParam}&tag=${
+        `${URL_API}recipe?page=${pageParam}&tag=${
           searchParams.get("tag") || ""
         }`
       );
