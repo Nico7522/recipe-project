@@ -12,7 +12,8 @@ import { useCalcMacro } from "../../hooks/macro-hooks";
 import ShowTags from "../../../utils/show-tags";
 import ImageForm from "../image-form/image-form";
 import CalculByPart from "../ingredients/form-calculbyparts";
-const URL_API = import.meta.env.VITE__URL_API;
+const URL_IMG_API = import.meta.env.VITE__URL_IMG_API;
+
 // + " " + (!showComment && "h-12 break-words overflow-scroll")
 export default function Recipe({
   id,
@@ -79,7 +80,7 @@ export default function Recipe({
       <div className="text-center items-center justify-center flex flex-col lg:flex-row">
         <div className="rounded-2xl m-auto shadow-md">
         <img
-          src={`${URL_API}${imgURL}`}
+          src={`${URL_IMG_API}${imgURL}`}
           
           
           

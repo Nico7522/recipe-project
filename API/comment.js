@@ -20,7 +20,7 @@ export const useFetchCommentById = ({ cId }) => {
   const queryClient = useQueryClient();
   return useQuery(["Comments", cId], async () => {
     const { data } = await axios.get(
-      `${URL_API}recipe/comment/${cId}`
+      `${URL_API}/recipe/comment/${cId}`
     );
     return data.result.text;
   });

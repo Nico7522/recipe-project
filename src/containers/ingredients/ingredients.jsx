@@ -11,6 +11,7 @@ import SearchBar from "../../components/ingredients/searchbar";
 import { useState } from "react";
 import qs from "qs";
 import Button from "../../components/button";
+const URL_API = import.meta.env.VITE__URL_API;
 
 export default function Ingredients() {
   const [searchParams, setSearchParams] = useSearchParams({});
@@ -40,7 +41,7 @@ export default function Ingredients() {
     ["Ingredients", { ingredient: ingredient }],
     async ({ pageParam = 0 }) => {
       const { data } = await axios.get(
-        `http://localhost:8080/api/ingredient?page=${pageParam}`,
+        `${URL_API}/ingredient?page=${pageParam}`,
         {
           params: { ingredient: ingredient },
           paramsSerializer: (param) => {

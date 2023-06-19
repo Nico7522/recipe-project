@@ -10,7 +10,7 @@ export const fetchUser = async () => {
 // Get user by ID
 export const fetchUserById = async (logedUserId) => {
   const { data } = await axios.get(
-    `${URL_API}user/${logedUserId}`
+    `${URL_API}/user/${logedUserId}`
   );
   return data.result;
 };
