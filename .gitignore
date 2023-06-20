@@ -25,4 +25,4 @@ dist-ssr
 
 # env variables
 .env
-.en.production
+.env.production
