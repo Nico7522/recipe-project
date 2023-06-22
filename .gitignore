@@ -24,5 +24,6 @@ dist-ssr
 *.sw?
 
 # env variables
+.env.production
 .env
-.en.production
+*.env

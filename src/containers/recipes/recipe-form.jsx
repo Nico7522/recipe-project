@@ -28,6 +28,7 @@ export default function RecipeForm() {
     });
   };
   const sendRecipe = () => {
+    console.log(newRecipe);
     recipe.mutate(newRecipe);
     setToogleModal(false)
     methods.reset();

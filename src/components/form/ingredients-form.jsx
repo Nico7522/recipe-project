@@ -39,8 +39,11 @@ export default function IngredientsForm() {
             labelledBy="ingredients"
             hasSelectAll={false}
             className="w-96 m-auto"
+            
           />
+          
         )}
+        
       />{" "}
         <div className="flex flex-row items-center flex-wrap justify-center mt-2 mb-2 text-white">
       {selectedIngredients.map((i) => (
