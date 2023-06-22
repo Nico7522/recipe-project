@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useFetchUser } from "../../hooks/user-hooks.js";
 import { logoutAction } from "../../store/actions/user.action.js";
-
+const URL_IMG_API = import.meta.env.VITE__URL_IMG_API;
 import UserProfil from "../profil/profil";
 import Button from "../button.jsx";
 
@@ -82,7 +82,7 @@ const NavBar = () => {
               </div>
               <Link to={"/user/profil/" + userId}>
                 <img
-                  src={"http://localhost:8080/" + avatar}
+                  src={`${URL_IMG_API}/${avatar}`}
                   width="50"
                   height="30"
                   className="rounded-2xl"

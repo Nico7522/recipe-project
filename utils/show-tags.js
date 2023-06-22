@@ -8,6 +8,8 @@ export default function ShowTags( t ) {
 
     case "Dessert":
       return "Dessert 🧁";
+    case "Main course":
+      return "Main course 🍜"
 
     default:
       return t;

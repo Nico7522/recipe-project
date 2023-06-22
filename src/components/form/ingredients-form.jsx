@@ -3,7 +3,7 @@ import { MultiSelect } from "react-multi-select-component";
 
 import { useEffect } from "react";
 import { useState } from "react";
-import { useFetchIngredient, useFetchIngredientForm } from "../../../API/ingredient";
+import { useFetchIngredientForm } from "../../../API/ingredient";
 import QuantityUnitForm from "./quantity-unit-form";
 
 export default function IngredientsForm() {
