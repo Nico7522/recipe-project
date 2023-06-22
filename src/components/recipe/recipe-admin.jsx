@@ -40,7 +40,7 @@ export default function RecipeAdmin({
         ))}
         </section>
       </div>
-    </div>
+    </div >
     <DuvRecipe valid={valid} id={id} />
     </div>
   );
