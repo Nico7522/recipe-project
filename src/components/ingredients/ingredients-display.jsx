@@ -13,7 +13,7 @@ export default function IngredientDisplay({name,
                 <p>Calories : {calories} kcals</p>
                 <p>Carbohydrates : {carbohydrates} g</p>
                 <p>Proteins : {proteins} g</p>
-                <p>Fats{fats} g</p>
+                <p>Fats : {fats} g</p>
             </div>
         </div>
     )

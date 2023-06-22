@@ -86,7 +86,7 @@ export default function Ingredients() {
       </div>
       <div className="m-auto w-4/5 text-cnter bg-white">
       {data.pages.map((page, pageIndex) => (
-        <div key={pageIndex} className=" w-full m-auto gap-1 flex-wrap flex flex-row mt-10" >
+        <div key={pageIndex} className="w-full gap-1 flex-wrap flex flex-row mt-1" >
           {page.results.map((ingredient) => (
             <IngredientDisplay key={ingredient.id} {...ingredient} />
           ))}
