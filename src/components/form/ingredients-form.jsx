@@ -3,13 +3,13 @@ import { MultiSelect } from "react-multi-select-component";
 
 import { useEffect } from "react";
 import { useState } from "react";
-import { useFetchIngredient } from "../../../API/ingredient";
+import { useFetchIngredient, useFetchIngredientForm } from "../../../API/ingredient";
 import QuantityUnitForm from "./quantity-unit-form";
 
 export default function IngredientsForm() {
   const [ingredients, setIngredients] = useState([]);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
-  const { data } = useFetchIngredient();
+  const { data } = useFetchIngredientForm();
 
   useEffect(() => {
     console.log(data);
