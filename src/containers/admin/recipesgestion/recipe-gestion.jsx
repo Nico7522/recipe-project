@@ -5,6 +5,7 @@ import axios from "axios";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
 import ValidForm from "../../../components/validform/validform";
+const URL_API = import.meta.env.VITE__URL_API;
 
 export default function RecipeGestion() {
     const { ref, inView } = useInView();
@@ -30,7 +31,7 @@ export default function RecipeGestion() {
     ["Recipes", {valid: valid}],
     async ({ pageParam = 0 }) => {
       const { data } = await axios.get(
-        `http://localhost:8080/api/recipe/admin?page=${pageParam}&valid=${valid || ''}`
+        `${URL_API}/recipe/admin?page=${pageParam}&valid=${valid || ''}`
       );
       return data;
     },

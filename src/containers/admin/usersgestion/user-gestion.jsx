@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import Loader from "../../../components/loader/loader";
 import ValidForm from "../../../components/validform/validform";
+const URL_API = import.meta.env.VITE__URL_API;
 
 export default function UserGestion() {
   const { ref, inView } = useInView();
@@ -30,7 +31,7 @@ export default function UserGestion() {
     ["Users"],
     async ({ pageParam = 0 }) => {
       const { data } = await axios.get(
-        `http://localhost:8080/api/user?page=${pageParam}`
+        `${URL_API}/user?page=${pageParam}`
       );
       return data;
     },

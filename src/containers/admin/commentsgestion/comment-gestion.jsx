@@ -7,6 +7,7 @@ import { useFetchCommentsAdmin } from "../../../../API/comment";
 import Comment from "../../../components/comments/comment";
 import DuvComment from "../../../components/duv-admin/duv-comment";
 import ValidForm from "../../../components/validform/validform";
+const URL_API = import.meta.env.VITE__URL_API;
 
 export default function CommentGestion() {
   // const {data, isLoading, isError} = useFetchCommentsAdmin()
@@ -38,7 +39,7 @@ export default function CommentGestion() {
     ["Comments", {valid: valid}],
     async ({ pageParam = 0 }) => {
       const { data } = await axios.get(
-        `http://localhost:8080/api/comment?page=${pageParam}&valid=${
+        `${URL_API}/comment?page=${pageParam}&valid=${
           valid || ""
         }`
       );
