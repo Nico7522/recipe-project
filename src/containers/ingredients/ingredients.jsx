@@ -18,7 +18,7 @@ export default function Ingredients() {
   const navigation = useNavigate();
   const { ref, inView } = useInView();
   const [ingredient, setIngredient] = useState("");
-
+  const nav = useNavigate()
   const handleIngredient = (search) => {
     let params = qs.stringify({ ingredient: search });
 
@@ -82,7 +82,7 @@ export default function Ingredients() {
           className={'order-1'}
         />
         <Title text={"All ingredients"} className={'order-2'} />
-        <Button text={"Post new ingredient"} className={'order-3'} />
+        <Button text={"Post new ingredient"} onClick={() => nav('/ingredients/create')} className={'order-3'} />
       </div>
       <div className="m-auto w-4/5 text-cnter bg-white">
       {data.pages.map((page, pageIndex) => (

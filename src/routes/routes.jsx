@@ -8,8 +8,11 @@ import AdminCommentsPage from "../pages/admin/pages/admin-comments";
 import AdminRecipesPage from "../pages/admin/pages/admin-recipes";
 import AdminUserPage from "../pages/admin/pages/admin-users";
 import CommentUpdatePage from "../pages/comment/commentuptade-page";
+import ContactPage from "../pages/contact/contact-page";
 import DevelopmentPage from "../pages/development/development-page";
 import HomePage from "../pages/home/home.page";
+import IngredientsAllPage from "../pages/ingredients/ingredients-all-page";
+import IngredientFormPage from "../pages/ingredients/ingredients-create-pages";
 import IngredientsPage from "../pages/ingredients/ingredients-pages";
 import RecipeCreatePage from "../pages/recipes/recipe-create.pages";
 import RecipeDetailsPage from "../pages/recipes/recipe-details.page";
@@ -60,16 +63,15 @@ export const routes = [
             path: "top",
             element: <TopRecipePage />,
           },
-      
         ],
       },
       {
         path: "ingredients",
-        element: <IngredientsPage />
-      },
-      {
-        path: "about",
-        element: <AboutPage />,
+        element: <IngredientsPage />,
+        children: [
+          { path: "", element: <IngredientsAllPage/> },
+          { path: "create", element: <IngredientFormPage /> }
+        ],
       },
       {
         path: "user",
@@ -92,7 +94,7 @@ export const routes = [
           },
           {
             path: "forgotpassword",
-            element: <ForgotPasswordPage />
+            element: <ForgotPasswordPage />,
           },
           {
             path: "resetpassword",
@@ -120,20 +122,24 @@ export const routes = [
             element: <AdminUserPage />,
           },
           {
-            path: 'development',
-            element: <DevelopmentPage/>
-          }
+            path: "development",
+            element: <DevelopmentPage />,
+          },
         ],
       },
       {
         path: "comment",
         children: [
           {
-            path: ':commentId',
-            element: <CommentUpdatePage />
-          }
-        ]
-      }
+            path: ":commentId",
+            element: <CommentUpdatePage />,
+          },
+        ],
+      },
+      {
+        path: "contact",
+        element: <ContactPage />,
+      },
     ],
   },
 ];
