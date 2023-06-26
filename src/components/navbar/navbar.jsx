@@ -34,7 +34,7 @@ const NavBar = () => {
     { name: "RECIPES", link: "/recipes/all" },
     { name: "INGREDIENTS", link: "/ingredients" },
     { name: "RECIPES OF THE WEEKS", link: "/recipes/top" },
-    { name: "CONTACT", link: "/" },
+    { name: "CONTACT", link: "/contact" },
   ];
   let [open, setOpen] = useState(false);
   return (
