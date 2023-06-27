@@ -62,9 +62,9 @@ export default function Register() {
   return (
     <>
     <Title text={'CREATE A ACCOUNT'} className={'underline md:mt-36 lg:mt-20'} />
-    <div className="w-96 border-4 p-2 border-green-300 m-auto mt-5">
+   
       <form
-        className="text-center m-auto flex flex-col justify-center content-center"
+        className="text-center m-auto mt-5 w-80 p-2 flex flex-col justify-center content-center border-4 border-green-700"
         onSubmit={handleSubmit(submitRegister)}
       >
         <div className="mt-2 flex flex-col justify-center content-center">
@@ -149,7 +149,7 @@ export default function Register() {
 
         <Button className={'w-36 m-auto mt-2'} type={"submit"} text={"REGISTER"} />
       </form>
-    </div>
+  
     </>
   );
 }

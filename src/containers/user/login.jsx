@@ -6,6 +6,9 @@ import { loginUser } from "../../../API/connexion";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
 import Title from "../../components/title/title";
+import ErrorInputDispay from "../../components/responses/error-input-display";
+import ErrorDisplay from "../../components/responses/error-display";
+import Loader from "../../components/loader/loader";
 
 
 export default function Login() {
@@ -15,12 +18,12 @@ export default function Login() {
     email: yup.string().email("Must be a mail !").required("Mail required !"),
     password: yup
       .string()
-      .min(8, "Password doesn't not match the requirement !")
-      .max(100)
       .matches(
         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
         "Password doesn't not match the requirement !"
-      ),
+      )
+      .min(8)
+      .max(100)
   });
 
   const {
@@ -29,6 +32,7 @@ export default function Login() {
     formState: { errors },
     reset,
   } = useForm({
+    criteriaMode: "all",
     resolver: yupResolver(schema),
   });
 
@@ -39,33 +43,30 @@ export default function Login() {
     reset();
   };
   if (isLoading) {
-    return <div className="custom-loader"></div>;
+    return <Loader className={'w-96 m-auto text-center'} />
   }
 
   return (
     <>
-    <Title text={'LOGIN'} className={'underline'}/>
+    <Title text={'LOGIN'} className={'underline md:mt-36 lg:mt-20'}/>
     <form
       onSubmit={handleSubmit(onLogin)}
-      className="text-center  m-auto w-80  border-green-300 border-4 p-2 flex flex-col justify-center content-center"
+      className="text-center m-auto mt-5 w-80 border-green-300 border-4 p-2 flex flex-col justify-center content-center"
     >
       <div className="mt-2 flex flex-col justify-center content-center">
-        <label htmlFor="mail" className=" text-white font text-2xl">
-          Mail :{" "}
-        </label>
+        <label htmlFor="mail" className=" text-white font text-2xl"> Mail :{" "} </label>
         <input className="w-3/4 m-auto" {...register("email")}></input>
-        {errors.email && <p>{errors.email.message}</p>}
+        {errors.email && <ErrorInputDispay errors={errors} name={'email'} />}
       </div>
+
       <div className="mt-2 flex flex-col justify-center content-center ">
-        <label htmlFor="password" className="text-white font text-2xl">
-          Password :{" "}
-        </label>
+        <label htmlFor="password" className="text-white font text-2xl"> Password :{" "} </label>
         <input
           className="w-3/4 m-auto"
           type="password"
           {...register("password")}
         ></input>
-        {errors.password && <p>{errors.password.message}</p>}
+        {errors.password && <ErrorInputDispay errors={errors} name={'password'} />}
       </div>
       <button
         type="submit"
@@ -73,9 +74,7 @@ export default function Login() {
       >
         Submit
       </button>
-      {error === 404 && (
-        <p className="mt-5 font text-2xl m-auto">Wrong mail or password !</p>
-      )}
+      {error && <ErrorDisplay text={error === 404 ? 'Password or mail incorrect' : "An error has occurred"} />}
     </form>
     </>
   );

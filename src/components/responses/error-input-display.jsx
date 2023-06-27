@@ -1,6 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 
 export default function ErrorInputDispay({ errors, name }) {
+  console.log(errors, name);
   return (
     <ErrorMessage
       errors={errors}

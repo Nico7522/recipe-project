@@ -24,7 +24,7 @@ export default function ContactForm() {
     };
     
   return (
-    <form onSubmit={handleSubmit(handleMessage)} className="flex flex-col w-96 m-auto mt-5">
+    <form onSubmit={handleSubmit(handleMessage)} className="flex flex-col w-72 md:w-96 m-auto mt-5">
       <label className="text-white" htmlFor="mail"> Mail :{" "} </label>
       <input
         type="text"
