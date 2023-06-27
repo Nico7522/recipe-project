@@ -1,9 +1,11 @@
+import ContactForm from "../../components/contact/contact-from";
+import Title from "../../components/title/title";
+
 export default function Contact(){
     return(
         <div className="text-center">
-            
-            <h1 className="text-center  text-3xl  "> <span className="text-white">CONTACT PAGE IS INCOMING</span> ❄❄❄</h1>
-           
+            <Title text={'CONTACT'} className={"underline"}/>
+            <ContactForm />
         </div>
     )
 }
