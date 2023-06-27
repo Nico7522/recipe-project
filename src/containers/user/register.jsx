@@ -1,5 +1,5 @@
 import { useForm, Controller } from "react-hook-form";
-import Button from "../../components/Button";
+import Button from "../../components/button";
 import { RegisterUser } from "../../../API/connexion";
 import * as yup from "yup";
 import DatePicker from "../../components/datepicker/datepicker";
@@ -7,6 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 import { loginAction } from "../../store/actions/user.action";
 import { useNavigate } from "react-router-dom";
+import Title from "../../components/title/title";
 
 export default function Register() {
   const dispatch = useDispatch()
@@ -59,15 +60,17 @@ export default function Register() {
   };
 
   return (
-    <div className=" w-96 m-auto mt-56 ">
+    <>
+    <Title text={'CREATE A ACCOUNT'} className={'underline md:mt-36 lg:mt-20'} />
+    <div className="w-96 border-4 p-2 border-green-300 m-auto mt-5">
       <form
-        className="text-center mt-96 m-auto w-80 border-sky-400 border-2 flex flex-col justify-center content-center"
+        className="text-center m-auto flex flex-col justify-center content-center"
         onSubmit={handleSubmit(submitRegister)}
       >
         <div className="mt-2 flex flex-col justify-center content-center">
-          <label htmlFor="name">Name : </label>
+          <label className="text-white" htmlFor="name">Name : </label>
           <input
-            className="w-56 m-auto"
+            className="w-64 m-auto rounded-2xl"
             {...register("name")}
             id="name"
             type="text"
@@ -78,9 +81,9 @@ export default function Register() {
         </div>
 
         <div className="mt-2 flex flex-col justify-center content-center">
-          <label htmlFor="surname">Surname : </label>
+          <label className="text-white" htmlFor="surname">Surname : </label>
           <input
-            className="w-56 m-auto"
+            className="w-64 m-auto rounded-2xl"
             {...register("surname")}
             id="surname"
             type="text"
@@ -91,9 +94,9 @@ export default function Register() {
         </div>
 
         <div className="mt-2 flex flex-col justify-center content-center">
-          <label htmlFor="surname">Mail : </label>
+          <label className="text-white" htmlFor="surname">Mail : </label>
           <input
-            className="w-56 m-auto"
+            className="w-64 m-auto rounded-2xl"
             {...register("email")}
             id="email"
             type="email"
@@ -104,8 +107,8 @@ export default function Register() {
         </div>
 
         {/* <div className="mt-2 flex flex-col justify-center content-center"> */}
-        <label>Birthdate : </label>
-        <div className="relative w-56 m-auto">
+        <label className="text-white">Birthdate : </label>
+        <div className="relative w-64 m-auto">
           <Controller
             control={control}
             name="birthdate"
@@ -132,9 +135,9 @@ export default function Register() {
         </div>
 
         <div className="mt-2 flex flex-col justify-center content-center">
-          <label htmlFor="password">Password : </label>
+          <label className="text-white" htmlFor="password">Password : </label>
           <input
-            className="w-56 m-auto"
+            className="w-64 m-auto rounded-2xl"
             {...register("password")}
             id="password"
             type="password"
@@ -144,8 +147,9 @@ export default function Register() {
           )}
         </div>
 
-        <Button className={'w-56 m-auto mt-2'} type={"submit"} text={"REGISTER"} />
+        <Button className={'w-36 m-auto mt-2'} type={"submit"} text={"REGISTER"} />
       </form>
     </div>
+    </>
   );
 }

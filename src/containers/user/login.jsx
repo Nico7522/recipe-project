@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../../API/connexion";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
+import Title from "../../components/title/title";
 
 
 export default function Login() {
@@ -42,9 +43,11 @@ export default function Login() {
   }
 
   return (
+    <>
+    <Title text={'LOGIN'} className={'underline'}/>
     <form
       onSubmit={handleSubmit(onLogin)}
-      className="text-center mt-96 m-auto w-80 border-sky-400 border-2 flex flex-col justify-center content-center"
+      className="text-center  m-auto w-80  border-green-300 border-4 p-2 flex flex-col justify-center content-center"
     >
       <div className="mt-2 flex flex-col justify-center content-center">
         <label htmlFor="mail" className=" text-white font text-2xl">
@@ -74,5 +77,6 @@ export default function Login() {
         <p className="mt-5 font text-2xl m-auto">Wrong mail or password !</p>
       )}
     </form>
+    </>
   );
 }

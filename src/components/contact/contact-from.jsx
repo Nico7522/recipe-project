@@ -1,25 +1,28 @@
 import { useForm } from "react-hook-form";
 import Button from "../button";
-
 import { sendMessage } from "../../../API/contact";
-import ErrorDisplay from "../responses/error-display";
-import { useEffect } from "react";
+import ErrorInputDisplay from "../responses/error-input-display";
 import { useState } from "react";
+import { useFetchUser } from "../../hooks/user-hooks";
+import ErrorDisplay from "../responses/error-display";
+
 
 
 export default function ContactForm() {
   const send = sendMessage();
   const [messageSend, setMessageSend] = useState('')
   const { register, handleSubmit, formState: { errors }, reset, } = useForm({ criteriaMode: "all"});
-  const handleMessage = (data) =>  { 
-    send.mutate(data); 
+  const { config } = useFetchUser()
+  const handleMessage = ({mail, subject, body}) =>  { 
+  
+    send.mutate({mail, subject, body, config}); 
     setMessageSend('Your message has been send !');
     setTimeout(() => {
         setMessageSend('')
         reset()
     }, 3000);
     };
-
+    
   return (
     <form onSubmit={handleSubmit(handleMessage)} className="flex flex-col w-96 m-auto mt-5">
       <label className="text-white" htmlFor="mail"> Mail :{" "} </label>
@@ -34,7 +37,8 @@ export default function ContactForm() {
           },
         })}
       />
-      {errors.mail && <ErrorDisplay errors={errors} name={'mail'} />}
+      {errors.mail && <ErrorInputDisplay errors={errors} name={'mail'} />}
+ 
       <label className="text-white" htmlFor="subject"> Subject :{" "} </label>
       <input type="text" 
         className="rounded-2xl"
@@ -43,8 +47,8 @@ export default function ContactForm() {
           maxLength: { value: 50, message: "Max 50 characters !"
           },
         })} />
-      {errors.subject && <ErrorDisplay errors={errors} name={'subject'} />}
-      <label className="text-white" htmlFor="message"> Message :{" "} </label>
+      {errors.subject && <ErrorInputDisplay errors={errors} name={'subject'} />}
+      <label className="text-white" htmlFor="body"> Message :{" "} </label>
       <textarea
         className="rounded-2xl"
         cols="30"
@@ -54,11 +58,10 @@ export default function ContactForm() {
           },
         )}
       ></textarea>
-      {errors.body && <ErrorDisplay errors={errors} name={"body"} />}
+      {errors.body && <ErrorInputDisplay errors={errors} name={"body"} />}
       <Button className={"w-56 m-auto mt-2"} text={"Send"} />
-      {send.error && <p>Error !</p>}
       {send.isSuccess && ( <p className="text-green-800 text-3xl">{messageSend}</p> )}
-
+      {send.error && (send.error.response.status === 403 ? <ErrorDisplay text={send.error.response.data.message}/> : <ErrorDisplay text={'An error has occurred'}/> )}
     </form>
   );
 }
