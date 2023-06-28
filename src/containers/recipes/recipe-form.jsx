@@ -8,13 +8,55 @@ import Button from "../../components/button";
 import ConfirmModal from "../../components/modal/confirm-modal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import ErrorInputDispay from "../../components/responses/error-input-display";
+
+import * as yup from "yup";
 export default function RecipeForm() {
-  const nav = useNavigate()
+  const schema = yup.object().shape({
+    name: yup.string().max(25).required("Required field"),
+    description: yup.string().required("Required field !"),
+    tags: yup
+      .array()
+      .of(
+        yup.object({
+          label: yup.string(),
+          value: yup.string(),
+        })
+      )
+      .test('tags', 'At least one tags !', (tab) => {
+        if (Array.isArray(tab)) {
+          if (tab.length > 0) {
+            return true
+          }
+        } 
+        return false
+      }),
+    ingredients: yup.array().of(
+      yup.object({
+        label: yup.string(),
+        value: yup.string(),
+      })
+    )
+    .test('ingredients', 'At least one ingredient !', (tab) => {
+      if (Array.isArray(tab)) {
+        if (tab.length > 0) {
+          return true
+        }
+      } 
+      return false
+    })
+  
+  });
+  const nav = useNavigate();
   const [toogleModal, setToogleModal] = useState(false);
   const [newRecipe, setNewRecipe] = useState({});
   const { userId } = useFetchUser();
   const recipe = postRecipe();
-  const methods = useForm();
+  const methods = useForm({
+    criteriaMode: "all",
+    resolver: yupResolver(schema),
+  });
 
   const handleRecipe = (data) => {
     setToogleModal(true);
@@ -30,22 +72,25 @@ export default function RecipeForm() {
   const sendRecipe = () => {
     console.log(newRecipe);
     recipe.mutate(newRecipe);
-    setToogleModal(false)
+    setToogleModal(false);
     methods.reset();
   };
 
-if (recipe.isSuccess) {
-  return <div>
-    <h2 className="text-green-300 font text-2xl">Recipe created ! </h2>
-    {setTimeout(() => {
-      nav('/recipes/all')
-    }, 2000)}
-  </div>
-}
+  if (recipe.isSuccess) {
+    return (
+      <div>
+        <h2 className="text-green-300 font text-2xl text-center">
+          Recipe created !{" "}
+        </h2>
+        {setTimeout(() => {
+          nav("/recipes/all");
+        }, 2000)}
+      </div>
+    );
+  }
 
   return (
     <div className="w-3/4 m-auto border-4 border-green-800">
-    
       <ConfirmModal
         toogleModal={toogleModal}
         setToogleModal={setToogleModal}
@@ -64,9 +109,18 @@ if (recipe.isSuccess) {
             type="text"
             {...methods.register("name")}
           />
+          {methods.formState.errors.name && (
+            <ErrorInputDispay errors={methods.formState.errors} name={"name"} />
+          )}
           <label className="text-white font text-2xl" htmlFor="description">
             Description :{" "}
           </label>
+          {methods.formState.errors.description && (
+            <ErrorInputDispay
+              errors={methods.formState.errors}
+              name={"description"}
+            />
+          )}
 
           <textarea
             {...methods.register("description")}
@@ -76,8 +130,15 @@ if (recipe.isSuccess) {
             className="w-96 m-auto h-60 rounded-lg shadow-2xl resize-none"
           ></textarea>
           <TagsForm />
+          {methods.formState.errors.tags && (
+            <ErrorInputDispay errors={methods.formState.errors} name={"tags"} />
+          )}
+
           <IngredientsForm />
-          <Button className={"w-72 m-auto"} type={"submit"} text={"Search"} />
+          {methods.formState.errors.ingredients && (
+            <ErrorInputDispay errors={methods.formState.ingredients} name={"ingredients"} />
+          )}
+          <Button className={"w-72 m-auto"} type={"submit"} text={"Create"} />
         </form>
       </FormProvider>
     </div>
