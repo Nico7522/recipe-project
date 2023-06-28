@@ -74,6 +74,8 @@ export const resetPassword = () => {
 
 export const RegisterUser = () => {
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
+  const nav = useNavigate();
   return useMutation(
     async (user) => {
       const { data } = await axios.post(
@@ -94,6 +96,10 @@ export const RegisterUser = () => {
       onError: (err, user, context) => {
         queryClient.setQueryData("Users", context.previousUsers);
         return err;
+      },
+      onSuccess: (data) => {
+        dispatch(loginAction(data.result));
+        nav("/recipes/all");
       },
       onSettled: (err, context) => {
         queryClient.invalidateQueries("Users");
