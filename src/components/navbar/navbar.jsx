@@ -82,7 +82,7 @@ const NavBar = () => {
               </div>
               <Link to={"/user/profil/" + userId}>
                 <img
-                  src={`${URL_IMG_API}/${avatar}`}
+                  src={`${URL_IMG_API}${avatar}`}
                   width="50"
                   height="30"
                   className="rounded-2xl"

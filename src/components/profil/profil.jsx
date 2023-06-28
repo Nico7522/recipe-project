@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 import { useFetchUser } from "../../hooks/user-hooks";
 import Button from "../button";
-import { resetPassword } from "../../../API/connexion";
 import FormResetPassword from "../formresetpassword/form-reset-password";
+const URL_IMG_API = import.meta.env.VITE__URL_IMG_API;
 
 export default function UserProfil({
   id,
@@ -52,7 +49,7 @@ export default function UserProfil({
         <div className="w-96 h-auto border-2 border-green-400 mt-32 md:mt-40 m-auto ">
           <h2 className="font text-center text-3xl text-white ">User details </h2>
           <img
-            src={"http://localhost:8080" + avatar}
+            src={`${URL_IMG_API}` + avatar}
             alt="avatar"
             width={100}
             height={100}
