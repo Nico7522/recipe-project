@@ -12,6 +12,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import ErrorInputDispay from "../../components/responses/error-input-display";
 
 import * as yup from "yup";
+import Title from "../../components/title/title";
 export default function RecipeForm() {
   const schema = yup.object().shape({
     name: yup.string().max(25).required("Required field"),
@@ -90,6 +91,8 @@ export default function RecipeForm() {
   }
 
   return (
+    <>
+      <Title text={'CREATE RECIPE'} className={'md:mt-36'}/>
     <div className="w-3/4 m-auto border-4 border-green-800">
       <ConfirmModal
         toogleModal={toogleModal}
@@ -105,7 +108,7 @@ export default function RecipeForm() {
             Recipe name :{" "}
           </label>
           <input
-            className="w-96 m-auto"
+            className="md:w-96 m-auto"
             type="text"
             {...methods.register("name")}
           />
@@ -127,7 +130,7 @@ export default function RecipeForm() {
             id=""
             cols="30"
             rows="10"
-            className="w-96 m-auto h-60 rounded-lg shadow-2xl resize-none"
+            className="md:w-96 m-auto h-60 rounded-lg shadow-2xl resize-none"
           ></textarea>
           <TagsForm />
           {methods.formState.errors.tags && (
@@ -142,5 +145,6 @@ export default function RecipeForm() {
         </form>
       </FormProvider>
     </div>
+    </>
   );
 }

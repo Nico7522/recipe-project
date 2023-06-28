@@ -36,7 +36,7 @@ export default function TagsForm() {
             }}
             labelledBy="tags"
             hasSelectAll={false}
-            className="w-96 m-auto"
+            className="md:w-96 m-auto"
           />
         )}
       />
