@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useFetchUser } from "../../hooks/user-hooks.js";
 import { logoutAction } from "../../store/actions/user.action.js";
 const URL_IMG_API = import.meta.env.VITE__URL_IMG_API;
+const DOMAINE = import.meta.env.VITE__DOMAINE;
 import UserProfil from "../profil/profil";
 import Button from "../button.jsx";
 
@@ -19,8 +20,9 @@ const NavBar = () => {
   }, [token])
   const logOut = () => {
     setIsToken(null)
-    dispatch(logoutAction())
-    navigation('/')
+    document.cookie = `refreshToken=; Max-Age=0; path=/; domain=${DOMAINE}`;
+    dispatch(logoutAction());
+    navigation('/');
   }
   const darkMode = () => {
     localStorage.theme === "dark"

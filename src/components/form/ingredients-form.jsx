@@ -38,7 +38,7 @@ export default function IngredientsForm() {
             }}
             labelledBy="ingredients"
             hasSelectAll={false}
-            className="md:w-96 m-auto"
+            className="sm:w-96 m-auto"
             
           />
           

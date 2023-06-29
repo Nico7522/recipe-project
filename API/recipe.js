@@ -16,6 +16,7 @@ import assert from "assert";
 import { useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useFetchUser } from "../src/hooks/user-hooks";
+import { createRecipe } from "./POST/recipe";
 const URL_API = import.meta.env.VITE__URL_API;
 // const URL_API = process.env.URL_API
 export const useFetchRecipe = (params) => {
@@ -114,15 +115,8 @@ export const postRecipe = () => {
   const { token, config } = useFetchUser();
 
   const queryClient = useQueryClient();
-  return useMutation(
-    async (recipe) => {
-      return await axios.post(
-        `${URL_API}/recipe`,
-        { ...recipe },
-        config
-      );
-    },
-    {
+  return useMutation({
+      mutationFn: createRecipe,
       onMutate: async (recipe) => {
         await queryClient.cancelQueries({
           queryKey: ["Recipes", recipe],

@@ -13,6 +13,7 @@ import ErrorInputDispay from "../../components/responses/error-input-display";
 
 import * as yup from "yup";
 import Title from "../../components/title/title";
+import ErrorDisplay from "../../components/responses/error-display";
 export default function RecipeForm() {
   const schema = yup.object().shape({
     name: yup.string().max(25).required("Required field"),
@@ -52,11 +53,12 @@ export default function RecipeForm() {
   const nav = useNavigate();
   const [toogleModal, setToogleModal] = useState(false);
   const [newRecipe, setNewRecipe] = useState({});
-  const { userId } = useFetchUser();
+  const { userId, config } = useFetchUser();
   const recipe = postRecipe();
   const methods = useForm({
     criteriaMode: "all",
     resolver: yupResolver(schema),
+  
   });
 
   const handleRecipe = (data) => {
@@ -71,10 +73,8 @@ export default function RecipeForm() {
     });
   };
   const sendRecipe = () => {
-    console.log(newRecipe);
-    recipe.mutate(newRecipe);
+    recipe.mutate({newRecipe, config});
     setToogleModal(false);
-    methods.reset();
   };
 
   if (recipe.isSuccess) {
@@ -108,7 +108,7 @@ export default function RecipeForm() {
             Recipe name :{" "}
           </label>
           <input
-            className="md:w-96 m-auto"
+            className="w-full sm:w-96 m-auto"
             type="text"
             {...methods.register("name")}
           />
@@ -118,20 +118,20 @@ export default function RecipeForm() {
           <label className="text-white font text-2xl" htmlFor="description">
             Description :{" "}
           </label>
-          {methods.formState.errors.description && (
-            <ErrorInputDispay
-              errors={methods.formState.errors}
-              name={"description"}
-            />
-          )}
 
           <textarea
             {...methods.register("description")}
             id=""
             cols="30"
             rows="10"
-            className="md:w-96 m-auto h-60 rounded-lg shadow-2xl resize-none"
-          ></textarea>
+            className="w-full sm:w-96 m-auto h-60 rounded-lg shadow-2xl resize-none"
+            ></textarea>
+            {methods.formState.errors.description && (
+              <ErrorInputDispay
+                errors={methods.formState.errors}
+                name={"description"}
+              />
+            )}
           <TagsForm />
           {methods.formState.errors.tags && (
             <ErrorInputDispay errors={methods.formState.errors} name={"tags"} />
@@ -141,10 +141,11 @@ export default function RecipeForm() {
           {methods.formState.errors.ingredients && (
             <ErrorInputDispay errors={methods.formState.ingredients} name={"ingredients"} />
           )}
-          <Button className={"w-72 m-auto"} type={"submit"} text={"Create"} />
+          <Button className={"w-full sm:w-72 m-auto"} type={"submit"} text={"Create"} />
         </form>
       </FormProvider>
     </div>
+    {recipe.error && <ErrorDisplay text={recipe.error.response.status === 403 ? recipe.error.response.data.message : "An error has occured !"} className={'text-center'} />}
     </>
   );
 }
