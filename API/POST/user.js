@@ -5,7 +5,8 @@ const URL_API = import.meta.env.VITE__URL_API;
 export const userLogin = async (userLog) => {
     const { data } = await axios.post(
       `${URL_API}/user/login`,
-      userLog
+      userLog,
+      { withCredentials: true }
     );
     return data;
   };

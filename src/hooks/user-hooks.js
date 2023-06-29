@@ -15,9 +15,11 @@ export const useFetchUser = () => {
   const fullName = `${name} ${surname}`;
  
   const config = {
+    withCredential: true,
     headers: {
       "content-type": "application/json",
       'Authorization': `Bearer ${isLogged}`,
+      
     },
   };
 
