@@ -80,7 +80,8 @@ export const RegisterUser = () => {
     async (user) => {
       const { data } = await axios.post(
         `${URL_API}/user/signup`,
-        user
+        user,
+        { withCredentials: true }
       );
       return data;
     },
