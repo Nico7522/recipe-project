@@ -11,6 +11,14 @@ export const userLogin = async (userLog) => {
     return data;
   };
 
+export const userLogout = async ({userId, config}) => {
+  axios.defaults.withCredentials = true
+  console.log(userId, config);
+  const { data } = await axios.post(
+    `${URL_API}/user/logout/${userId}`, config);
+  return data;
+}
+
 // Forgot password (envoi du mail pour changer le mot de passe)
 export const forgotPassword = async (mail) => {
   const { data } = await axios.post(`${URL_API}/user/forgotpassword`, { mail })

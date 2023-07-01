@@ -7,22 +7,27 @@ import { useFetchUser } from "../../hooks/user-hooks.js";
 import { logoutAction } from "../../store/actions/user.action.js";
 const URL_IMG_API = import.meta.env.VITE__URL_IMG_API;
 const DOMAINE = import.meta.env.VITE__DOMAINE;
+const URL_API = import.meta.env.VITE__URL_API;
 import UserProfil from "../profil/profil";
 import Button from "../button.jsx";
+import axios from "axios";
+import { userLogout } from "../../../API/POST/user.js";
 
 const NavBar = () => {
   const dispatch = useDispatch()
   const navigation = useNavigate()
-  const { token, userStatus, userId, avatar, fullName } = useFetchUser();
+  const { token, userStatus, userId, avatar, fullName, config } = useFetchUser();
   const [isToken, setIsToken] = useState(null)
+ 
+
   useEffect(() => {
     setIsToken(token)
   }, [token])
   const logOut = () => {
     setIsToken(null)
-    document.cookie = `refreshToken=; Max-Age=0; path=/; domain=${DOMAINE}`;
+    userLogout({userId, config})
     dispatch(logoutAction());
-    navigation('/');
+    // navigation('/');
   }
   const darkMode = () => {
     localStorage.theme === "dark"
@@ -39,6 +44,7 @@ const NavBar = () => {
     { name: "CONTACT", link: "/contact" },
   ];
   let [open, setOpen] = useState(false);
+
   return (
     <div className="shadow-md w-full">
       <div className=" md:flex items-center justify-between bg-white py-4 md:px-10 px-7 dark:bg-black dark:border-b-green-300 dark:border-b-2">
