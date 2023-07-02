@@ -13,7 +13,6 @@ export const userLogin = async (userLog) => {
 
 export const userLogout = async ({userId, config}) => {
   axios.defaults.withCredentials = true
-  console.log(userId, config);
   const { data } = await axios.post(
     `${URL_API}/user/logout/${userId}`, config);
   return data;

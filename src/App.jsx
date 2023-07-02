@@ -6,20 +6,24 @@ import { Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { disconnectedAction } from "./store/actions/user.action";
 
+
 function App() {
   const dispatch = useDispatch();
   const isDisconnect = useSelector((state) => state.user.disconnect);
 
-  
   useEffect(() => {
     checkDark();
   }, []);
 
-  
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      dispatch(disconnectedAction());
+    }, 2000);
+
+    return () => clearTimeout(timeout);
+  });
+
   if (isDisconnect === "disconnected") {
-    setTimeout(() => {
-      dispatch(disconnectedAction())
-    }, 2000)
     return (
       <div>
         <h2 className="text-green-300 font text-2xl text-center">
@@ -34,6 +38,7 @@ function App() {
       <header className="z-50 top-0 start-0 end-0 fixed">
         <NavBar />
       </header>
+
       <main className="mt-[7.2rem]">
         <Outlet />
       </main>
