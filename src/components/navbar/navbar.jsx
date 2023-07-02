@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useFetchUser } from "../../hooks/user-hooks.js";
-import { logoutAction } from "../../store/actions/user.action.js";
+import { disconnectAction, logoutAction } from "../../store/actions/user.action.js";
 const URL_IMG_API = import.meta.env.VITE__URL_IMG_API;
 const DOMAINE = import.meta.env.VITE__DOMAINE;
 const URL_API = import.meta.env.VITE__URL_API;
@@ -16,7 +16,7 @@ import { userLogout } from "../../../API/POST/user.js";
 const NavBar = () => {
   const dispatch = useDispatch()
   const navigation = useNavigate()
-  const { token, userStatus, userId, avatar, fullName, config } = useFetchUser();
+  const { token, userId, avatar, fullName, config } = useFetchUser();
   const [isToken, setIsToken] = useState(null)
  
 
@@ -26,8 +26,9 @@ const NavBar = () => {
   const logOut = () => {
     setIsToken(null)
     userLogout({userId, config})
-    dispatch(logoutAction());
-    // navigation('/');
+    dispatch(disconnectAction());
+    navigation('/user/logout')
+    
   }
   const darkMode = () => {
     localStorage.theme === "dark"

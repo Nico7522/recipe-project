@@ -1,7 +1,4 @@
 import App from "../App";
-import UpdateRecipe from "../containers/recipes/recipe-update";
-import RecipesList from "../containers/recipes/recipes-list";
-
 import AboutPage from "../pages/about/about-page";
 import AdminPage from "../pages/admin/admin-page";
 import AdminCommentsPage from "../pages/admin/pages/admin-comments";
@@ -24,6 +21,7 @@ import AllRecipesPage from "../pages/recipes/recipes-all";
 import AllRecipes from "../pages/recipes/recipes-all";
 import RecipesPage from "../pages/recipes/recipes-page";
 import LoginPage from "../pages/user/login/login-page";
+import LogoutPage from "../pages/user/logout/logout-page";
 import ProfilPage from "../pages/user/profil/profil-page";
 import RegisterPage from "../pages/user/register/register-page";
 import ForgotPasswordPage from "../pages/user/resetpassword/forgotpassword-page";
@@ -87,6 +85,10 @@ export const routes = [
           {
             path: "signup",
             element: <RegisterPage />,
+          },
+          {
+            path: "logout",
+            element: <LogoutPage />,
           },
           {
             path: "profil/:userId",

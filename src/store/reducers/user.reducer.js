@@ -1,26 +1,25 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { disconnectedAction, loginAction, logoutAction } from "../actions/user.action";
+import {  changeUserStatus, loginAction, logoutAction } from "../actions/user.action";
 const initialState = {
     user : [],
     token: null,
-    disconnect: true
+    userState: 'unauthorized'
 }
 const userReducer = createReducer(initialState, (builder) => {
     builder.addCase(loginAction, (state, action) => {
         state.user = action.payload,
         state.token = action.payload.token
-        state.disconnect = 'logged'
+        state.userState = 'connected'
     })
     .addCase(logoutAction, (state) => {
         state.user = [];
         state.token = null;
-        state.disconnect = 'disconnected'
+        state.userState = 'disconnected'
     })
-    .addCase(disconnectedAction, (state) => {
-        state.user = [];
-        state.token = null;
-        state.disconnect = ''
-    })
+    .addCase(changeUserStatus, (state, action) => {
+        state.userState = action.payload;
+      })
+
 });
 
 export default userReducer;

@@ -3,35 +3,13 @@ import { checkDark } from "../utils/darkmode";
 import "./App.css";
 import NavBar from "./components/navbar/navbar";
 import { Outlet } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { disconnectedAction } from "./store/actions/user.action";
 
 
 function App() {
-  const dispatch = useDispatch();
-  const isDisconnect = useSelector((state) => state.user.disconnect);
-
   useEffect(() => {
     checkDark();
   }, []);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      dispatch(disconnectedAction());
-    }, 2000);
-
-    return () => clearTimeout(timeout);
-  });
-
-  if (isDisconnect === "disconnected") {
-    return (
-      <div>
-        <h2 className="text-green-300 font text-2xl text-center">
-          Disconnected !{" "}
-        </h2>
-      </div>
-    );
-  }
 
   return (
     <div className="">
